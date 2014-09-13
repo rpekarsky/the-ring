@@ -1,0 +1,1077 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fin",
+				"findedBlockRight	(?)"
+			],
+			[
+				"remo",
+				"removeChild"
+			],
+			[
+				"g",
+				"graphics	(?)"
+			],
+			[
+				"mo",
+				"moveUp()"
+			],
+			[
+				"s",
+				"stage	(?)"
+			],
+			[
+				"ren",
+				"renderTexture	(?)"
+			],
+			[
+				"pro",
+				"prototype	{}"
+			],
+			[
+				"B",
+				"Block(x, y)"
+			],
+			[
+				"log",
+				"logo	(str)"
+			],
+			[
+				"dra",
+				"drawPath(path)"
+			],
+			[
+				"draw",
+				"drawCircle(x, y, radius)"
+			],
+			[
+				"lin",
+				"lineStyle"
+			],
+			[
+				"de",
+				"destination"
+			],
+			[
+				"lo",
+				"loop"
+			],
+			[
+				"fre",
+				"freq"
+			],
+			[
+				"d",
+				"draw"
+			],
+			[
+				"ti",
+				"this"
+			],
+			[
+				"tim",
+				"timeout	setTimeout function"
+			],
+			[
+				"se",
+				"setPassive"
+			],
+			[
+				"oss",
+				"osscGain"
+			],
+			[
+				"co",
+				"connect"
+			],
+			[
+				"cre",
+				"createBiquadFilter"
+			],
+			[
+				"pla",
+				"playbackRate"
+			],
+			[
+				"Ro",
+				"RotateObstacle"
+			],
+			[
+				"so",
+				"sourceDelayed"
+			],
+			[
+				"time",
+				"timeDelta"
+			],
+			[
+				"play",
+				"playbackRate"
+			],
+			[
+				"le",
+				"length"
+			],
+			[
+				"pa",
+				"parameters"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"ma",
+				"margin-right"
+			],
+			[
+				"fon",
+				"font-family"
+			],
+			[
+				"re",
+				"renderCount"
+			],
+			[
+				"in",
+				"instance"
+			],
+			[
+				"rig",
+				"rightControl"
+			],
+			[
+				"lef",
+				"leftControl"
+			],
+			[
+				"st",
+				"stop"
+			],
+			[
+				"red",
+				"render"
+			],
+			[
+				"sta",
+				"start"
+			],
+			[
+				"create",
+				"createBufferSource"
+			],
+			[
+				"loa",
+				"loadSoundFile"
+			],
+			[
+				"crea",
+				"createElement"
+			],
+			[
+				"Audio",
+				"audio"
+			],
+			[
+				"au",
+				"audio"
+			],
+			[
+				"on",
+				"onAnalyze"
+			],
+			[
+				"Ga",
+				"GamePage"
+			],
+			[
+				"tes",
+				"testPassed"
+			],
+			[
+				"cur",
+				"curLoopTime"
+			],
+			[
+				"cu",
+				"curLoopTime"
+			],
+			[
+				"add",
+				"added"
+			],
+			[
+				"a",
+				"analyser"
+			],
+			[
+				"data",
+				"dataDomain"
+			],
+			[
+				"ana",
+				"analyzerProcessor"
+			],
+			[
+				"ri",
+				"right"
+			],
+			[
+				"right",
+				"rightPressed"
+			],
+			[
+				"la",
+				"lastXto"
+			],
+			[
+				"las",
+				"lastXto"
+			],
+			[
+				"clo",
+				"closed"
+			],
+			[
+				"ob",
+				"objects"
+			],
+			[
+				"di",
+				"duration"
+			],
+			[
+				"ra",
+				"radius"
+			],
+			[
+				"fo",
+				"for	for (…) {…}"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"text",
+				"textContent"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 526,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nEmmet:\n-----\n\n  Thank you for installing Emmet -- a toolkit that can greatly improve your workflow. Note that this plugin automatically downloads and installs PyV8 binary (see status bar message). \n  \n  ******************************\n  Please restart editor \n  to finish installation process \n  after PyV8 was downloaded.\n  ******************************\n  \n  Tab key handler\n  ==========================\n  \n  By default, Emmet allows you to expand abbreviations with Tab key in HTML, XML, HAML and CSS/SASS/LESS/Stylus documents. As a side effect, you can’t use some of your ST2 snippets.\n  \n  Please read https://github.com/sergeche/emmet-sublime#tab-key-handler about how Tab handler works and how to tweak its behavior to match your needs.\n  \n  Enter key\n  ==========================\n  \n  In HTML and XML documents, Emmet overrides Enter key to insert formatted line breaks between opening and closing tags. In some cases it will break character input (for example, in Japanese language).\n  \n  To disable Enter key handler, simply add the following option in your user's Preferences file:\n  \n  \"disable_formatted_linebreak\": true\n  \n  Actions shortcuts\n  ==========================\n  \n  Emmet has a number of actions with keyboard shortcuts that may override ones you're using commonly (for example, Ctrl-E or Ctrl-Down). Please read the project main page to get list of available actions and keyboard shortcuts and how to disable them:\n  https://github.com/sergeche/emmet-sublime\n  \n  Documentation and examples:\n  http://emmet.io\n  \n  ------------------------------\n  Follow me on Twitter: @emmetio\n  ------------------------------\n  \n",
+			"settings":
+			{
+				"buffer_size": 1692,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"scratch": true
+			}
+		},
+		{
+			"file": "Block.js",
+			"settings":
+			{
+				"buffer_size": 4729,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "NewBlocks.js",
+			"settings":
+			{
+				"buffer_size": 1427,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "input.js",
+			"settings":
+			{
+				"buffer_size": 645,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "init.js",
+			"settings":
+			{
+				"buffer_size": 314,
+				"line_ending": "Unix",
+				"name": "init.js"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 306.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"",
+				"TernJS: Reload"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/roman/Documents/the Ring/New/index.html",
+		"/home/roman/Documents/the Ring/TweenLite.js",
+		"/home/roman/Documents/the Ring/mousetrap.js",
+		"/home/roman/Documents/the Ring/ring.sublime-project",
+		"/home/roman/.config/sublime-text-2/Packages/TernJS/TernJS.sublime-settings",
+		"/home/roman/.config/sublime-text-2/Packages/User/TernJS.sublime-settings",
+		"/home/roman/Documents/Kulmination/mainMenu.html",
+		"/home/roman/Documents/audio3/AnalyserProcessor.js",
+		"/home/roman/Documents/Kulmination/Drawer.js",
+		"/home/roman/Documents/audio3/init.js",
+		"/home/roman/Documents/audio3/index.html",
+		"/home/roman/Documents/Kulmination/renderer.js",
+		"/home/roman/Documents/Kulmination/player.js",
+		"/home/roman/Documents/Kulmination/tube.js",
+		"/home/roman/Documents/Kulmination/GameObject.js",
+		"/home/roman/Documents/Kulmination/obstacles.js",
+		"/home/roman/Documents/Kulmination/MPlayer.js",
+		"/home/roman/Documents/Kulmination/Analyser.js",
+		"/home/roman/Documents/Kulmination/AnalyserProcessor.js",
+		"/home/roman/Documents/Kulmination/Game.js",
+		"/home/roman/Documents/Kulmination/Collection.js",
+		"/home/roman/Documents/Kulmination/index.html",
+		"/home/roman/Documents/Kulmination/app.js",
+		"/home/roman/Documents/Kulmination/MainMenu.js",
+		"/home/roman/Documents/audio3/music/11. Last One Standing.mp3",
+		"/home/roman/Documents/Kulmination/audiodest.html",
+		"/home/roman/Documents/Kulmination/AudioContext.js",
+		"/home/roman/Documents/Kulmination/controls.js",
+		"/home/roman/Documents/Kulmination/GamePage.js",
+		"/home/roman/Documents/Kulmination/camera.js",
+		"/home/roman/Documents/Kulmination/gui.js",
+		"/home/roman/Documents/workspace/Kulmination/initialize.js",
+		"/home/roman/Documents/Kulmination/korn_beats.js",
+		"/home/roman/Documents/Kulmination/caramell_beats.js",
+		"/home/roman/Documents/workspace/Kulmination/obstacles.js",
+		"/home/roman/Documents/audio3/Player.js",
+		"/home/roman/Documents/Kulmination/game.js",
+		"/home/roman/Documents/Kulmination/app.html",
+		"/home/roman/Documents/Kulmination/30sec_beats.js",
+		"/home/roman/Documents/Kulmination/initialize.js",
+		"/home/roman/Documents/audio3/Drawer.js",
+		"/home/roman/Documents/Kulmination/hud.js",
+		"/home/roman/Documents/Kulmination/initialize2.js",
+		"/home/roman/Documents/Kulmination/luckystar_beats_local.js",
+		"/home/roman/Documents/Kulmination/LevelManager.js",
+		"/home/roman/Documents/Kulmination/loop.js",
+		"/home/roman/Documents/Kulmination/main.js",
+		"/home/roman/Documents/Kulmination/nightwish_beats.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/home/roman/Documents/Kulmination",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"i",
+			"tt",
+			"10",
+			"x",
+			"analyser",
+			"drawGraph",
+			"graphConfig",
+			"drawFFT",
+			"20",
+			"this.futureTime",
+			"timeDomain",
+			"scriptProc",
+			"onAddBeat",
+			"Game.js:46",
+			"add beat ",
+			"Game.js:46",
+			"setActive",
+			"collided",
+			"+ '",
+			"getTime",
+			"timePosition",
+			"added",
+			"Renderer",
+			"this",
+			"selectedFrec",
+			"maxfreq",
+			"selectedFrec",
+			"historyAvg",
+			"historyBars",
+			"barsCount",
+			"this.selectedFrec",
+			"time,",
+			"time",
+			"timestamp",
+			"this.timeDomain",
+			"Analyser",
+			"1024",
+			"futureTime",
+			"analyser",
+			"this.AvrVHystory",
+			"moveHistory",
+			"freqData",
+			"this.scene",
+			"instanse",
+			"_singletonInstance",
+			"this.analyser",
+			"lastX",
+			"none",
+			"console.log('leftPressed');",
+			"this.time",
+			"this.duration",
+			"console.log",
+			"this.duration",
+			"mainloop",
+			"render",
+			"timePosition",
+			"getAnalise",
+			"this.render",
+			"loop",
+			"render",
+			"musicPlayStarted",
+			"current",
+			"MPlayer",
+			"loadSoundFile",
+			"init",
+			"analyser",
+			"play",
+			"loadSoundFile",
+			"YAYAYA",
+			"Ka",
+			"init",
+			"tt",
+			"/home/roman/Documents/audio3/music/",
+			"this.time",
+			"onAddBeat",
+			"this.game.duration",
+			"dura",
+			"){\n",
+			"beat.b",
+			"beat.a",
+			"'}",
+			"'",
+			"500",
+			"5000",
+			"curLoopTime",
+			"curLoop",
+			"curLoopTime",
+			"cur",
+			"dura",
+			"durati",
+			"duraio",
+			"this.player",
+			"duration",
+			"dura",
+			"duration",
+			"time",
+			"curLoopTime",
+			"timestamp",
+			"pla",
+			"drawer",
+			"speed",
+			"right",
+			"left",
+			".update();",
+			"new Obstacles.RotateObstacle",
+			"Obstacles",
+			"Material",
+			"this.screen/2",
+			"SCALE",
+			"Obstacles.screen",
+			"Obstacles",
+			"this..",
+			"Obstacles.curCollideTestNum",
+			"textCo",
+			"this.angle",
+			"Constrols",
+			"lastX",
+			"console",
+			"loabBeats",
+			"Obstacles",
+			"new Obstacles.Coin",
+			"Obsta",
+			"Obstacles",
+			"new Obstacles.Coin",
+			"curLoopTime",
+			"getPointAt",
+			"getTangentAt",
+			"tube"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 526,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								423,
+								423
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 17.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"settings":
+					{
+						"buffer_size": 1692,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								426,
+								426
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Block.js",
+					"settings":
+					{
+						"buffer_size": 4729,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1324,
+								1324
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 357.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "NewBlocks.js",
+					"settings":
+					{
+						"buffer_size": 1427,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 102.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "input.js",
+					"settings":
+					{
+						"buffer_size": 645,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "init.js",
+					"settings":
+					{
+						"buffer_size": 314,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "init.js",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"drawe",
+				"Kulmination/Drawer.js"
+			],
+			[
+				"inde",
+				"Kulmination/index.html"
+			],
+			[
+				"play",
+				"Kulmination/player.js"
+			],
+			[
+				"tube",
+				"Kulmination/tube.js"
+			],
+			[
+				"obs",
+				"Kulmination/obstacles.js"
+			],
+			[
+				"os",
+				"audio3/music/11. Last One Standing.mp3"
+			],
+			[
+				"game",
+				"Kulmination/GameObject.js"
+			],
+			[
+				"ren",
+				"Kulmination/renderer.js"
+			],
+			[
+				"p",
+				"Kulmination/player.js"
+			],
+			[
+				"mp",
+				"Kulmination/MPlayer.js"
+			],
+			[
+				"coll",
+				"Kulmination/Collection.js"
+			],
+			[
+				"rende",
+				"Kulmination/renderer.js"
+			],
+			[
+				"re",
+				"Kulmination/renderer.js"
+			],
+			[
+				"app",
+				"Kulmination/app.js"
+			],
+			[
+				"mainm",
+				"Kulmination/MainMenu.js"
+			],
+			[
+				"m",
+				"Kulmination/MPlayer.js"
+			],
+			[
+				"analy",
+				"Kulmination/Analyser.js"
+			],
+			[
+				"anal",
+				"Kulmination/AnalyserProcessor.js"
+			],
+			[
+				"gam",
+				"Kulmination/Game.js"
+			],
+			[
+				"gamep",
+				"Kulmination/GamePage.js"
+			],
+			[
+				"gamepa",
+				"Kulmination/GamePage.js"
+			],
+			[
+				"cam",
+				"Kulmination/camera.js"
+			],
+			[
+				"came",
+				"Kulmination/camera.js"
+			],
+			[
+				"con",
+				"Kulmination/controls.js"
+			],
+			[
+				"rendere",
+				"Kulmination/renderer.js"
+			],
+			[
+				"index",
+				"Kulmination/index.html"
+			],
+			[
+				"mpla",
+				"Kulmination/MPlayer.js"
+			],
+			[
+				"ga",
+				"Kulmination/Game.js"
+			],
+			[
+				"contro",
+				"Kulmination/controls.js"
+			],
+			[
+				"main",
+				"Kulmination/MainMenu.js"
+			],
+			[
+				"laye",
+				"Kulmination/player.js"
+			],
+			[
+				"ob",
+				"Kulmination/obstacles.js"
+			],
+			[
+				"ana",
+				"Kulmination/AnalyserProcessor.js"
+			],
+			[
+				"nanly",
+				"Kulmination/Analyser.js"
+			],
+			[
+				"au",
+				"Kulmination/AudioContext.js"
+			],
+			[
+				"aud",
+				"Kulmination/AudioContext.js"
+			],
+			[
+				"gameo",
+				"Kulmination/GameObject.js"
+			],
+			[
+				"co",
+				"Kulmination/Collection.js"
+			],
+			[
+				"ma",
+				"Kulmination/MainMenu.js"
+			],
+			[
+				"audio",
+				"Kulmination/AudioContext.js"
+			],
+			[
+				"cara",
+				"Kulmination/caramell_beats.js"
+			],
+			[
+				"korn",
+				"Kulmination/korn_beats.js"
+			],
+			[
+				"gameob",
+				"Kulmination/GameObject.js"
+			],
+			[
+				"playe",
+				"Kulmination/player.js"
+			],
+			[
+				"proce",
+				"audio3/AnalyserProcessor.js"
+			],
+			[
+				"obsta",
+				"Kulmination/obstacles.js"
+			],
+			[
+				"init",
+				"initialize.js"
+			],
+			[
+				"obst",
+				"obstacles.js"
+			],
+			[
+				"ini",
+				"initialize.js"
+			],
+			[
+				"camera",
+				"camera.js"
+			],
+			[
+				"30",
+				"30sec_beats.js"
+			],
+			[
+				"c",
+				"Collection.js"
+			],
+			[
+				"pla",
+				"player.js"
+			],
+			[
+				"ca",
+				"camera.js"
+			],
+			[
+				"initi",
+				"initialize.js"
+			],
+			[
+				"luck",
+				"luckystar_beats_local.js"
+			],
+			[
+				"cont",
+				"controls.js"
+			],
+			[
+				"hud",
+				"hud.js"
+			],
+			[
+				"layer",
+				"player.js"
+			],
+			[
+				"inii",
+				"initialize.js"
+			],
+			[
+				"camer",
+				"camera.js"
+			],
+			[
+				"loo",
+				"loop.js"
+			],
+			[
+				"loop",
+				"loop.js"
+			],
+			[
+				"hu",
+				"hud.js"
+			],
+			[
+				"lay",
+				"player.js"
+			],
+			[
+				"gui",
+				"gui.js"
+			],
+			[
+				"night",
+				"nightwish_beats.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/home/roman/Documents/the Ring/ring.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 204.0,
+	"status_bar_visible": true
+}
