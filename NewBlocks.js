@@ -4,23 +4,24 @@ var NewBlocks = (function(){
         this.type = 0;
         this.blocks = [];
         this.x = x;
-        this.y = 30;
+        this.y = 20;
         this.init(num);
     }
     NewBlocks.prototype = {
         init:function(num){
             this.num = num;
             this.blocks = [];
-            // this.blocks.push(new Block(0,this.y,this.type));
+            // this.blocks.push(new Block(this.x,this.y,this.type));
             var s = 0;
             for (var j = 0; j < (Math.random()*3+1); j++) {
-                var secN = Math.floor(this.num*Math.random()+1);
+                var secN = Math.floor(this.num*Math.random()+this.num*.5+2);
+                var type = (Math.random()>0.5);
                 for (var i = 0; i < secN; i++) {
-                    this.blocks.push(new Block(this.x+i+s,this.y,this.type));
+                    this.blocks.push(new Block(this.x+i+s,this.y,type));
                 };
-                s += secN + 1;
+                s += secN + 3+Math.floor(Math.random()*4);
             };
-            this.type = this.type?0:1;
+            // this.type = this.type?0:1;
         },
         move:function(delta){
             this.x+=delta;
@@ -34,7 +35,8 @@ var NewBlocks = (function(){
                 bl.add();
                 bl.moveUp();
             };
-            this.init(Math.floor(Math.random()*8+1));
+            this.init(Math.floor(Math.random()*2+2));
+            // Block.check();
         },
         update:function(){
             // this.graphics.x = this.animx*BlockSize;

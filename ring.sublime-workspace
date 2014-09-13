@@ -4,16 +4,68 @@
 		"selected_items":
 		[
 			[
-				"fin",
-				"findedBlockRight	(?)"
+				"de",
+				"delay"
 			],
 			[
-				"remo",
-				"removeChild"
+				"a",
+				"added"
 			],
 			[
 				"g",
-				"graphics	(?)"
+				"graphics"
+			],
+			[
+				"re",
+				"remove"
+			],
+			[
+				"l",
+				"log"
+			],
+			[
+				"to",
+				"toRem"
+			],
+			[
+				"fil",
+				"filtered"
+			],
+			[
+				"in",
+				"inArray"
+			],
+			[
+				"t",
+				"tmp"
+			],
+			[
+				"ad",
+				"addChild"
+			],
+			[
+				"fi",
+				"filtered"
+			],
+			[
+				"remo",
+				"removeEl"
+			],
+			[
+				"arr",
+				"arr1"
+			],
+			[
+				"get",
+				"getTypeNeibhoors"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"fin",
+				"findedBlockRight	(?)"
 			],
 			[
 				"mo",
@@ -50,10 +102,6 @@
 			[
 				"lin",
 				"lineStyle"
-			],
-			[
-				"de",
-				"destination"
 			],
 			[
 				"lo",
@@ -132,14 +180,6 @@
 				"font-family"
 			],
 			[
-				"re",
-				"renderCount"
-			],
-			[
-				"in",
-				"instance"
-			],
-			[
 				"rig",
 				"rightControl"
 			],
@@ -202,10 +242,6 @@
 			[
 				"add",
 				"added"
-			],
-			[
-				"a",
-				"analyser"
 			],
 			[
 				"data",
@@ -285,7 +321,7 @@
 			"file": "Block.js",
 			"settings":
 			{
-				"buffer_size": 4729,
+				"buffer_size": 9373,
 				"line_ending": "Unix"
 			}
 		},
@@ -293,7 +329,7 @@
 			"file": "NewBlocks.js",
 			"settings":
 			{
-				"buffer_size": 1427,
+				"buffer_size": 1548,
 				"line_ending": "Unix"
 			}
 		},
@@ -301,7 +337,7 @@
 			"file": "input.js",
 			"settings":
 			{
-				"buffer_size": 645,
+				"buffer_size": 700,
 				"line_ending": "Unix"
 			}
 		},
@@ -426,6 +462,16 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"adde",
+			"gameob",
+			"BlockSize",
+			"i",
+			"arrRemoveArr",
+			"Things",
+			"i",
+			"getTypeNeibhoors",
+			"move",
+			"result",
 			"i",
 			"tt",
 			"10",
@@ -543,17 +589,7 @@
 			"this.angle",
 			"Constrols",
 			"lastX",
-			"console",
-			"loabBeats",
-			"Obstacles",
-			"new Obstacles.Coin",
-			"Obsta",
-			"Obstacles",
-			"new Obstacles.Coin",
-			"curLoopTime",
-			"getPointAt",
-			"getTangentAt",
-			"tube"
+			"console"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -635,15 +671,15 @@
 					"file": "Block.js",
 					"settings":
 					{
-						"buffer_size": 4729,
+						"buffer_size": 9373,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1324,
-								1324
+								3913,
+								3913
 							]
 						],
 						"settings":
@@ -653,7 +689,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 357.0,
+						"translation.y": 1559.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -663,15 +699,15 @@
 					"file": "NewBlocks.js",
 					"settings":
 					{
-						"buffer_size": 1427,
+						"buffer_size": 1548,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								851,
+								851
 							]
 						],
 						"settings":
@@ -682,7 +718,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 102.0,
+						"translation.y": 255.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -692,15 +728,15 @@
 					"file": "input.js",
 					"settings":
 					{
-						"buffer_size": 645,
+						"buffer_size": 700,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								649,
+								649
 							]
 						],
 						"settings":
@@ -709,7 +745,7 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 306.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -726,8 +762,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								78,
+								78
 							]
 						],
 						"settings":

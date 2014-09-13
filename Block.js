@@ -1,5 +1,6 @@
 var Block = (function(){
-    var BlockSize = 20;
+    var BlockSizeX = 20;
+    var BlockSizeY = 20;
     function Block(x,y,type){
         this.type = type;
         // console.log(x,y);
@@ -12,47 +13,116 @@ var Block = (function(){
         this.init();
     }
     function ab(a,b){
-     return (a % b + b) % b;
+        return (a % b + b) % b;
+    }
+    function inArray(el,arr){
+        return (arr.indexOf(el) != -1);
+    }
+    function filter (arr1,arr2){
+        var result = [];
+        for (var i = 0; i < arr1.length; i++) {
+            if(arr2.indexOf(arr1[i]) != -1) result.push(arr1[i]);
+        };
+        return result;
+    };
+
+    function arrRemoveArr(arr1,arr2){
+        var toRem = [];
+        for (var i = 0; i < arr1.length; i++) {
+            for (var j = 0; j < arr2.length; j++) {
+                if(arr1[i] == arr2[j]){
+                    toRem.push(arr1[i]);
+                }
+            };
+        };
+        for (var i = 0; i < toRem.length; i++) {
+            removeEl(toRem[i],arr2);
+        };
+    };
+    function removeEl(el,arr){
+        for (var i = 0; i < arr.length; i++) {
+            if(arr[i] == el){
+                arr.splice(i,1);
+            }
+        };
     }
     Block.prototype = {
         objects:[],
         gameobjects:[],
         init:function(){
             if(this.type){
-                this.graphics.beginFill(0x3B8686);
+                this.graphics.beginFill(0x69D2E7);
             } else {
-                this.graphics.beginFill(0x79BD9A);
+                this.graphics.beginFill(0xFA6900);
             }
             // this.graphics.lineStyle(1, 0x505050); 
-            this.graphics.drawRect(0, 0, BlockSize, BlockSize);
-            this.graphics.pivot.x = BlockSize/2;
-            this.graphics.pivot.y = BlockSize/2;
-            this.graphics.alpha = 0.3;
+            this.text = new PIXI.Text('0',{font:'regular 12px Arial'});
+            this.graphics.drawRect(0, 0, BlockSizeX, BlockSizeY);
+            this.graphics.pivot.x = BlockSizeX/2;
+            this.graphics.pivot.y = BlockSizeY/2;
+            // this.graphics.alpha = 1;
             this.graphics.endFill();
+            // this.graphics.addChild(this.text);
             stage.addChild(this.graphics);
             this.objects.push(this);
             this.update();
         },
+        flash:function(){
+            // this.graphics.alpha = 1;
+            this.graphics.clear();
+
+            this.graphics.beginFill(0xFFFFFF);
+            this.graphics.drawRect(0, 0, BlockSizeX, BlockSizeY);
+            this.graphics.pivot.x = BlockSizeX/2;
+            this.graphics.pivot.y = BlockSizeY/2;
+            this.graphics.endFill();
+
+            // if(this.flashing) this.flashing.kill();
+            // this.flashing = TweenLite.to(this.graphics,0.5,{alpha:0.5});
+            
+        },
+        setText:function(str){
+            this.text.setText(str);
+        },
         getNeibhoors:function(){
             var result = [];
-            var nb = Block.find(this.x-1,this.y); if(nb) result.push(nb);
-                nb = Block.find(this.x+1,this.y); if(nb) result.push(nb);
-                nb = Block.find(this.x,this.y-1); if(nb) result.push(nb);
-                nb = Block.find(this.x,this.y+1); if(nb) result.push(nb);
-            return (!!result.length)?result:false;
-        }
+            var nbl = Block.find(this.x-1,this.y); if(nbl) result.push(nbl);
+            var nbr = Block.find(this.x+1,this.y); if(nbr) result.push(nbr);
+            var nbt = Block.find(this.x,this.y-1); if(nbt) result.push(nbt);
+            var nbb = Block.find(this.x,this.y+1); if(nbb) result.push(nbb);
+            return result;
+        },
+        getTypeNeibhoors:function(){
+            var nb = this.getNeibhoors();
+            var result = [];
+            for (var i = 0; i < nb.length; i++) {
+                if(nb[i].type == this.type) result.push(nb[i]);
+            };
+            return result;
+        },
         add:function(){
             this.added = true;
             this.gameobjects.push(this);
         },
         move:function(x,y){
-            console.log('move',this.x,x);
+            // console.log('move',this.x,x);
+            var dir = (this.y>y)?1:-1;
             this.x = ab(x,32);
             this.y = y;
             if(this.added){
                 TweenLite.to(this,0.2,{
                     animx:this.x,
-                    animy:this.y
+                });
+                TweenLite.to(this,0.1,{
+                    animy:this.y-0.1*dir
+                });
+                TweenLite.to(this,0.1,{
+                    animy:this.y+0.1*dir,
+                    delay:0.1
+                });
+                TweenLite.to(this,0.2,{
+                    animy:this.y,
+                    delay:0.2
                 });
             } else {
                 this.animx = this.x;
@@ -64,10 +134,28 @@ var Block = (function(){
             if(findedBlock){
                 findedBlock.moveDown();
             }
+            this.graphics.alpha = 0.2;
+            this.graphics.rotation = Math.PI/180*45;
+            this.graphics.scale.x = 0.5;
+            this.graphics.scale.y = 0.5;
+            TweenLite.to(this.graphics.scale,0.1,{
+                x:2,
+                y:2
+            });
 
-            TweenLite.to(this.graphics.scale,0.3,{
+            TweenLite.to(this.graphics,0.4,{
+                alpha:0.4
+            });
+
+            TweenLite.to(this.graphics,0.1,{
+                alpha:0,
+                delay:0.3
+            });
+
+            TweenLite.to(this.graphics.scale,0.7,{
                 x:0,
                 y:0,
+                delay:0.1,
                 onComplete:function(){
                     this.graphics.clear();
                     for (var i = 0; i < stage.children.length; i++) {
@@ -75,6 +163,7 @@ var Block = (function(){
                             stage.removeChildAt(i);
                         }
                     };
+                    Block.destroy(this);
                 }.bind(this)
             });
             Block.remove(this);
@@ -117,8 +206,8 @@ var Block = (function(){
             this.move(this.x,this.y-1);
         },
         update:function(){
-            this.graphics.x = this.x*BlockSize + BlockSize/2;
-            this.graphics.y = this.animy*BlockSize + BlockSize/2;
+            this.graphics.x = this.x*BlockSizeX + BlockSizeX/2;
+            this.graphics.y = this.animy*BlockSizeY + BlockSizeY/2;
         }
     }
     Block.update = function(){
@@ -128,19 +217,62 @@ var Block = (function(){
     }
     Block.find = function(x,y){
         for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
-            if(Block.prototype.gameobjects[i].x == x && Block.prototype.gameobjects[i].y == y) return Block.prototype.gameobjects[i];
+            if(Block.prototype.gameobjects[i].x == ab(x,32) && 
+               Block.prototype.gameobjects[i].y == y) 
+               return Block.prototype.gameobjects[i];
         };
         return false;
     }
     Block.check = function(){
+        // console.clear();
         var tmp = [];
         for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
-            if(Block.prototype.gameobjects[i].check()){
-                tmp.push(Block.prototype.gameobjects[i]);
+            tmp.push(Block.prototype.gameobjects[i]);
+        };
+
+        function check(el,arr,result){
+            
+            var nb = el.getTypeNeibhoors();
+            result.push(el);
+            removeEl(el,arr);
+            var filtered = filter(nb,arr);
+            // console.log('element filtered',filtered.length);
+            arrRemoveArr(filtered,arr);
+            for (var i = 0; i < filtered.length; i++) {
+                // console.log('call check of',filtered[i],i);
+                var els = check(filtered[i],arr,result);
+            };
+            return result;
+        };
+
+
+        for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
+            if(inArray(Block.prototype.gameobjects[n],tmp)){
+                if(!!tmp.length){
+                    // console.log('parse block ',n);
+                    var elements = check(Block.prototype.gameobjects[n],tmp,[]);
+                    for (var i = 0; i < elements.length; i++) {
+                        elements[i].setText(elements.length.toString());
+                        if(elements.length > 7){
+                            elements[i].flash();
+                            elements[i].remove();
+                        }
+                    };
+                }
             }
         };
-        for (var i = 0; i < tmp.length; i++) {
-            tmp[i].remove();
+
+        // while(el){
+        //     i++;
+        //     el = tmp[i];
+        // }
+    }
+
+    Block.destroy = function(block){
+        for (var i = 0; i < Block.prototype.objects.length; i++) {
+            if(Block.prototype.objects[i] == block){
+                Block.prototype.objects.splice(i,1);
+            }
         };
     }
 
