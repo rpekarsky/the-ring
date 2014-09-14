@@ -4,7 +4,7 @@ var NewBlocks = (function(){
         this.type = 0;
         this.blocks = [];
         this.x = x;
-        this.y = 20;
+        this.y = 5;
         this.init(num);
     }
     NewBlocks.prototype = {
