@@ -20,14 +20,18 @@ PIXI.Strip = function(texture)
 
     // set up the main bits..
 
-    var segs = 64;
-    var tt = [0,0];
-    var ind = [0];
-    var uv = [0,0];
+    var segs = 32;
+    // var tt = [0,0];
+    // var ind = [0];
+    // var uv = [0,0];
+
+    var tt = [];
+    var ind = [];
+    var uv = [];
     var rad = 20*6;
     var s = 0;
     for (var i = 0; i <= segs; i++) {
-        s += 1;
+
         var x = Math.sin(Math.PI*2/segs*i)*rad;
         var y = Math.cos(Math.PI*2/segs*i)*rad;
         tt.push(x);
@@ -35,13 +39,24 @@ PIXI.Strip = function(texture)
         uv.push(i/segs);
         uv.push(1);
         ind.push(s);
-
+        
         s += 1;
-        tt.push(0);
-        tt.push(0);
+
+        var x = Math.sin(Math.PI*2/segs*i)*rad*0.1;
+        var y = Math.cos(Math.PI*2/segs*i)*rad*0.1;
+        tt.push(x);
+        tt.push(y);
         uv.push(i/segs);
         uv.push(0);
         ind.push(s);
+        s += 1;
+
+        // tt.push(0);
+        // tt.push(0);
+        // uv.push(i/segs);
+        // uv.push(0);
+        // ind.push(s);
+        // s += 1;
     };
 
     this.uvs = new PIXI.Float32Array(uv);

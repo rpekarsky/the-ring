@@ -1,5 +1,6 @@
-var Adder = new NewBlocks(3,5);
-
+// var Adder = new NewBlocks(3,5);
+var Game = new Game();
+var Adder = Game.adder;
 function GoLeft () {
 	Adder.move(-1);
     // console.log('left');

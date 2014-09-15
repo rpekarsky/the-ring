@@ -1,6 +1,6 @@
 
 // create an new instance of a pixi stage
-var stage = new PIXI.Stage(0xE0E4CC);
+
 
 
 
@@ -12,7 +12,7 @@ var basestage = new PIXI.Stage(0x909090);
 var renderer = PIXI.autoDetectRenderer(320,480);
 
 // // create a new render texture..
-var renderTexture = new PIXI.RenderTexture(20*32, 20*6*2);
+// var renderTexture = new PIXI.RenderTexture(20*32, 20*6*2);
 // var renderTexture = new PIXI.RenderTexture(100,100);
 
 var gr = new PIXI.Graphics();
@@ -22,26 +22,27 @@ gr.beginFill(0x00ff00);
 gr.drawRect(0,50,50,50);
 gr.endFill();
 testStage.addChild(gr);
-var sprite = new PIXI.Strip(renderTexture);
-sprite.x = 320/2;
-sprite.y = 480/2;
+// var sprite = new PIXI.Strip(renderTexture);
+// sprite.x = 320/2;
+// sprite.y = 480/2;
 // sprite.scale.x = 5.4;
 // sprite.scale.y = 5.4;
 document.body.appendChild(renderer.view);
 
 
 // document.body.appendChild(renderer.view);
-var bgTex = PIXI.Texture.fromImage('bg.jpg');
-var bg = new PIXI.Sprite(bgTex);
+// var bgTex = PIXI.Texture.fromImage('bg.jpg');
+// var bg = new PIXI.Sprite(bgTex);
 // bg.blendMode = PIXI.blendModes.ADD;
 
-basestage.addChild(bg);
-basestage.addChild(sprite);
+// basestage.addChild(bg);
+
 function animate() {
     requestAnimFrame( animate );
-    Block.update();
+    
+    Game.render();
     // renderer.render(stage);
-    renderTexture.clear();
-    renderTexture.render(stage);
+    // renderTexture.clear();
+    // renderTexture.render(stage);
     renderer.render(basestage);
 }
