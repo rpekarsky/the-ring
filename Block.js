@@ -50,35 +50,50 @@ var Block = (function(){
         objects:[],
         gameobjects:[],
         init:function(){
+            this.setType(this.type);
+            this.text = new PIXI.Text('0',{font:'regular 12px Arial'});
+            // stage.addChild(this.graphics);
+            this.show();
+            this.graphics.alpha = 0;
+            // this.graphics.scale.x = 0;
+            TweenLite.to(this.graphics,0.8,{
+                alpha:0.5
+            });
+
+            this.objects.push(this);
+            this.update();
+        },
+        hide:function(){
+            stage.removeChild(this.graphics);
+        },
+        show:function(){
+            stage.addChild(this.graphics);
+        },
+        setType:function(type){
+            this.type = type;
+            this.graphics.clear();
             if(this.type){
                 this.graphics.beginFill(0x69D2E7);
             } else {
                 this.graphics.beginFill(0xFA6900);
             }
-            // this.graphics.lineStyle(1, 0x505050); 
-            this.text = new PIXI.Text('0',{font:'regular 12px Arial'});
             this.graphics.drawRect(0, 0, BlockSizeX, BlockSizeY);
             this.graphics.pivot.x = BlockSizeX/2;
             this.graphics.pivot.y = BlockSizeY/2;
-            // this.graphics.alpha = 1;
             this.graphics.endFill();
-            // this.graphics.addChild(this.text);
-            stage.addChild(this.graphics);
-            this.objects.push(this);
-            this.update();
         },
         flash:function(){
-            // this.graphics.alpha = 1;
-            this.graphics.clear();
+            this.graphics.alpha = 1;
+            // this.graphics.clear();
 
-            this.graphics.beginFill(0xFFFFFF);
-            this.graphics.drawRect(0, 0, BlockSizeX, BlockSizeY);
-            this.graphics.pivot.x = BlockSizeX/2;
-            this.graphics.pivot.y = BlockSizeY/2;
-            this.graphics.endFill();
+            // this.graphics.beginFill(0xFFFFFF);
+            // this.graphics.drawRect(0, 0, BlockSizeX, BlockSizeY);
+            // this.graphics.pivot.x = BlockSizeX/2;
+            // this.graphics.pivot.y = BlockSizeY/2;
+            // this.graphics.endFill();
 
-            // if(this.flashing) this.flashing.kill();
-            // this.flashing = TweenLite.to(this.graphics,0.5,{alpha:0.5});
+            if(this.flashing) this.flashing.kill();
+            this.flashing = TweenLite.to(this.graphics,0.5,{alpha:0.2});
             
         },
         setText:function(str){
@@ -105,29 +120,56 @@ var Block = (function(){
             this.gameobjects.push(this);
         },
         move:function(x,y){
+            if(this.moveXanim) this.moveXanim.kill();
+            if(this.moveYanim) this.moveYanim.kill();
             // console.log('move',this.x,x);
-            var dir = (this.y>y)?1:-1;
-            this.x = ab(x,32);
+            var fall = (y>this.y)?true:false;
+            var dist = Math.abs(y-this.y);
+            var nx = ab(x,32);
+            // console.log(this.x,x);
+            // if(this.x != x){
+            //     this.animx = 1;
+            // }
+            // if(Math.abs(this.x-ns) )
+            var delta = Math.abs(this.x-nx);
             this.y = y;
-            if(this.added){
-                TweenLite.to(this,0.2,{
-                    animx:this.x,
-                });
-                TweenLite.to(this,0.1,{
-                    animy:this.y-0.1*dir
-                });
-                TweenLite.to(this,0.1,{
-                    animy:this.y+0.1*dir,
-                    delay:0.1
-                });
-                TweenLite.to(this,0.2,{
-                    animy:this.y,
-                    delay:0.2
-                });
+            this.x = nx;
+            if(delta == 1){
+                this.moveXanim = TweenLite.to(this,0.1,{
+                    animx:this.x
+                });             
             } else {
                 this.animx = this.x;
-                this.animy = this.y;
             }
+
+            // if(this.added){
+                if(fall){
+                    this.moveYanim = TweenLite.to(this,0.6,{
+                        animy:this.y,
+                        delay:0.3*(dist-1),
+                        ease: Bounce.easeOut
+                    })
+                } else {
+                    this.moveYanim = TweenLite.to(this,1,{
+                        animy:this.y,
+                        ease: Elastic.easeOut
+                    })
+                }
+                // TweenLite.to(this,0.1,{
+                //     animy:this.y-0.1
+                // });
+                // TweenLite.to(this,0.1,{
+                //     animy:this.y+0.1,
+                //     delay:0.1
+                // });
+                // TweenLite.to(this,0.2,{
+                //     animy:this.y,
+                //     delay:0.2
+                // });
+            // } else {
+            //     this.animx = this.x;
+            //     this.animy = this.y;
+            // }
         },
         remove:function(){
             var findedBlock = Block.find(this.x,this.y-1);
@@ -135,12 +177,12 @@ var Block = (function(){
                 findedBlock.moveDown();
             }
             this.graphics.alpha = 0.2;
-            this.graphics.rotation = Math.PI/180*45;
-            this.graphics.scale.x = 0.5;
-            this.graphics.scale.y = 0.5;
+            // this.graphics.rotation = Math.PI/180*45;
+            // this.graphics.scale.x = 0.5;
+            // this.graphics.scale.y = 0.5;
             TweenLite.to(this.graphics.scale,0.1,{
-                x:2,
-                y:2
+                x:1.5,
+                y:1.5
             });
 
             TweenLite.to(this.graphics,0.4,{
@@ -206,7 +248,7 @@ var Block = (function(){
             this.move(this.x,this.y-1);
         },
         update:function(){
-            this.graphics.x = this.x*BlockSizeX + BlockSizeX/2;
+            this.graphics.x = this.animx*BlockSizeX + BlockSizeX/2;
             this.graphics.y = this.animy*BlockSizeY + BlockSizeY/2;
         }
     }

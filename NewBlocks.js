@@ -4,11 +4,13 @@ var NewBlocks = (function(){
         this.type = 0;
         this.blocks = [];
         this.x = x;
-        this.y = 5;
+        this.y = 10;
         this.init(num);
     }
     NewBlocks.prototype = {
         init:function(num){
+            this.overlapBlock = new Block(0,this.y,0);
+            this.overlapBlock.hide();
             this.num = num;
             this.blocks = [];
             // this.blocks.push(new Block(this.x,this.y,this.type));

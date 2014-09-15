@@ -6,13 +6,13 @@ var stage = new PIXI.Stage(0xE0E4CC);
 
 var testStage = new PIXI.Stage(0xFFFFFF);
 
-var basestage = new PIXI.Stage(0x000000);
+var basestage = new PIXI.Stage(0x909090);
  
 // create a renderer instance.
-var renderer = PIXI.autoDetectRenderer(1366,768);
+var renderer = PIXI.autoDetectRenderer(320,480);
 
 // // create a new render texture..
-var renderTexture = new PIXI.RenderTexture(20*32, 20*6);
+var renderTexture = new PIXI.RenderTexture(20*32, 20*6*2);
 // var renderTexture = new PIXI.RenderTexture(100,100);
 
 var gr = new PIXI.Graphics();
@@ -23,20 +23,20 @@ gr.drawRect(0,50,50,50);
 gr.endFill();
 testStage.addChild(gr);
 var sprite = new PIXI.Strip(renderTexture);
-sprite.x = 300;
-sprite.y = 300;
-basestage.addChild(sprite);
-
-var sprite = new PIXI.Strip(renderTexture);
-sprite.x = 300+300+300;
-sprite.y = 300;
-basestage.addChild(sprite);
+sprite.x = 320/2;
+sprite.y = 480/2;
 // sprite.scale.x = 5.4;
 // sprite.scale.y = 5.4;
 document.body.appendChild(renderer.view);
 
-// document.body.appendChild(renderer.view);
 
+// document.body.appendChild(renderer.view);
+var bgTex = PIXI.Texture.fromImage('bg.jpg');
+var bg = new PIXI.Sprite(bgTex);
+// bg.blendMode = PIXI.blendModes.ADD;
+
+basestage.addChild(bg);
+basestage.addChild(sprite);
 function animate() {
     requestAnimFrame( animate );
     Block.update();

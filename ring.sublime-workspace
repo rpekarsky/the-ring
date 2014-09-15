@@ -4,20 +4,48 @@
 		"selected_items":
 		[
 			[
+				"ease",
+				"easeOut"
+			],
+			[
+				"fla",
+				"flash"
+			],
+			[
+				"ON",
+				"ONE_MINUS_SRC_ALPHA"
+			],
+			[
+				"blen",
+				"blendMode"
+			],
+			[
+				"d",
+				"dir"
+			],
+			[
+				"a",
+				"animy"
+			],
+			[
+				"te",
+				"testStage"
+			],
+			[
+				"re",
+				"render"
+			],
+			[
+				"S",
+				"sprite"
+			],
+			[
 				"de",
 				"delay"
 			],
 			[
-				"a",
-				"added"
-			],
-			[
 				"g",
 				"graphics"
-			],
-			[
-				"re",
-				"remove"
 			],
 			[
 				"l",
@@ -110,10 +138,6 @@
 			[
 				"fre",
 				"freq"
-			],
-			[
-				"d",
-				"draw"
 			],
 			[
 				"ti",
@@ -300,36 +324,18 @@
 	"buffers":
 	[
 		{
-			"file": "index.html",
+			"file": "init.js",
 			"settings":
 			{
-				"buffer_size": 526,
+				"buffer_size": 1157,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Package Control Messages\n========================\n\nEmmet:\n-----\n\n  Thank you for installing Emmet -- a toolkit that can greatly improve your workflow. Note that this plugin automatically downloads and installs PyV8 binary (see status bar message). \n  \n  ******************************\n  Please restart editor \n  to finish installation process \n  after PyV8 was downloaded.\n  ******************************\n  \n  Tab key handler\n  ==========================\n  \n  By default, Emmet allows you to expand abbreviations with Tab key in HTML, XML, HAML and CSS/SASS/LESS/Stylus documents. As a side effect, you can’t use some of your ST2 snippets.\n  \n  Please read https://github.com/sergeche/emmet-sublime#tab-key-handler about how Tab handler works and how to tweak its behavior to match your needs.\n  \n  Enter key\n  ==========================\n  \n  In HTML and XML documents, Emmet overrides Enter key to insert formatted line breaks between opening and closing tags. In some cases it will break character input (for example, in Japanese language).\n  \n  To disable Enter key handler, simply add the following option in your user's Preferences file:\n  \n  \"disable_formatted_linebreak\": true\n  \n  Actions shortcuts\n  ==========================\n  \n  Emmet has a number of actions with keyboard shortcuts that may override ones you're using commonly (for example, Ctrl-E or Ctrl-Down). Please read the project main page to get list of available actions and keyboard shortcuts and how to disable them:\n  https://github.com/sergeche/emmet-sublime\n  \n  Documentation and examples:\n  http://emmet.io\n  \n  ------------------------------\n  Follow me on Twitter: @emmetio\n  ------------------------------\n  \n",
+			"file": "Strip.js",
 			"settings":
 			{
-				"buffer_size": 1692,
-				"line_ending": "Unix",
-				"name": "Package Control Messages",
-				"scratch": true
-			}
-		},
-		{
-			"file": "Block.js",
-			"settings":
-			{
-				"buffer_size": 9373,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "NewBlocks.js",
-			"settings":
-			{
-				"buffer_size": 1548,
+				"buffer_size": 6662,
 				"line_ending": "Unix"
 			}
 		},
@@ -337,17 +343,32 @@
 			"file": "input.js",
 			"settings":
 			{
-				"buffer_size": 700,
+				"buffer_size": 696,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "init.js",
+			"file": "Block.js",
 			"settings":
 			{
-				"buffer_size": 314,
-				"line_ending": "Unix",
-				"name": "init.js"
+				"buffer_size": 10762,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
+			"settings":
+			{
+				"buffer_size": 18308,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "NewBlocks.js",
+			"settings":
+			{
+				"buffer_size": 1641,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -395,6 +416,17 @@
 	},
 	"file_history":
 	[
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/utils/WebGLBlendModeManager.js",
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/DisplayObjectContainer.js",
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/DisplayObject.js",
+		"/home/roman/Documents/the Ring/NewBlocks.js",
+		"/home/roman/Documents/the Ring/index.html",
+		"/home/roman/Documents/the Ring/Block.js",
+		"/home/roman/Documents/the Ring/init.js",
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/Sprite.js",
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/SpriteBatch.js",
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/utils/Polyk.js",
 		"/home/roman/Documents/the Ring/New/index.html",
 		"/home/roman/Documents/the Ring/TweenLite.js",
 		"/home/roman/Documents/the Ring/mousetrap.js",
@@ -462,6 +494,23 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"flash",
+			"y",
+			"blendMode",
+			"2",
+			"TRIANGLE_FA",
+			"TRIANGLE_STRIP",
+			"tt",
+			"TRIANGLE_STRIP",
+			"100",
+			"verticies",
+			"indices",
+			"index",
+			"wid",
+			"this.dirty",
+			"_initWebGL",
+			"_renderWebGL",
+			"_renderStrip",
 			"adde",
 			"gameob",
 			"BlockSize",
@@ -572,24 +621,7 @@
 			"timestamp",
 			"pla",
 			"drawer",
-			"speed",
-			"right",
-			"left",
-			".update();",
-			"new Obstacles.RotateObstacle",
-			"Obstacles",
-			"Material",
-			"this.screen/2",
-			"SCALE",
-			"Obstacles.screen",
-			"Obstacles",
-			"this..",
-			"Obstacles.curCollideTestNum",
-			"textCo",
-			"this.angle",
-			"Constrols",
-			"lastX",
-			"console"
+			"speed"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -607,58 +639,83 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "index.html",
+					"file": "init.js",
 					"settings":
 					{
-						"buffer_size": 526,
+						"buffer_size": 1157,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								423,
-								423
+								905,
+								905
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 17.0,
+						"translation.y": 357.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+					"file": "Strip.js",
 					"settings":
 					{
-						"buffer_size": 1692,
+						"buffer_size": 6662,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								426,
-								426
+								3505,
+								3505
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1960.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "input.js",
+					"settings":
+					{
+						"buffer_size": 696,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								468,
+								468
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -667,19 +724,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "Block.js",
 					"settings":
 					{
-						"buffer_size": 9373,
+						"buffer_size": 10762,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3913,
-								3913
+								4455,
+								4455
 							]
 						],
 						"settings":
@@ -689,87 +746,60 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1559.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "NewBlocks.js",
-					"settings":
-					{
-						"buffer_size": 1548,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								851,
-								851
-							]
-						],
-						"settings":
-						{
-							"auto_name": "",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 255.0,
+						"translation.y": 1870.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "input.js",
+					"file": "pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
 					"settings":
 					{
-						"buffer_size": 700,
+						"buffer_size": 18308,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								649,
-								649
+								4034,
+								4034
 							]
 						],
 						"settings":
 						{
-							"auto_name": "",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 306.0,
+						"translation.y": 1739.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "init.js",
+					"file": "NewBlocks.js",
 					"settings":
 					{
-						"buffer_size": 314,
+						"buffer_size": 1641,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								78,
-								78
+								736,
+								736
 							]
 						],
 						"settings":
 						{
-							"auto_name": "init.js",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -821,6 +851,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"blo",
+				"Block.js"
+			],
 			[
 				"drawe",
 				"Kulmination/Drawer.js"
@@ -1108,6 +1142,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 204.0,
+	"side_bar_width": 218.0,
 	"status_bar_visible": true
 }

@@ -23,8 +23,8 @@ function GoUp () {
 //     console.log('up');
 // }
 
-// Mousetrap.bind('left', GoLeft);
-// Mousetrap.bind('right', GoRight);
+Mousetrap.bind('left', GoLeft);
+Mousetrap.bind('right', GoRight);
 Mousetrap.bind('up', GoUp);
 var dir = true;
 function move(){
@@ -35,7 +35,7 @@ function move(){
 	}
 }
 setInterval(Block.check,100);
-setInterval(move,1000/10);
+// setInterval(move,1000/5);
 // Mousetrap.bind('down', GoDown);
 
 

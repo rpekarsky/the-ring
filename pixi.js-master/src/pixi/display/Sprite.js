@@ -310,11 +310,11 @@ PIXI.Sprite.prototype._renderCanvas = function(renderSession)
     // If the sprite is not visible or the alpha is 0 then no need to render this element
     if (this.visible === false || this.alpha === 0) return;
     
-    if (this.blendMode !== renderSession.currentBlendMode)
-    {
-        renderSession.currentBlendMode = this.blendMode;
-        renderSession.context.globalCompositeOperation = PIXI.blendModesCanvas[renderSession.currentBlendMode];
-    }
+    // if (this.blendMode !== renderSession.currentBlendMode)
+    // {
+    //     renderSession.currentBlendMode = this.blendMode;
+    //     renderSession.context.globalCompositeOperation = PIXI.blendModesCanvas[renderSession.currentBlendMode];
+    // }
 
     if (this._mask)
     {

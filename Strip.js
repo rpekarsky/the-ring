@@ -20,19 +20,28 @@ PIXI.Strip = function(texture)
 
     // set up the main bits..
 
-    var segs = 4;
+    var segs = 64;
     var tt = [0,0];
     var ind = [0];
-    var uv = [0.5,0];
-    var rad = 300;
+    var uv = [0,0];
+    var rad = 20*6;
+    var s = 0;
     for (var i = 0; i <= segs; i++) {
+        s += 1;
         var x = Math.sin(Math.PI*2/segs*i)*rad;
         var y = Math.cos(Math.PI*2/segs*i)*rad;
         tt.push(x);
         tt.push(y);
         uv.push(i/segs);
         uv.push(1);
-        ind.push(i+1);
+        ind.push(s);
+
+        s += 1;
+        tt.push(0);
+        tt.push(0);
+        uv.push(i/segs);
+        uv.push(0);
+        ind.push(s);
     };
 
     this.uvs = new PIXI.Float32Array(uv);
@@ -43,6 +52,26 @@ PIXI.Strip = function(texture)
 
     this.indices = new PIXI.Uint16Array(ind);
     
+    this.blendMode = PIXI.blendModes.OVERLAY;
+//     "{
+//     "NORMAL": 0,
+//     "ADD": 1,
+//     "MULTIPLY": 2,
+//     "SCREEN": 3,
+//     "OVERLAY": 4,
+//     "DARKEN": 5,
+//     "LIGHTEN": 6,
+//     "COLOR_DODGE": 7,
+//     "COLOR_BURN": 8,
+//     "HARD_LIGHT": 9,
+//     "SOFT_LIGHT": 10,
+//     "DIFFERENCE": 11,
+//     "EXCLUSION": 12,
+//     "HUE": 13,
+//     "SATURATION": 14,
+//     "COLOR": 15,
+//     "LUMINOSITY": 16
+// }"
 
     this.dirty = true;
 };
@@ -103,10 +132,18 @@ PIXI.Strip.prototype._renderStrip = function(renderSession)
         offset = renderSession.offset,
         shader = renderSession.shaderManager.stripShader;
 
-
     // gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mat4Real);
 
-    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    // gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    renderSession.blendModeManager.setBlendMode(this.blendMode);
+    gl.blendFunc(gl.ONE,gl.ONE);
+    // var curr = renderSession.blendModeManager.currentBlendMode;
+    // renderSession.blendModeManager.setBlendMode(this.blendMode);
+    // gl.blendFunc(gl.DST_ALPHA, gl.DST_ALPHA);
+    // console.log(curr,renderSession.blendModeManager.currentBlendMode);
+    // console.log(this.blendMode);
+    
+    // PIXI.WebGLBlendModeManager.setBlendMode(this.blendMode);
 
     // set uniforms
     gl.uniformMatrix3fv(shader.translationMatrix, false, this.worldTransform.toArray(true));
@@ -158,9 +195,7 @@ PIXI.Strip.prototype._renderStrip = function(renderSession)
     //console.log(gl.TRIANGLE_STRIP)
     //
     //
-    gl.drawElements(gl.TRIANGLE_FAN, this.indices.length, gl.UNSIGNED_SHORT, 0);
-    
-  
+    gl.drawElements(gl.TRIANGLE_STRIP, this.indices.length, gl.UNSIGNED_SHORT, 0);
 };
 
 /*
