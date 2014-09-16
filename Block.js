@@ -59,8 +59,8 @@ var Block = (function(){
             this.show();
             this.graphics.alpha = 0;
             // this.graphics.scale.x = 0;
-            TweenLite.to(this.graphics,0.8,{
-                alpha:0.5
+            TweenLite.to(this.graphics,0.2,{
+                alpha:1
             });
 
             this.objects.push(this);

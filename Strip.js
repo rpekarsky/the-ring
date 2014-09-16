@@ -20,74 +20,60 @@ PIXI.Strip = function(texture)
 
     // set up the main bits..
 
-    var segs = 32;
-    // var tt = [0,0];
-    // var ind = [0];
-    // var uv = [0,0];
+    this.segs = 64;
+    this.ringsNum = 32;
+    var RN = this.ringsNum;
+    var rad = 20*8;
 
-    var tt = [];
-    var ind = [];
-    var uv = [];
-    var rad = 20*6;
-    var s = 0;
-    for (var i = 0; i <= segs; i++) {
+    this.verticesNum = (this.segs+1)*2;
+    this.verticies = new PIXI.Float32Array( this.verticesNum*RN*2 );
+    this.uvs = new PIXI.Float32Array( this.verticesNum*RN*2 );
+    this.indices = new PIXI.Uint16Array( this.verticesNum*RN );
+    this.colors = new PIXI.Float32Array( this.verticesNum*RN*2 );
+    
+    var v = this.verticies;
+    var uvs = this.uvs;
+    var ind = this.indices;
+    var segs = this.segs;
+    var vn = 0;
+    var indn = 0;
+    for (var j = 0; j < RN; j++) {
+        var innRadiusFac = j/RN
+        var outRadiusFac = (j+1)/RN
+        console.log('innRadiusFac',innRadiusFac);
+        console.log('outRadiusFac',outRadiusFac);
+        for (var i = 0; i <= segs; i++) {
+            var x = Math.sin(Math.PI*2/segs*i)*rad*outRadiusFac;
+            var y = Math.cos(Math.PI*2/segs*i)*rad*outRadiusFac;
+            v[vn]=x;
+            uvs[vn]=i/segs;
+            vn++;
 
-        var x = Math.sin(Math.PI*2/segs*i)*rad;
-        var y = Math.cos(Math.PI*2/segs*i)*rad;
-        tt.push(x);
-        tt.push(y);
-        uv.push(i/segs);
-        uv.push(1);
-        ind.push(s);
-        
-        s += 1;
+            v[vn]=y;
+            uvs[vn]=outRadiusFac;
+            vn++;
 
-        var x = Math.sin(Math.PI*2/segs*i)*rad*0.1;
-        var y = Math.cos(Math.PI*2/segs*i)*rad*0.1;
-        tt.push(x);
-        tt.push(y);
-        uv.push(i/segs);
-        uv.push(0);
-        ind.push(s);
-        s += 1;
+            ind[indn] = indn;
+            indn++;
 
-        // tt.push(0);
-        // tt.push(0);
-        // uv.push(i/segs);
-        // uv.push(0);
-        // ind.push(s);
-        // s += 1;
+
+            var x = Math.sin(Math.PI*2/segs*i)*rad*innRadiusFac;
+            var y = Math.cos(Math.PI*2/segs*i)*rad*innRadiusFac;
+            v[vn]=x;
+            uvs[vn]=i/segs;
+            vn++;
+
+            v[vn]=y;
+            uvs[vn]=innRadiusFac;
+            vn++;
+
+            ind[indn] = indn;
+            indn++;
+        };
     };
 
-    this.uvs = new PIXI.Float32Array(uv);
-
-    this.verticies = new PIXI.Float32Array(tt);
-
-    this.colors = new PIXI.Float32Array([]);
-
-    this.indices = new PIXI.Uint16Array(ind);
-    
+    console.log(this.verticies.length);
     this.blendMode = PIXI.blendModes.OVERLAY;
-//     "{
-//     "NORMAL": 0,
-//     "ADD": 1,
-//     "MULTIPLY": 2,
-//     "SCREEN": 3,
-//     "OVERLAY": 4,
-//     "DARKEN": 5,
-//     "LIGHTEN": 6,
-//     "COLOR_DODGE": 7,
-//     "COLOR_BURN": 8,
-//     "HARD_LIGHT": 9,
-//     "SOFT_LIGHT": 10,
-//     "DIFFERENCE": 11,
-//     "EXCLUSION": 12,
-//     "HUE": 13,
-//     "SATURATION": 14,
-//     "COLOR": 15,
-//     "LUMINOSITY": 16
-// }"
-
     this.dirty = true;
 };
 
@@ -149,9 +135,9 @@ PIXI.Strip.prototype._renderStrip = function(renderSession)
 
     // gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mat4Real);
 
-    // gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     renderSession.blendModeManager.setBlendMode(this.blendMode);
-    gl.blendFunc(gl.ONE,gl.ONE);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    // gl.blendFunc(gl.ONE,gl.ONE);
     // var curr = renderSession.blendModeManager.currentBlendMode;
     // renderSession.blendModeManager.setBlendMode(this.blendMode);
     // gl.blendFunc(gl.DST_ALPHA, gl.DST_ALPHA);
@@ -210,7 +196,12 @@ PIXI.Strip.prototype._renderStrip = function(renderSession)
     //console.log(gl.TRIANGLE_STRIP)
     //
     //
-    gl.drawElements(gl.TRIANGLE_STRIP, this.indices.length, gl.UNSIGNED_SHORT, 0);
+    // console.log(this.verticesNum);
+    // var segsNumber = this.segs*2
+    for (var i = 0; i < this.ringsNum; i++) {
+        // gl.drawElements(gl.TRIANGLE_STRIP, this.segs*2, gl.UNSIGNED_SHORT, i*this.segs*2);
+        gl.drawElements(gl.TRIANGLE_STRIP, this.verticesNum, gl.UNSIGNED_SHORT, this.verticesNum*2*i);
+    };
 };
 
 /*

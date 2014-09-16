@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"ra",
+				"radialSegs"
+			],
+			[
+				"a",
+				"adder"
+			],
+			[
 				"ease",
 				"easeOut"
 			],
@@ -22,10 +30,6 @@
 			[
 				"d",
 				"dir"
-			],
-			[
-				"a",
-				"animy"
 			],
 			[
 				"te",
@@ -304,10 +308,6 @@
 				"duration"
 			],
 			[
-				"ra",
-				"radius"
-			],
-			[
 				"fo",
 				"for	for (…) {…}"
 			],
@@ -327,7 +327,7 @@
 			"file": "init.js",
 			"settings":
 			{
-				"buffer_size": 1157,
+				"buffer_size": 1124,
 				"line_ending": "Unix"
 			}
 		},
@@ -335,7 +335,7 @@
 			"file": "Strip.js",
 			"settings":
 			{
-				"buffer_size": 6662,
+				"buffer_size": 6978,
 				"line_ending": "Unix"
 			}
 		},
@@ -343,7 +343,7 @@
 			"file": "input.js",
 			"settings":
 			{
-				"buffer_size": 696,
+				"buffer_size": 745,
 				"line_ending": "Unix"
 			}
 		},
@@ -351,7 +351,24 @@
 			"file": "Block.js",
 			"settings":
 			{
-				"buffer_size": 10762,
+				"buffer_size": 10975,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game.js",
+			"settings":
+			{
+				"buffer_size": 753,
+				"line_ending": "Unix",
+				"name": "var Game = fun"
+			}
+		},
+		{
+			"file": "NewBlocks.js",
+			"settings":
+			{
+				"buffer_size": 2351,
 				"line_ending": "Unix"
 			}
 		},
@@ -364,10 +381,10 @@
 			}
 		},
 		{
-			"file": "NewBlocks.js",
+			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 1641,
+				"buffer_size": 643,
 				"line_ending": "Unix"
 			}
 		}
@@ -416,11 +433,11 @@
 	},
 	"file_history":
 	[
+		"/home/roman/Documents/the Ring/NewBlocks.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/utils/WebGLBlendModeManager.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/DisplayObjectContainer.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/DisplayObject.js",
-		"/home/roman/Documents/the Ring/NewBlocks.js",
 		"/home/roman/Documents/the Ring/index.html",
 		"/home/roman/Documents/the Ring/Block.js",
 		"/home/roman/Documents/the Ring/init.js",
@@ -494,6 +511,16 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"i",
+			");\n",
+			"this.num",
+			"flash",
+			"0.5",
+			"stage",
+			"BlockSize",
+			"BlockSizeX",
+			"BlockSize",
+			"BlockSizeX",
 			"flash",
 			"y",
 			"blendMode",
@@ -611,17 +638,7 @@
 			"cur",
 			"dura",
 			"durati",
-			"duraio",
-			"this.player",
-			"duration",
-			"dura",
-			"duration",
-			"time",
-			"curLoopTime",
-			"timestamp",
-			"pla",
-			"drawer",
-			"speed"
+			"duraio"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -639,7 +656,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -647,15 +664,15 @@
 					"file": "init.js",
 					"settings":
 					{
-						"buffer_size": 1157,
+						"buffer_size": 1124,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								905,
-								905
+								915,
+								915
 							]
 						],
 						"settings":
@@ -663,7 +680,7 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 357.0,
+						"translation.y": 459.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -673,15 +690,15 @@
 					"file": "Strip.js",
 					"settings":
 					{
-						"buffer_size": 6662,
+						"buffer_size": 6978,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3505,
-								3505
+								416,
+								416
 							]
 						],
 						"settings":
@@ -691,7 +708,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1960.0,
+						"translation.y": 87.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -701,15 +718,15 @@
 					"file": "input.js",
 					"settings":
 					{
-						"buffer_size": 696,
+						"buffer_size": 745,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								468,
-								468
+								76,
+								76
 							]
 						],
 						"settings":
@@ -728,15 +745,15 @@
 					"file": "Block.js",
 					"settings":
 					{
-						"buffer_size": 10762,
+						"buffer_size": 10975,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4455,
-								4455
+								4266,
+								4266
 							]
 						],
 						"settings":
@@ -746,13 +763,68 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1870.0,
+						"translation.y": 199.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
+					"file": "Game.js",
+					"settings":
+					{
+						"buffer_size": 753,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								56,
+								56
+							]
+						],
+						"settings":
+						{
+							"auto_name": "var Game = fun",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "NewBlocks.js",
+					"settings":
+					{
+						"buffer_size": 2351,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1078,
+								1078
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
 					"settings":
 					{
@@ -780,24 +852,24 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "NewBlocks.js",
+					"buffer": 7,
+					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 1641,
+						"buffer_size": 643,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								736,
-								736
+								476,
+								476
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},

@@ -1,9 +1,10 @@
 var Game = (function(){
 	function Game(){
-		this.num = 32/2;
-		this.height = 5;
+		this.num = 3*3;
+		this.height = 6;
 		this.stage = new PIXI.Stage(0x000000);
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
+		var bgTex = PIXI.Texture.fromImage('bg.jpg');
 		this.ring = new PIXI.Strip(this.rtx);
 		this.adder = this.createAdder();
 		
