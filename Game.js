@@ -1,12 +1,13 @@
 var Game = (function(){
 	function Game(){
-		this.num = 3*3;
+		this.num = 5*5;
 		this.height = 6;
 		this.stage = new PIXI.Stage(0x000000);
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
 		var bgTex = PIXI.Texture.fromImage('bg.jpg');
 		this.ring = new PIXI.Strip(this.rtx);
 		this.adder = this.createAdder();
+		this.deadline = this.createDeadline();
 		
 		this.ring.x = 320/2;
 		this.ring.y = 480/2;
@@ -27,6 +28,11 @@ var Game = (function(){
 			adder.create();
 
 			return adder;
+		},
+		createDeadline:function(){
+			var dl = new Deadline();
+			dl.init(this);
+			return dl;
 		},
 		createBlock:function(x,y,type){
 			var block = new Block(x,y,type);

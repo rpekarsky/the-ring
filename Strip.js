@@ -20,7 +20,7 @@ PIXI.Strip = function(texture)
 
     // set up the main bits..
 
-    this.segs = 64;
+    this.segs = 5;
     this.ringsNum = 32;
     var RN = this.ringsNum;
     var rad = 20*8;

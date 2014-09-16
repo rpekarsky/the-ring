@@ -1,5 +1,7 @@
 var Block = (function(){
     var BlockSize = 20;
+    var FALL_TIMEOUT = 0.6;
+    var MOVE_TIMEOUT = 0.1;
     function Block(x,y,type){
         this.type = type;
         this.falling = false;
@@ -8,6 +10,7 @@ var Block = (function(){
         this.animx = this.x;
         this.animy = this.y;
         this.graphics = new PIXI.Graphics();
+        this.fakeGraphics = new PIXI.Graphics();
     }
     function ab(a,b){
         return (a % b + b) % b;
@@ -48,42 +51,53 @@ var Block = (function(){
         gameobjects:[],
         init:function(game){
             this.game = game;
+            this.maxx = this.game.num;
             this.setType(this.type);
             this.x = ab(this.x,this.game.num);
             this.y = this.y;
             this.animx = this.x;
+            this.animfx = this.x;
             this.animy = this.y;
             this.stage = this.game.stage;
             this.text = new PIXI.Text('0',{font:'regular 12px Arial'});
             // stage.addChild(this.graphics);
             this.show();
-            this.graphics.alpha = 0;
+            // this.graphics.alpha = 0;
             // this.graphics.scale.x = 0;
-            TweenLite.to(this.graphics,0.2,{
-                alpha:1
-            });
+            // TweenLite.to(this.graphics,0.2,{
+            //     alpha:1
+            // });
 
             this.objects.push(this);
             this.update();
         },
         hide:function(){
             this.stage.removeChild(this.graphics);
+            this.stage.removeChild(this.fakeGraphics);
         },
         show:function(){
             this.stage.addChild(this.graphics);
+            this.stage.addChild(this.fakeGraphics);
         },
         setType:function(type){
             this.type = type;
             this.graphics.clear();
+            var color = 0xFA6900;
             if(this.type){
-                this.graphics.beginFill(0x69D2E7);
-            } else {
-                this.graphics.beginFill(0xFA6900);
+                color = 0x69D2E7;
             }
-            this.graphics.drawRect(0, 0, BlockSize, BlockSize);
+            this.graphics.beginFill(color);
+            this.graphics.drawRoundedRect(0, 0, BlockSize, BlockSize,2);
             this.graphics.pivot.x = BlockSize/2;
             this.graphics.pivot.y = BlockSize/2;
             this.graphics.endFill();
+            this.graphics.cacheAsBitmap = true;
+
+            this.fakeGraphics.beginFill(color);
+            this.fakeGraphics.drawRect(0, 0, BlockSize, BlockSize);
+            this.fakeGraphics.pivot.x = BlockSize/2;
+            this.fakeGraphics.pivot.y = BlockSize/2;
+            this.fakeGraphics.endFill();
         },
         flash:function(){
             this.graphics.alpha = 1;
@@ -104,10 +118,10 @@ var Block = (function(){
         },
         getNeibhoors:function(){
             var result = [];
-            var nbl = Block.find(this.x-1,this.y); if(nbl) result.push(nbl);
-            var nbr = Block.find(this.x+1,this.y); if(nbr) result.push(nbr);
-            var nbt = Block.find(this.x,this.y-1); if(nbt) result.push(nbt);
-            var nbb = Block.find(this.x,this.y+1); if(nbb) result.push(nbb);
+            var nbl = Block.find(ab(this.x-1,this.maxx),this.y); if(nbl) result.push(nbl);
+            var nbr = Block.find(ab(this.x+1,this.maxx),this.y); if(nbr) result.push(nbr);
+            var nbt = Block.find(ab(this.x,this.maxx),this.y-1); if(nbt) result.push(nbt);
+            var nbb = Block.find(ab(this.x,this.maxx),this.y+1); if(nbb) result.push(nbb);
             return result;
         },
         getTypeNeibhoors:function(){
@@ -124,6 +138,7 @@ var Block = (function(){
         },
         move:function(x,y){
             if(this.moveXanim) this.moveXanim.kill();
+            if(this.moveXFanim) this.moveXFanim.kill();
             if(this.moveYanim) this.moveYanim.kill();
             // console.log('move',this.x,x);
             var fall = (y>this.y)?true:false;
@@ -134,13 +149,48 @@ var Block = (function(){
             //     this.animx = 1;
             // }
             // if(Math.abs(this.x-ns) )
-            var delta = Math.abs(this.x-nx);
-            this.animx = this.x;
+            // var delta = Math.abs(this.x-nx);
+            var oldX = this.x;
             this.y = y;
-            this.moveXanim = TweenLite.to(this,0.1,{
-                animx:x
-            });             
             this.x = nx;
+            this.animx = oldX;
+            this.moveXanim = TweenLite.to(this,MOVE_TIMEOUT,{
+                animx:this.x
+            });            
+
+            var fakeblockseen = false;
+            if(oldX == 0 && this.x == this.game.num-1){
+                // console.log("YAY!");
+                this.moveXanim.kill();
+                this.animx = this.game.num;
+                this.animfx = 0;
+                this.moveXanim = TweenLite.to(this,MOVE_TIMEOUT,{
+                    animx:this.x
+                });
+
+                this.moveXFanim = TweenLite.to(this,MOVE_TIMEOUT,{
+                    animfx:-1
+                });
+                fakeblockseen = true;
+            }
+            if(oldX == this.game.num-1 && this.x == 0){
+                // console.log("YAY!2",oldX,this.x);
+                this.moveXanim.kill();
+                this.animfx = oldX;
+                this.animx = -1;
+                this.moveXanim = TweenLite.to(this,MOVE_TIMEOUT,{
+                    animx:this.x
+                });
+                this.moveXFanim = TweenLite.to(this,MOVE_TIMEOUT,{
+                    animfx:oldX+1
+                });
+                fakeblockseen = true;
+            }
+            if(fakeblockseen){
+                this.fakeGraphics.visible = true;
+            } else {
+                this.fakeGraphics.visible = false;
+            }
             // if(delta == 1){
             // } else {
             //     this.animx = this.x;
@@ -148,16 +198,16 @@ var Block = (function(){
 
             // if(this.added){
                 if(fall){
-                    this.moveYanim = TweenLite.to(this,0.6,{
+                    this.moveYanim = TweenLite.to(this,FALL_TIMEOUT,{
                         animy:this.y,
-                        delay:0.3*(dist-1),
                         ease: Bounce.easeOut
                     })
                 } else {
                     this.moveYanim = TweenLite.to(this,1,{
                         animy:this.y,
                         ease: Elastic.easeOut
-                    })
+                    });
+                    setTimeout(Block.check,FALL_TIMEOUT*1000);
                 }
                 // TweenLite.to(this,0.1,{
                 //     animy:this.y-0.1
@@ -198,7 +248,7 @@ var Block = (function(){
             //     delay:0.3
             // });
 
-            TweenLite.to(this.graphics.scale,0.2,{
+            TweenLite.to(this.graphics.scale,0.3,{
                 x:0,
                 y:0,
                 delay:0.2,
@@ -212,6 +262,7 @@ var Block = (function(){
                     Block.destroy(this);
                 }.bind(this)
             });
+            setTimeout(Block.check,FALL_TIMEOUT*1000);
             Block.remove(this);
             // Block.check();
         },
@@ -230,6 +281,7 @@ var Block = (function(){
                 findedBlock = Block.find(this.x,this.y+1);
             }
             this.move(this.x,this.y+1);
+            // Block.check();
             // Block.check();
         },
         check:function(){
@@ -254,6 +306,9 @@ var Block = (function(){
         update:function(){
             this.graphics.x = this.animx*BlockSize + BlockSize/2;
             this.graphics.y = this.animy*BlockSize + BlockSize/2;
+
+            this.fakeGraphics.x = this.animfx*BlockSize + BlockSize/2;
+            this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2;
         }
     }
     Block.update = function(){
@@ -299,7 +354,7 @@ var Block = (function(){
                     var elements = check(Block.prototype.gameobjects[n],tmp,[]);
                     for (var i = 0; i < elements.length; i++) {
                         elements[i].setText(elements.length.toString());
-                        if(elements.length > 7){
+                        if(elements.length > 3){
                             elements[i].flash();
                             elements[i].remove();
                         }

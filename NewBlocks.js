@@ -29,7 +29,9 @@ var NewBlocks = (function(){
             this.blocks = [];
             var s = 0;
             var type = (Math.random()>0.5);
-            this.blocks.push(this.game.createBlock(0,this.y,type));
+            this.blocks.push(this.game.createBlock(this.x,this.y,type));
+            // this.blocks.push(this.game.createBlock(this.x+1,this.y,type));
+            // this.blocks.push(this.game.createBlock(this.x+2,this.y,type));
             // for (var j = 0; j < (Math.random()*3+1); j++) {
             //     var secN = Math.floor(count*Math.random()+count*.5+2);
             //     var type = (Math.random()>0.5);

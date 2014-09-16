@@ -13,7 +13,8 @@ function GoRight () {
 
 function GoUp () {
 	Adder.moveUp();
-	Adder.move(Math.floor(Math.random()*32)*dir);
+	// Block.check();
+	// Adder.move(Math.floor(Math.random()*32)*dir);
 	// dir = !dir;
     // console.log('up');
     // Block.check();
@@ -35,7 +36,7 @@ function move(){
 		GoLeft();
 	}
 }
-setInterval(Block.check,100);
+// setInterval(Block.check,100);
 // setInterval(move,1000/5);
 // Mousetrap.bind('down', GoDown);
 
