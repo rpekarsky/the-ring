@@ -37,7 +37,7 @@ function move(){
 	}
 }
 // setInterval(Block.check,100);
-// setInterval(move,1000/5);
+setInterval(move,1000/20);
 // Mousetrap.bind('down', GoDown);
 
 

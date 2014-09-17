@@ -20,8 +20,13 @@ PIXI.Strip = function(texture)
 
     // set up the main bits..
 
-    this.segs = 5;
-    this.ringsNum = 32;
+
+    // this.segs = 4;
+    // this.ringsNum = 64;
+
+    this.segs = 64;
+    this.ringsNum = 8;
+    
     var RN = this.ringsNum;
     var rad = 20*8;
 
@@ -73,7 +78,7 @@ PIXI.Strip = function(texture)
     };
 
     console.log(this.verticies.length);
-    this.blendMode = PIXI.blendModes.OVERLAY;
+    this.blendMode = PIXI.blendModes.NORMAL;
     this.dirty = true;
 };
 
@@ -136,8 +141,8 @@ PIXI.Strip.prototype._renderStrip = function(renderSession)
     // gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mat4Real);
 
     renderSession.blendModeManager.setBlendMode(this.blendMode);
-    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-    // gl.blendFunc(gl.ONE,gl.ONE);
+    // gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    // gl.blendFunc(gl.ZERO,gl.ONE);
     // var curr = renderSession.blendModeManager.currentBlendMode;
     // renderSession.blendModeManager.setBlendMode(this.blendMode);
     // gl.blendFunc(gl.DST_ALPHA, gl.DST_ALPHA);

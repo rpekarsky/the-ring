@@ -58,7 +58,7 @@ var Block = (function(){
             this.animx = this.x;
             this.animfx = this.x;
             this.animy = this.y;
-            this.stage = this.game.stage;
+            this.layer = this.game.blockLayer;
             this.text = new PIXI.Text('0',{font:'regular 12px Arial'});
             // stage.addChild(this.graphics);
             this.show();
@@ -72,46 +72,45 @@ var Block = (function(){
             this.update();
         },
         hide:function(){
-            this.stage.removeChild(this.graphics);
-            this.stage.removeChild(this.fakeGraphics);
+            this.layer.removeChild(this.graphics);
+            this.layer.removeChild(this.fakeGraphics);
         },
         show:function(){
-            this.stage.addChild(this.graphics);
-            this.stage.addChild(this.fakeGraphics);
+            this.layer.addChild(this.graphics);
+            this.layer.addChild(this.fakeGraphics);
         },
         setType:function(type){
             this.type = type;
             this.graphics.clear();
-            var color = 0xFA6900;
+            // var color = 0x26ADE4;
+            var color = 0x303030;
             if(this.type){
-                color = 0x69D2E7;
+                // color = 0xD1E751;
+                color = 0x606060;
             }
             this.graphics.beginFill(color);
-            this.graphics.drawRoundedRect(0, 0, BlockSize, BlockSize,2);
+            // this.graphics.drawRoundedRect(0, 0, BlockSize, BlockSize,2);
+            this.graphics.drawRect(0, 0, BlockSize, BlockSize-1);
             this.graphics.pivot.x = BlockSize/2;
             this.graphics.pivot.y = BlockSize/2;
             this.graphics.endFill();
-            this.graphics.cacheAsBitmap = true;
+            // this.graphics.cacheAsBitmap = true;
 
             this.fakeGraphics.beginFill(color);
-            this.fakeGraphics.drawRect(0, 0, BlockSize, BlockSize);
+            this.fakeGraphics.drawRect(0, 0, BlockSize, BlockSize-1);
             this.fakeGraphics.pivot.x = BlockSize/2;
             this.fakeGraphics.pivot.y = BlockSize/2;
             this.fakeGraphics.endFill();
         },
         flash:function(){
-            this.graphics.alpha = 1;
-            // this.graphics.clear();
-
-            // this.graphics.beginFill(0xFFFFFF);
-            // this.graphics.drawRect(0, 0, BlockSizeX, BlockSizeY);
-            // this.graphics.pivot.x = BlockSizeX/2;
-            // this.graphics.pivot.y = BlockSizeY/2;
-            // this.graphics.endFill();
-
-            if(this.flashing) this.flashing.kill();
-            this.flashing = TweenLite.to(this.graphics,0.5,{alpha:0.2});
-            
+            this.graphics.beginFill(0xffffff);
+            this.graphics.drawRect(BlockSize/4, BlockSize/4, BlockSize/2, BlockSize/2);
+            // this.graphics.pivot.x = BlockSize/2;
+            // this.graphics.pivot.y = BlockSize/2;
+            this.graphics.endFill();
+            // if(this.flashing) this.flashing.kill();
+            // this.graphics.alpha = 1;
+            // this.flashing = TweenLite.to(this.graphics,0.5,{alpha:0.2});
         },
         setText:function(str){
             this.text.setText(str);
@@ -140,16 +139,11 @@ var Block = (function(){
             if(this.moveXanim) this.moveXanim.kill();
             if(this.moveXFanim) this.moveXFanim.kill();
             if(this.moveYanim) this.moveYanim.kill();
-            // console.log('move',this.x,x);
+            
             var fall = (y>this.y)?true:false;
+            var raise = (this.y>y)?true:false;
             var dist = Math.abs(y-this.y);
             var nx = ab(x,this.game.num);
-            // console.log(this.x,x);
-            // if(this.x != x){
-            //     this.animx = 1;
-            // }
-            // if(Math.abs(this.x-ns) )
-            // var delta = Math.abs(this.x-nx);
             var oldX = this.x;
             this.y = y;
             this.x = nx;
@@ -174,7 +168,6 @@ var Block = (function(){
                 fakeblockseen = true;
             }
             if(oldX == this.game.num-1 && this.x == 0){
-                // console.log("YAY!2",oldX,this.x);
                 this.moveXanim.kill();
                 this.animfx = oldX;
                 this.animx = -1;
@@ -191,39 +184,21 @@ var Block = (function(){
             } else {
                 this.fakeGraphics.visible = false;
             }
-            // if(delta == 1){
-            // } else {
-            //     this.animx = this.x;
-            // }
-
-            // if(this.added){
-                if(fall){
-                    this.moveYanim = TweenLite.to(this,FALL_TIMEOUT,{
-                        animy:this.y,
-                        ease: Bounce.easeOut
-                    })
-                } else {
-                    this.moveYanim = TweenLite.to(this,1,{
-                        animy:this.y,
-                        ease: Elastic.easeOut
-                    });
-                    setTimeout(Block.check,FALL_TIMEOUT*1000);
-                }
-                // TweenLite.to(this,0.1,{
-                //     animy:this.y-0.1
-                // });
-                // TweenLite.to(this,0.1,{
-                //     animy:this.y+0.1,
-                //     delay:0.1
-                // });
-                // TweenLite.to(this,0.2,{
-                //     animy:this.y,
-                //     delay:0.2
-                // });
-            // } else {
-            //     this.animx = this.x;
-            //     this.animy = this.y;
-            // }
+             
+            if(fall){
+                this.moveYanim = TweenLite.to(this,FALL_TIMEOUT,{
+                    animy:this.y,
+                    ease: Bounce.easeOut
+                })
+                setTimeout(Block.check,FALL_TIMEOUT*1000);
+            } 
+            if(raise) {
+                this.moveYanim = TweenLite.to(this,0.3,{
+                    animy:this.y,
+                    // ease: Elastic.easeOut
+                });
+                setTimeout(Block.check,0.3*1000);
+            }
         },
         remove:function(){
             var findedBlock = Block.find(this.x,this.y-1);
@@ -234,10 +209,10 @@ var Block = (function(){
             // this.graphics.rotation = Math.PI/180*45;
             // this.graphics.scale.x = 0.5;
             // this.graphics.scale.y = 0.5;
-            TweenLite.to(this.graphics.scale,0.2,{
-                x:.5,
-                y:.5
-            });
+            // TweenLite.to(this.graphics.scale,0.2,{
+            //     x:.5,
+            //     y:.5
+            // });
 
             // TweenLite.to(this.graphics,0.4,{
             //     alpha:0.4
@@ -251,19 +226,21 @@ var Block = (function(){
             TweenLite.to(this.graphics.scale,0.3,{
                 x:0,
                 y:0,
-                delay:0.2,
+                // ease:Elastic.easeOut,
+                // delay:0,
                 onComplete:function(){
                     this.graphics.clear();
-                    for (var i = 0; i < this.stage.children.length; i++) {
-                        if(this.stage.children[i] == this.graphics){
-                            this.stage.removeChildAt(i);
+                    for (var i = 0; i < this.layer.children.length; i++) {
+                        if(this.layer.children[i] == this.graphics){
+                            this.layer.removeChildAt(i);
                         }
                     };
                     Block.destroy(this);
                 }.bind(this)
             });
-            setTimeout(Block.check,FALL_TIMEOUT*1000);
+            // setTimeout(Block.check,FALL_TIMEOUT*1000);
             Block.remove(this);
+
             // Block.check();
         },
         moveDown:function(){
@@ -305,10 +282,10 @@ var Block = (function(){
         },
         update:function(){
             this.graphics.x = this.animx*BlockSize + BlockSize/2;
-            this.graphics.y = this.animy*BlockSize + BlockSize/2;
+            this.graphics.y = this.animy*BlockSize + BlockSize/2-4;
 
             this.fakeGraphics.x = this.animfx*BlockSize + BlockSize/2;
-            this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2;
+            this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2-4;
         }
     }
     Block.update = function(){
@@ -316,15 +293,26 @@ var Block = (function(){
             Block.prototype.objects[i].update();
         };
     }
+    Block.clear = function(){
+        var toRemove = []
+        for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
+            toRemove.push(Block.prototype.gameobjects[i]);
+        };
+        for (var i = 0; i < toRemove.length; i++) {
+            toRemove[i].remove();
+        };
+    }
     Block.find = function(x,y){
         for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
-            if(Block.prototype.gameobjects[i].x == ab(x,32) && 
+            if(Block.prototype.gameobjects[i].x == ab(x,Block.prototype.gameobjects[i].game.num) && 
                Block.prototype.gameobjects[i].y == y) 
                return Block.prototype.gameobjects[i];
         };
         return false;
     }
     Block.check = function(){
+        // console.log('check');
+
         // console.clear();
         var tmp = [];
         for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
@@ -332,37 +320,43 @@ var Block = (function(){
         };
 
         function check(el,arr,result){
-            
             var nb = el.getTypeNeibhoors();
             result.push(el);
             removeEl(el,arr);
             var filtered = filter(nb,arr);
-            // console.log('element filtered',filtered.length);
             arrRemoveArr(filtered,arr);
             for (var i = 0; i < filtered.length; i++) {
-                // console.log('call check of',filtered[i],i);
                 var els = check(filtered[i],arr,result);
             };
             return result;
         };
 
 
+        var hasToRemove = false;
+        var gameover = false;
         for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
+            if(Block.prototype.gameobjects[n].y < Block.prototype.gameobjects[n].game.height-4){
+                
+                gameover = true
+            }
             if(inArray(Block.prototype.gameobjects[n],tmp)){
                 if(!!tmp.length){
-                    // console.log('parse block ',n);
                     var elements = check(Block.prototype.gameobjects[n],tmp,[]);
                     for (var i = 0; i < elements.length; i++) {
-                        elements[i].setText(elements.length.toString());
-                        if(elements.length > 3){
-                            elements[i].flash();
+                        // elements[i].setText(elements.length.toString());
+
+                        if(elements.length >= 6){
                             elements[i].remove();
+                            hasToRemove = true;
+                        } else if (elements.length == 5){
+                            elements[i].flash();
                         }
                     };
                 }
             }
         };
-
+        if(hasToRemove) Block.prototype.gameobjects[0].game.resonance();
+        if(gameover) Block.prototype.gameobjects[0].game.gameover();
         // while(el){
         //     i++;
         //     el = tmp[i];

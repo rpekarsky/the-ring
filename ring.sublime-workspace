@@ -4,12 +4,56 @@
 		"selected_items":
 		[
 			[
-				"ra",
-				"radialSegs"
+				"de",
+				"deadline"
+			],
+			[
+				"blo",
+				"blockLayer"
+			],
+			[
+				"add",
+				"addChild"
+			],
+			[
+				"ele",
+				"elements"
 			],
 			[
 				"a",
-				"adder"
+				"animx"
+			],
+			[
+				"set",
+				"setTimeout"
+			],
+			[
+				"in",
+				"indices"
+			],
+			[
+				"ind",
+				"indn"
+			],
+			[
+				"ver",
+				"vertices"
+			],
+			[
+				"FL",
+				"Float32Array"
+			],
+			[
+				"rin",
+				"ringsNum"
+			],
+			[
+				"inde",
+				"indices"
+			],
+			[
+				"ra",
+				"radialSegs"
 			],
 			[
 				"ease",
@@ -44,10 +88,6 @@
 				"sprite"
 			],
 			[
-				"de",
-				"delay"
-			],
-			[
 				"g",
 				"graphics"
 			],
@@ -62,10 +102,6 @@
 			[
 				"fil",
 				"filtered"
-			],
-			[
-				"in",
-				"inArray"
 			],
 			[
 				"t",
@@ -268,10 +304,6 @@
 				"curLoopTime"
 			],
 			[
-				"add",
-				"added"
-			],
-			[
 				"data",
 				"dataDomain"
 			],
@@ -327,7 +359,7 @@
 			"file": "init.js",
 			"settings":
 			{
-				"buffer_size": 1124,
+				"buffer_size": 917,
 				"line_ending": "Unix"
 			}
 		},
@@ -335,7 +367,7 @@
 			"file": "Strip.js",
 			"settings":
 			{
-				"buffer_size": 6978,
+				"buffer_size": 7311,
 				"line_ending": "Unix"
 			}
 		},
@@ -343,7 +375,7 @@
 			"file": "input.js",
 			"settings":
 			{
-				"buffer_size": 745,
+				"buffer_size": 768,
 				"line_ending": "Unix"
 			}
 		},
@@ -351,7 +383,7 @@
 			"file": "Block.js",
 			"settings":
 			{
-				"buffer_size": 10975,
+				"buffer_size": 13523,
 				"line_ending": "Unix"
 			}
 		},
@@ -359,7 +391,7 @@
 			"file": "Game.js",
 			"settings":
 			{
-				"buffer_size": 753,
+				"buffer_size": 1316,
 				"line_ending": "Unix",
 				"name": "var Game = fun"
 			}
@@ -368,23 +400,33 @@
 			"file": "NewBlocks.js",
 			"settings":
 			{
-				"buffer_size": 2351,
+				"buffer_size": 2534,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
+			"file": "Deadline.js",
 			"settings":
 			{
-				"buffer_size": 18308,
+				"buffer_size": 1467,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 78 files for \"Float32Array\" (case sensitive)\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/Pixi.js:\n   51  PIXI._UID = 0;\n   52  \n   53: if(typeof(Float32Array) != 'undefined')\n   54  {\n   55:     PIXI.Float32Array = Float32Array;\n   56      PIXI.Uint16Array = Uint16Array;\n   57  }\n   58  else\n   59  {\n   60:     PIXI.Float32Array = Array;\n   61      PIXI.Uint16Array = Array;\n   62  }\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/core/Matrix.js:\n   48  PIXI.Matrix.prototype.toArray = function(transpose)\n   49  {\n   50:     if(!this.array) this.array = new Float32Array(9);\n   51      var array = this.array;\n   52  \n   ..\n   82  \n   83  PIXI.determineMatrixArrayType = function() {\n   84:     return (typeof Float32Array !== 'undefined') ? Float32Array : Array;\n   85  };\n   86  \n   87  /**\n   88   * The Matrix2 class will choose the best type of array to use between\n   89:  * a regular javascript Array and a Float32Array if the latter is available\n   90   *\n   91   * @class Matrix2\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/extras/Rope.js:\n   15      this.points = points;\n   16  \n   17:     this.verticies = new PIXI.Float32Array(points.length * 4);\n   18:     this.uvs = new PIXI.Float32Array(points.length * 4);\n   19:     this.colors = new PIXI.Float32Array(points.length * 2);\n   20      this.indices = new PIXI.Uint16Array(points.length * 2);\n   21     \n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/extras/Strip.js:\n   20  \n   21      // set up the main bits..\n   22:     this.uvs = new PIXI.Float32Array([0, 1,\n   23                                      1, 1,\n   24                                      1, 0,\n   25                                      0,1]);\n   26  \n   27:     this.verticies = new PIXI.Float32Array([0, 0,\n   28                        100,0,\n   29                        100,100,\n   30                        0, 100]);\n   31  \n   32:     this.colors = new PIXI.Float32Array([1, 1, 1, 1]);\n   33  \n   34      this.indices = new PIXI.Uint16Array([0, 1, 2, 3]);\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/filters/PixelateFilter.js:\n   18      this.uniforms = {\n   19          invert: {type: '1f', value: 0},\n   20:         dimensions: {type: '4fv', value:new Float32Array([10000, 100, 10, 10])},\n   21          pixelSize: {type: '2f', value:{x:10, y:10}}\n   22      };\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/utils/WebGLFastSpriteBatch.js:\n   23  \n   24       //vertex data\n   25:     this.vertices = new Float32Array(numVerts);\n   26      //index data\n   27      this.indices = new Uint16Array(numIndices);\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/utils/WebGLFilterManager.js:\n  392      // bind and upload the vertexs..\n  393      // keep a reference to the vertexFloatData..\n  394:     this.vertexArray = new Float32Array([0.0, 0.0,\n  395                                           1.0, 0.0,\n  396                                           0.0, 1.0,\n  ...\n  405  \n  406      // bind and upload the uv buffer\n  407:     this.uvArray = new Float32Array([0.0, 0.0,\n  408                                       1.0, 0.0,\n  409                                       0.0, 1.0,\n  ...\n  416      gl.STATIC_DRAW);\n  417  \n  418:     this.colorArray = new Float32Array([1.0, 0xFFFFFF,\n  419                                          1.0, 0xFFFFFF,\n  420                                          1.0, 0xFFFFFF,\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/utils/WebGLGraphics.js:\n  824  \n  825  //    this.lastIndex = graphics.graphicsData.length;\n  826:     this.glPoints = new Float32Array(this.points);\n  827  \n  828      gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);\n\n/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/utils/WebGLSpriteBatch.js:\n   46      *\n   47      * @property vertices\n   48:     * @type Float32Array\n   49      */\n   50:     this.vertices = new Float32Array(numVerts);\n   51  \n   52      //index data\n\n22 matches across 9 files\n\n\nSearching 515 files for \"Block.check\" (case sensitive)\n\n/home/roman/Documents/the Ring/Block.js:\n  203                          ease: Bounce.easeOut\n  204                      })\n  205:                     // setTimeout(Block.check,FALL_TIMEOUT*1000);\n  206                  } else {\n  207                      this.moveYanim = TweenLite.to(this,0.3,{\n  ...\n  209                          // ease: Elastic.easeOut\n  210                      });\n  211:                     setTimeout(Block.check,2000);\n  212                  }\n  213                  // TweenLite.to(this,0.1,{\n  ...\n  264                  }.bind(this)\n  265              });\n  266:             // setTimeout(Block.check,FALL_TIMEOUT*1000);\n  267              Block.remove(this);\n  268:             // Block.check();\n  269          },\n  270          moveDown:function(){\n  ...\n  283              }\n  284              this.move(this.x,this.y+1);\n  285:             // Block.check();\n  286:             // Block.check();\n  287          },\n  288          check:function(){\n  ...\n  326          return false;\n  327      }\n  328:     Block.check = function(){\n  329          \n  330          // console.clear();\n\n/home/roman/Documents/the Ring/NewBlocks.js:\n   56              };\n   57              this.create();\n   58:             // Block.check();\n   59          },\n   60          update:function(){\n\n/home/roman/Documents/the Ring/input.js:\n   14  function GoUp () {\n   15  	Adder.moveUp();\n   16: 	// Block.check();\n   17  	// Adder.move(Math.floor(Math.random()*32)*dir);\n   18  	// dir = !dir;\n   19      // console.log('up');\n   20:     // Block.check();\n   21  }\n   22  \n   ..\n   37  	}\n   38  }\n   39: // setInterval(Block.check,100);\n   40  setInterval(move,1000/5);\n   41  // Mousetrap.bind('down', GoDown);\n\n/home/roman/Documents/the Ring/ring.sublime-workspace:\n  552  			\"BlockSize\",\n  553  			\"0.1\",\n  554: 			\"Block.check\",\n  555  			\"destroy\",\n  556  			\"FALL_TIMEOUT\",\n  557: 			\"Block.check\",\n  558  			\"verticesNum\",\n  559  			\"vertices\",\n\n13 matches across 4 files\n",
+			"settings":
+			{
+				"buffer_size": 6103,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
 			}
 		},
 		{
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 643,
+				"buffer_size": 683,
 				"line_ending": "Unix"
 			}
 		}
@@ -433,8 +475,9 @@
 	},
 	"file_history":
 	[
-		"/home/roman/Documents/the Ring/NewBlocks.js",
+		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/Pixi.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
+		"/home/roman/Documents/the Ring/NewBlocks.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/renderers/webgl/utils/WebGLBlendModeManager.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/DisplayObjectContainer.js",
 		"/home/roman/Documents/the Ring/pixi.js-master/src/pixi/display/DisplayObject.js",
@@ -499,18 +542,50 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			"/home/roman/Documents/the Ring",
+			"/home/roman/Documents/the Ring/pixi.js-master/src",
 			"/home/roman/Documents/Kulmination",
 			""
 		]
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"console.lo",
+			"scene",
+			"Block.check",
+			"check",
+			"cacheAsBitmap",
+			"NewBlocks",
+			"createDeadLine",
+			"BlockSize",
+			"0.1",
+			"Block.check",
+			"destroy",
+			"FALL_TIMEOUT",
+			"Block.check",
+			"verticesNum",
+			"vertices",
+			"uv",
+			"ringsNum",
+			"segs",
+			"this.ringsNum",
+			"_indexBuffer",
+			"ringsNum",
+			" v[",
+			"v[",
+			"v",
+			"push(x)",
+			"Float32Array",
+			"outRadius",
+			"innRadius",
+			"(s)",
+			"tt",
 			"i",
 			");\n",
 			"this.num",
@@ -608,37 +683,7 @@
 			"this.render",
 			"loop",
 			"render",
-			"musicPlayStarted",
-			"current",
-			"MPlayer",
-			"loadSoundFile",
-			"init",
-			"analyser",
-			"play",
-			"loadSoundFile",
-			"YAYAYA",
-			"Ka",
-			"init",
-			"tt",
-			"/home/roman/Documents/audio3/music/",
-			"this.time",
-			"onAddBeat",
-			"this.game.duration",
-			"dura",
-			"){\n",
-			"beat.b",
-			"beat.a",
-			"'}",
-			"'",
-			"500",
-			"5000",
-			"curLoopTime",
-			"curLoop",
-			"curLoopTime",
-			"cur",
-			"dura",
-			"durati",
-			"duraio"
+			"musicPlayStarted"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -656,7 +701,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -664,15 +709,15 @@
 					"file": "init.js",
 					"settings":
 					{
-						"buffer_size": 1124,
+						"buffer_size": 917,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								915,
-								915
+								328,
+								328
 							]
 						],
 						"settings":
@@ -680,7 +725,7 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 459.0,
+						"translation.y": 255.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -690,15 +735,15 @@
 					"file": "Strip.js",
 					"settings":
 					{
-						"buffer_size": 6978,
+						"buffer_size": 7311,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								416,
-								416
+								418,
+								418
 							]
 						],
 						"settings":
@@ -708,7 +753,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 87.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -718,15 +763,15 @@
 					"file": "input.js",
 					"settings":
 					{
-						"buffer_size": 745,
+						"buffer_size": 768,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								76,
-								76
+								718,
+								718
 							]
 						],
 						"settings":
@@ -735,7 +780,7 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 153.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -745,15 +790,15 @@
 					"file": "Block.js",
 					"settings":
 					{
-						"buffer_size": 10975,
+						"buffer_size": 13523,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4266,
-								4266
+								103,
+								103
 							]
 						],
 						"settings":
@@ -763,7 +808,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 199.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -773,21 +818,22 @@
 					"file": "Game.js",
 					"settings":
 					{
-						"buffer_size": 753,
+						"buffer_size": 1316,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								56,
-								56
+								58,
+								58
 							]
 						],
 						"settings":
 						{
 							"auto_name": "var Game = fun",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -800,15 +846,15 @@
 					"file": "NewBlocks.js",
 					"settings":
 					{
-						"buffer_size": 2351,
+						"buffer_size": 2534,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1078,
-								1078
+								2112,
+								2112
 							]
 						],
 						"settings":
@@ -818,53 +864,230 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 459.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "pixi.js-master/src/pixi/renderers/webgl/WebGLRenderer.js",
+					"file": "Deadline.js",
 					"settings":
 					{
-						"buffer_size": 18308,
+						"buffer_size": 1467,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4034,
-								4034
+								751,
+								751
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1739.0,
+						"translation.y": 51.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 7,
+					"settings":
+					{
+						"buffer_size": 6103,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										167,
+										179
+									],
+									[
+										222,
+										234
+									],
+									[
+										237,
+										249
+									],
+									[
+										340,
+										352
+									],
+									[
+										592,
+										604
+									],
+									[
+										744,
+										756
+									],
+									[
+										776,
+										788
+									],
+									[
+										948,
+										960
+									],
+									[
+										1173,
+										1185
+									],
+									[
+										1237,
+										1249
+									],
+									[
+										1304,
+										1316
+									],
+									[
+										1564,
+										1576
+									],
+									[
+										1777,
+										1789
+									],
+									[
+										1952,
+										1964
+									],
+									[
+										2260,
+										2272
+									],
+									[
+										2538,
+										2550
+									],
+									[
+										2876,
+										2888
+									],
+									[
+										3104,
+										3116
+									],
+									[
+										3311,
+										3323
+									],
+									[
+										3659,
+										3671
+									],
+									[
+										3913,
+										3925
+									],
+									[
+										3971,
+										3983
+									],
+									[
+										4276,
+										4287
+									],
+									[
+										4539,
+										4550
+									],
+									[
+										4731,
+										4742
+									],
+									[
+										4824,
+										4835
+									],
+									[
+										4989,
+										5000
+									],
+									[
+										5026,
+										5037
+									],
+									[
+										5151,
+										5162
+									],
+									[
+										5352,
+										5363
+									],
+									[
+										5522,
+										5533
+									],
+									[
+										5664,
+										5675
+									],
+									[
+										5743,
+										5754
+									],
+									[
+										5943,
+										5954
+									],
+									[
+										6015,
+										6026
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								4544,
+								4544
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1683.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 643,
+						"buffer_size": 683,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								476,
-								476
+								475,
+								475
 							]
 						],
 						"settings":
