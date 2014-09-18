@@ -102,7 +102,7 @@ PIXI.Strip.prototype._renderStrip = function(renderSession)
     gl.uniformMatrix3fv(shader.translationMatrix, false, this.worldTransform.toArray(true));
     gl.uniform2f(shader.projectionVector, projection.x, -projection.y);
     gl.uniform2f(shader.offsetVector, -offset.x, -offset.y);
-    gl.uniform1f(shader.alpha, 1);
+    // gl.uniform1f(shader.alpha, 1);
 
     if(!this.dirty)
     {

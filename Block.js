@@ -83,10 +83,11 @@ var Block = (function(){
             this.type = type;
             this.graphics.clear();
             // var color = 0x26ADE4;
-            var color = 0x303030;
+            var color = 0x505050;
             if(this.type){
                 // color = 0xD1E751;
-                color = 0x606060;
+                // color = 0x606060;
+                color = 0x909090;
             }
             this.graphics.beginFill(color);
             // this.graphics.drawRoundedRect(0, 0, BlockSize, BlockSize,2);

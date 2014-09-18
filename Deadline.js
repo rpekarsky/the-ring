@@ -51,7 +51,7 @@ var Deadline = (function(){
 	    		if(this.animtween){
 	    			this.animtween.kill();
 		    	}
-		    		this.animtween = TweenLite.to(this,1,{
+		    		this.animtween = TweenLite.to(this,5,{
                         animy:this.game.height*20,
                         alpha:1,
 		    			onComplete:function(){

@@ -97,7 +97,10 @@ PIXI.Strip.prototype._renderWebGL = function(renderSession)
     // init! init!
     if(!this._vertexBuffer)this._initWebGL(renderSession);
     
+
+
     renderSession.shaderManager.setShader(renderSession.shaderManager.stripShader);
+    // renderSession.shaderManager.setShader(this.testShader);
 
     this._renderStrip(renderSession);
 
@@ -111,7 +114,22 @@ PIXI.Strip.prototype._renderWebGL = function(renderSession)
 PIXI.Strip.prototype._initWebGL = function(renderSession)
 {
     // build the strip!
-    var gl = renderSession.gl;
+    var gl = renderSession.gl;  
+
+
+    this.testShader = new PIXI.PixiShader(renderSession.gl);
+    this.testShader.fragmentSrc = [
+            'precision lowp float;',
+            'varying vec2 vTextureCoord;',
+            'varying vec4 vColor;',
+            'uniform sampler2D uSampler;',
+            'void main(void) {',
+            '   gl_FragColor = vec4(vTextureCoord.x,vTextureCoord.y,1,1) ;',
+            // '   gl_FragColor = texture2D(uSampler, vTextureCoord) * vColor ;',
+            '}'
+        ];
+    this.testShader.init();
+
     
     this._vertexBuffer = gl.createBuffer();
     this._indexBuffer = gl.createBuffer();
