@@ -21,7 +21,7 @@ PIXI.Strip = function(texture)
     // set up the main bits..
 
 
-    // this.segs = 4;
+    // this.segs = 3;
     // this.ringsNum = 64;
 
     this.segs = 64;

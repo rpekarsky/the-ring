@@ -21,7 +21,7 @@ var Deadline = (function(){
             this.graphicsbg.pivot.y = this.game.height*20;
 
             this.graphics.beginFill(color);
-            this.graphics.drawRect(0, this.game.height*20, this.game.num*20, 3);
+            this.graphics.drawRect(0, this.game.height*20, this.game.num*20, 2);
             this.graphics.endFill();
             this.graphics.pivot.y = this.game.height*20;
             // this.DOC.addChild(this.graphicsbg);
@@ -31,6 +31,8 @@ var Deadline = (function(){
             this.layer.addChild(this.DOC);
             this.DOC.y = 0;
             this.animy = 0;
+            // this.graphics.cacheAsBitmap = true;
+            // this.graphicsbg.cacheAsBitmap = true;
             this.reset(true);
     	},
 
@@ -51,7 +53,7 @@ var Deadline = (function(){
 	    		if(this.animtween){
 	    			this.animtween.kill();
 		    	}
-		    		this.animtween = TweenLite.to(this,5,{
+		    		this.animtween = TweenLite.to(this,2,{
                         animy:this.game.height*20,
                         alpha:1,
 		    			onComplete:function(){
