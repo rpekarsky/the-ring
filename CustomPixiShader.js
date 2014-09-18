@@ -260,7 +260,7 @@ PIXI.CustomPixiShader.prototype.initSampler2D = function(uniform)
 */
 PIXI.CustomPixiShader.prototype.syncUniforms = function()
 {
-    console.log('syncUniforms');
+    // console.log('syncUniforms');
     this.textureCount = 1;
     var uniform;
     var gl = this.gl;

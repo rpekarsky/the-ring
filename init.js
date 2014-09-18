@@ -17,7 +17,7 @@ var renderTexture = new PIXI.RenderTexture(360, 480);
 // var renderTexture = new PIXI.RenderTexture(100,100);
 
 // var quad = new PIXI.Sprite(renderTexture);
-var bgTex = PIXI.Texture.fromImage('bg.jpg');
+var bgTex = PIXI.Texture.fromImage('bgsmall.jpg');
 // var lionTex = PIXI.Texture.fromImage('lion.jpg');
 // sprite.x = 320/2;
 // sprite.y = 480/2;
@@ -26,10 +26,10 @@ var bgTex = PIXI.Texture.fromImage('bg.jpg');
 
 var stage = new PIXI.Stage(0x202060);
 
-setTimeout(function(){
+// setTimeout(function(){
 	var quad = new PIXI.Quad(bgTex,renderTexture);
 	stage.addChild(quad);
-},2000);
+// },2000);
 
 document.body.appendChild(renderer.view);
 
@@ -39,6 +39,7 @@ document.body.appendChild(renderer.view);
 // basestage.addChild(bg);
 function animate() {
     requestAnimFrame( animate );
+    quad.update();
     Game.render();
     renderTexture.clear();
     renderTexture.render(basestage);    

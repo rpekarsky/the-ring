@@ -21,7 +21,7 @@ var Deadline = (function(){
             this.graphicsbg.pivot.y = this.game.height*20;
 
             this.graphics.beginFill(color);
-            this.graphics.drawRect(0, this.game.height*20, this.game.num*20, 1);
+            this.graphics.drawRect(0, this.game.height*20, this.game.num*20, 3);
             this.graphics.endFill();
             this.graphics.pivot.y = this.game.height*20;
             // this.DOC.addChild(this.graphicsbg);
@@ -41,7 +41,7 @@ var Deadline = (function(){
 	    		}
 	    			this.animtween = TweenLite.to(this,0.5,{
                         animy:0,
-                        alpha:-1,
+                        alpha:-0.8,
 	    				// ease:Elastic.easeOut,
 		    			onComplete:function(){
 		    				this.reset(true);

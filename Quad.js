@@ -73,6 +73,11 @@ PIXI.Quad = function(texture1,texture2)
 PIXI.Quad.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
 PIXI.Quad.prototype.constructor = PIXI.Quad;
 
+PIXI.Quad.prototype.update = function(){
+    if(this.quadShader){
+        this.quadShader.syncUniforms();
+    }
+}
 PIXI.Quad.prototype._renderWebGL = function(renderSession)
 {
     // if the sprite is not visible or the alpha is 0 then no need to render this element
