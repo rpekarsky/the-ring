@@ -71,10 +71,9 @@ var Game = (function(){
 		},
 		render:function(){
 			Block.update();
-			Deadline.update();
+			Deadline.update();	
 		    this.rtx.clear();
 		    this.rtx.render(this.stage);
-
 		    this.ring.scale.x = this.ringAnimScale;
 		    this.ring.scale.y = this.ringAnimScale;
 		},

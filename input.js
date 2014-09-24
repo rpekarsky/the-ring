@@ -41,4 +41,16 @@ setInterval(move,1000/10);
 // Mousetrap.bind('down', GoDown);
 
 
-animate();
+
+var blink = new PIXI.Sprite.fromImage('blink_alpha.png');
+blink.scale.x = 20;
+blink.scale.y = 1;
+blink.y = 480/2;
+// blink.alpha = 0.3;
+blink.blendMode = PIXI.blendModes.OVERLAY;
+basestage.addChild(blink);
+
+// PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.SRC_ALPHA,renderer.gl.SRC_ALPHA]
+PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.gl.DST_COLOR];
+
+// animate();

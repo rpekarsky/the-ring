@@ -33,14 +33,20 @@ var stage = new PIXI.Stage(0x202060);
 
 document.body.appendChild(renderer.view);
 
+var aloader = new PIXI.AssetLoader(['bgsmall.jpg','blink_alpha.png']);
+aloader.addEventListener('onComplete',function(){
+	// console.log("YA!");
+	quad.update();
+	animate();
+},false)
+aloader.load();
 
-// document.body.appendChild(renderer.view);
-// var bg = new PIXI.Sprite(bgTex);
-// basestage.addChild(bg);
+
 function animate() {
     requestAnimFrame( animate );
-    quad.update();
+    
     Game.render();
+
     renderTexture.clear();
     renderTexture.render(basestage);    
     renderer.render(stage);
