@@ -21,11 +21,12 @@ PIXI.Strip = function(texture)
     // set up the main bits..
 
 
-    // this.segs = 3;
-    // this.ringsNum = 64;
 
     this.segs = 64;
     this.ringsNum = 8;
+
+    // this.segs = 3;
+    // this.ringsNum = 64;
     
     var RN = this.ringsNum;
     var rad = 20*8;
@@ -48,8 +49,8 @@ PIXI.Strip = function(texture)
         console.log('innRadiusFac',innRadiusFac);
         console.log('outRadiusFac',outRadiusFac);
         for (var i = 0; i <= segs; i++) {
-            var x = Math.sin(Math.PI*2/segs*i)*rad*outRadiusFac;
-            var y = Math.cos(Math.PI*2/segs*i)*rad*outRadiusFac;
+            var x = Math.sin(Math.PI*2/segs*i + Math.PI*2/segs*0.5)*rad*outRadiusFac;
+            var y = Math.cos(Math.PI*2/segs*i + Math.PI*2/segs*0.5)*rad*outRadiusFac;
             v[vn]=x;
             uvs[vn]=i/segs;
             vn++;
@@ -62,8 +63,8 @@ PIXI.Strip = function(texture)
             indn++;
 
 
-            var x = Math.sin(Math.PI*2/segs*i)*rad*innRadiusFac;
-            var y = Math.cos(Math.PI*2/segs*i)*rad*innRadiusFac;
+            var x = Math.sin(Math.PI*2/segs*i + Math.PI*2/segs*0.5)*rad*innRadiusFac;
+            var y = Math.cos(Math.PI*2/segs*i + Math.PI*2/segs*0.5)*rad*innRadiusFac;
             v[vn]=x;
             uvs[vn]=i/segs;
             vn++;

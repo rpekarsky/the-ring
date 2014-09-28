@@ -80,29 +80,29 @@ var Block = (function(){
             this.layer.addChild(this.fakeGraphics);
         },
         setType:function(type){
+            function drawBlock(gr,color,bcolor,borderWidth){
+                gr.beginFill(bcolor);
+                gr.drawRect(0, 0, BlockSize, BlockSize);
+                gr.endFill();
+
+                gr.beginFill(color);
+                gr.drawRect(borderWidth, borderWidth, BlockSize-borderWidth*2, BlockSize-borderWidth*2);
+                gr.pivot.x = BlockSize/2;
+                gr.pivot.y = BlockSize/2;
+                gr.endFill();
+            }
+
             this.type = type;
             this.graphics.clear();
-            // var color = 0x26ADE4;
-            var color = 0x404040;
-            // var color = 0x0000e0;
+            var color = 0x555555;
+            var bcolor = 0x222222;
             if(this.type){
-                // color = 0xD1E751;
-                color = 0xe0e0e0;
-                // color = 0x00e000;
+                color = 0xffffff;
+                bcolor = 0xcccccc;
             }
-            this.graphics.beginFill(color);
-            // this.graphics.drawRoundedRect(0, 0, BlockSize, BlockSize,2);
-            this.graphics.drawRect(0, 0, BlockSize, BlockSize-1);
-            this.graphics.pivot.x = BlockSize/2;
-            this.graphics.pivot.y = BlockSize/2;
-            this.graphics.endFill();
-            // this.graphics.cacheAsBitmap = true;
-
-            this.fakeGraphics.beginFill(color);
-            this.fakeGraphics.drawRect(0, 0, BlockSize, BlockSize-1);
-            this.fakeGraphics.pivot.x = BlockSize/2;
-            this.fakeGraphics.pivot.y = BlockSize/2;
-            this.fakeGraphics.endFill();
+            var borderWidth = 0.5;
+            drawBlock(this.graphics,color,bcolor,borderWidth);
+            drawBlock(this.fakeGraphics,color,bcolor,borderWidth);
         },
         flash:function(){
             this.graphics.beginFill(0xffffff);
@@ -114,6 +114,7 @@ var Block = (function(){
             // this.graphics.alpha = 1;
             // this.flashing = TweenLite.to(this.graphics,0.5,{alpha:0.2});
         },
+        
         setText:function(str){
             this.text.setText(str);
         },
@@ -347,17 +348,17 @@ var Block = (function(){
                     for (var i = 0; i < elements.length; i++) {
                         // elements[i].setText(elements.length.toString());
 
-                        if(elements.length >= 6){
+                        if(elements.length >= 10){
                             elements[i].remove();
                             hasToRemove = true;
-                        } else if (elements.length == 5){
+                        } else if (elements.length == 9){
                             elements[i].flash();
                         }
                     };
                 }
             }
         };
-        if(hasToRemove) Block.prototype.gameobjects[0].game.resonance();
+        // if(hasToRemove) Block.prototype.gameobjects[0].game.resonance();
         if(gameover) Block.prototype.gameobjects[0].game.gameover();
         // while(el){
         //     i++;

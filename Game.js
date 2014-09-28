@@ -7,6 +7,7 @@ var Game = (function(){
 		this.blockPopLayer = new PIXI.DisplayObjectContainer();
 		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 		this.stage.addChild(this.blockLayer);
+		// this.blockLayer.alpha = 5;
 		this.stage.addChild(this.blockPopLayer);
 		this.stage.addChild(this.deadlineLayer);
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
@@ -33,36 +34,39 @@ var Game = (function(){
 
 		},
 		bulk:function(){
+			TweenLite.killTweensOf(this);
 			TweenLite.to(this,0.1,{
 				ringAnimScale:.9,
 				// ease:Elastic.easeOut
 			})
-			TweenLite.to(this,3,{
+			TweenLite.to(this,2,{
 				ringAnimScale:1,
 				delay:0.1,
 				ease:Elastic.easeOut
 			})
 		},
 		resonance:function(){
-			TweenLite.to(this,0.2,{
-				ringAnimScale:1.2,
+			TweenLite.killTweensOf(this);
+			TweenLite.to(this,0.05,{
+				ringAnimScale:1.06,
 				// ease:Elastic.easeOut
 			})
 			TweenLite.to(this,1,{
 				ringAnimScale:1,
-				delay:.2,
+				delay:.05,
 				ease:Elastic.easeOut
 			})
 		},
 		gameover:function(){
+			TweenLite.killTweensOf(this);
 			Block.clear();
-			TweenLite.to(this,0.2,{
+			TweenLite.to(this,0.1,{
 				ringAnimScale:1.5,
 				// ease:Elastic.easeOut
 			})
 			TweenLite.to(this,2,{
 				ringAnimScale:1,
-				delay:.2,
+				delay:.1,
 				ease:Elastic.easeOut
 			})
 		},

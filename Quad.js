@@ -44,16 +44,16 @@ PIXI.Quad = function(texture1,texture2)
 
 
     uvs[0] = 0;
-    uvs[1] = 0;
+    uvs[1] = 1;
 
     uvs[2] = 1;
-    uvs[3] = 0;
+    uvs[3] = 1;
 
     uvs[4] = 0;
-    uvs[5] = 1;
+    uvs[5] = 0;
 
     uvs[6] = 1;
-    uvs[7] = 1;
+    uvs[7] = 0;
 
     ind[0] = 0;
     ind[1] = 1;

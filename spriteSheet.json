@@ -1,0 +1,22 @@
+{
+	"frames": {
+		"logo.png":
+		{
+			"frame": {"x":0,"y":0,"w":210,"h":100},
+			"spriteSourceSize": {"x":0,"y":0,"w":210,"h":100},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"flare.png":
+		{
+			"frame": {"x":200,"y":0,"w":250,"h":250},
+			"spriteSourceSize": {"x":0,"y":0,"w":250,"h":250},
+			"sourceSize": {"w":0,"h":0}
+		}
+	},
+	"meta": {
+		"image": "the_ring_sprite_tr.png",
+		"format": "RGBA8888",
+		"size": {"w":482,"h":250},
+		"scale": "1"
+	}
+}
