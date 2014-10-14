@@ -25,5 +25,5 @@ function move(){
 		GoLeft();
 	}
 }
-setInterval(move,1000/2);
+// setInterval(move,1000/2);
 document.ontouchstart = document.onclick = GoUp;

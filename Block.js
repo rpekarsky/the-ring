@@ -175,7 +175,8 @@ var Block = (function(){
             if(findedBlock){
                 findedBlock.moveDown();
             }
-            TweenLite.to(this.graphics.scale,0.3,{
+            // this.DOC.alpha = 2;
+            TweenLite.to(this.DOC.scale,0.4,{
                 x:0,
                 y:0,
                 onComplete:function(){
