@@ -52,9 +52,12 @@ var Block = (function(){
                 gr.endFill();
 
                 gr.beginFill(color);
-                gr.drawRect(borderWidth, borderWidth, BlockSize-borderWidth*2, BlockSize-borderWidth*2);
-                
+                gr.drawRect(0, borderWidth, BlockSize, BlockSize-borderWidth);   
                 gr.endFill();
+
+                // gr.beginFill(color);
+                // gr.drawRect(borderWidth, borderWidth, BlockSize-borderWidth*2, BlockSize-borderWidth*2);   
+                // gr.endFill();
             }
 
             this.type = type;
@@ -209,6 +212,7 @@ var Block = (function(){
         },
         moveUp:function(){
             var findedBlock = Block.find(this.x,this.y-1);
+            // console.log(this.x,this.y-1);
             if(findedBlock){
                 findedBlock.moveUp();
             }
@@ -270,18 +274,29 @@ var Block = (function(){
             if(Block.prototype.gameobjects[n].y < Block.prototype.gameobjects[n].game.height-4){
                 gameover = true
             }
-            if(inArray(Block.prototype.gameobjects[n],tmp)){
-                if(!!tmp.length){
-                    var elements = check(Block.prototype.gameobjects[n],tmp,[]);
-                    for (var i = 0; i < elements.length; i++) {
-                        if(elements.length >= 10){
-                            elements[i].remove();
-                            hasToRemove = true;
-                        }
-                    };
-                }
-            }
+            // if(inArray(Block.prototype.gameobjects[n],tmp)){
+            //     if(!!tmp.length){
+            //         var elements = check(Block.prototype.gameobjects[n],tmp,[]);
+            //         for (var i = 0; i < elements.length; i++) {
+            //             if(elements.length >= 10){
+            //                 elements[i].remove();
+            //                 hasToRemove = true;
+            //             }
+            //         };
+            //     }
+            // }
         };
+
+        var completed = true;
+        for (var i = 0; i < 24; i++) {
+            if(!Block.find(i,5)) completed = false;
+        };
+        if(completed){
+            // console.log('COMPLETED');
+            for (var i = 0; i < 24; i++) {
+                Block.find(i,5).remove();
+            };  
+        }
         if(gameover) Block.prototype.gameobjects[0].game.gameover();
     }
 

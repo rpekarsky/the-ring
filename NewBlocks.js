@@ -29,10 +29,11 @@ var NewBlocks = (function(){
         create:function(count){
             count = 1;
             this.blocks = [];
+            var type = 1;
             var s = 0;
             for (var j = 0; j < (Math.random()*3+1); j++) {
                 var secN = Math.floor(count*Math.random()+count*.5+2);
-                var type = (Math.random()>0.5);
+                // var type = (Math.random()>0.5);
                 for (var i = 0; i < secN; i++) {
                     var nx = this.x+i+s;
                     if(!find.call(this,nx)){
