@@ -1,7 +1,7 @@
 var Block = (function(){
     var BlockSize = 20;
     var FALL_TIMEOUT = 0.6;
-    var MOVE_TIMEOUT = 0.1;
+    var MOVE_TIMEOUT = 0.2;
     function Block(x,y,type){
         this.type = type;
         this.falling = false;
@@ -62,8 +62,8 @@ var Block = (function(){
             var color = 0x555555;
             var bcolor = 0x222222;
             if(this.type){
-                color = 0xdddddd;
-                bcolor = 0x999999;
+                color = 0xf0f0f0;
+                bcolor = 0xcccccc;
             }
             var borderWidth = 0.5;
             drawBlock(this.graphics,color,bcolor,borderWidth);

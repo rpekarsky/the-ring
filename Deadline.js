@@ -23,6 +23,7 @@ var Deadline = (function(){
             this.graphics.beginFill(color);
             this.graphics.drawRect(0, this.game.height*20, this.game.num*20, 2);
             this.graphics.endFill();
+            this.graphics.alpha = 2;
             this.graphics.pivot.y = this.game.height*20;
             // this.DOC.addChild(this.graphicsbg);
 
@@ -43,25 +44,25 @@ var Deadline = (function(){
 	    		}
 	    			this.animtween = TweenLite.to(this,0.5,{
                         animy:0,
-                        alpha:-0.8,
+                        alpha:-0.5,
 	    				// ease:Elastic.easeOut,
 		    			onComplete:function(){
 		    				this.reset(true);
 		    			}.bind(this)
 		    		});
     		}else{
-	    		// if(this.animtween){
-	    		// 	this.animtween.kill();
-		    	// }
-		    	// 	this.animtween = TweenLite.to(this,2,{
-       //                  animy:this.game.height*20,
-       //                  alpha:1,
-		    	// 		onComplete:function(){
-		    	// 			this.reset();
-       //                      this.game.gameover();
-		    	// 			// this.game.adder.moveUp();
-		    	// 		}.bind(this)
-		    	// 	});
+	    		if(this.animtween){
+	    			this.animtween.kill();
+		    	}
+		    		this.animtween = TweenLite.to(this,6,{
+                        animy:this.game.height*20,
+                        alpha:0.8,
+		    			onComplete:function(){
+		    				this.reset();
+                            this.game.gameover();
+		    				// this.game.adder.moveUp();
+		    			}.bind(this)
+		    		});
     		}
     	},
     	update:function(){

@@ -26,8 +26,8 @@ aloader.addEventListener('onComplete',function(){
 	logo.pivot.y = logo.height/2;
 	logo.x = 360/2;
 	logo.y = 480/2;
-	// logo.alpha = 1;
-	// basestage.addChild(logo);
+	logo.alpha = 1;
+	basestage.addChild(logo);
 	
 	quad.update();
 	animate();

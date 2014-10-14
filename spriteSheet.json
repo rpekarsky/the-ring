@@ -8,8 +8,20 @@
 		},
 		"flare.png":
 		{
-			"frame": {"x":200,"y":0,"w":250,"h":250},
-			"spriteSourceSize": {"x":0,"y":0,"w":250,"h":250},
+			"frame": {"x":3,"y":107,"w":180,"h":65},
+			"spriteSourceSize": {"x":0,"y":0,"w":180,"h":65},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"bokeh.png":
+		{
+			"frame": {"x":311,"y":0,"w":170,"h":170},
+			"spriteSourceSize": {"x":0,"y":0,"w":170,"h":170},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"bokeh-blur.png":
+		{
+			"frame": {"x":200,"y":90,"w":100,"h":100},
+			"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 			"sourceSize": {"w":0,"h":0}
 		}
 	},

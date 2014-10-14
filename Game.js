@@ -14,6 +14,7 @@ var Game = (function(){
 
 		this.blackBorder = new PIXI.Graphics();
         this.blackBorder.beginFill(0x000000);
+        this.blackBorder.alpha = 0.3;
         this.blackBorder.drawRect(0, this.height*20-5, this.num*20, 2);
         this.blackBorder.endFill();
         // this.blackBorder.pivot.y = this.height*20;
@@ -27,6 +28,7 @@ var Game = (function(){
 		
 		this.ring.x = 360/2;
 		this.ring.y = 480/2;
+		this.ring.alpha = 4;
 		basestage.addChild(this.ring);
 	}
 	Game.prototype = {
