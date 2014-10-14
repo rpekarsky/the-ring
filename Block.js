@@ -9,42 +9,13 @@ var Block = (function(){
         this.y = y;
         this.animx = this.x;
         this.animy = this.y;
+        this.DOC = new PIXI.DisplayObjectContainer();
         this.graphics = new PIXI.Graphics();
-        this.fakeGraphics = new PIXI.Graphics();
-    }
-    function ab(a,b){
-        return (a % b + b) % b;
-    }
-    function inArray(el,arr){
-        return (arr.indexOf(el) != -1);
-    }
-    function filter (arr1,arr2){
-        var result = [];
-        for (var i = 0; i < arr1.length; i++) {
-            if(arr2.indexOf(arr1[i]) != -1) result.push(arr1[i]);
-        };
-        return result;
-    };
-
-    function arrRemoveArr(arr1,arr2){
-        var toRem = [];
-        for (var i = 0; i < arr1.length; i++) {
-            for (var j = 0; j < arr2.length; j++) {
-                if(arr1[i] == arr2[j]){
-                    toRem.push(arr1[i]);
-                }
-            };
-        };
-        for (var i = 0; i < toRem.length; i++) {
-            removeEl(toRem[i],arr2);
-        };
-    };
-    function removeEl(el,arr){
-        for (var i = 0; i < arr.length; i++) {
-            if(arr[i] == el){
-                arr.splice(i,1);
-            }
-        };
+        this.DOC.addChild(this.graphics);
+        this.borders = new BlockBorders(this);
+        this.DOC.pivot.x = BlockSize/2;
+        this.DOC.pivot.y = BlockSize/2;
+        // this.fakeGraphics = new PIXI.Graphics();
     }
     Block.prototype = {
         objects:[],
@@ -59,25 +30,20 @@ var Block = (function(){
             this.animfx = this.x;
             this.animy = this.y;
             this.layer = this.game.blockLayer;
-            this.text = new PIXI.Text('0',{font:'regular 12px Arial'});
-            // stage.addChild(this.graphics);
             this.show();
-            // this.graphics.alpha = 0;
-            // this.graphics.scale.x = 0;
-            // TweenLite.to(this.graphics,0.2,{
-            //     alpha:1
-            // });
-
             this.objects.push(this);
             this.update();
         },
         hide:function(){
-            this.layer.removeChild(this.graphics);
-            this.layer.removeChild(this.fakeGraphics);
+            this.layer.removeChild(this.DOC);
+            // this.layer.removeChild(this.fakeGraphics);
         },
         show:function(){
-            this.layer.addChild(this.graphics);
-            this.layer.addChild(this.fakeGraphics);
+            this.layer.addChild(this.DOC);
+            // this.layer.addChild(this.fakeGraphics);
+        },
+        drawBorders:function(){
+            this.borders.draw();
         },
         setType:function(type){
             function drawBlock(gr,color,bcolor,borderWidth){
@@ -87,8 +53,7 @@ var Block = (function(){
 
                 gr.beginFill(color);
                 gr.drawRect(borderWidth, borderWidth, BlockSize-borderWidth*2, BlockSize-borderWidth*2);
-                gr.pivot.x = BlockSize/2;
-                gr.pivot.y = BlockSize/2;
+                
                 gr.endFill();
             }
 
@@ -97,26 +62,20 @@ var Block = (function(){
             var color = 0x555555;
             var bcolor = 0x222222;
             if(this.type){
-                color = 0xffffff;
-                bcolor = 0xcccccc;
+                color = 0xdddddd;
+                bcolor = 0x999999;
             }
             var borderWidth = 0.5;
             drawBlock(this.graphics,color,bcolor,borderWidth);
-            drawBlock(this.fakeGraphics,color,bcolor,borderWidth);
+            // drawBlock(this.fakeGraphics,color,bcolor,borderWidth);
         },
         flash:function(){
             this.graphics.beginFill(0xffffff);
             this.graphics.drawRect(BlockSize/4, BlockSize/4, BlockSize/2, BlockSize/2);
-            // this.graphics.pivot.x = BlockSize/2;
-            // this.graphics.pivot.y = BlockSize/2;
             this.graphics.endFill();
-            // if(this.flashing) this.flashing.kill();
-            // this.graphics.alpha = 1;
-            // this.flashing = TweenLite.to(this.graphics,0.5,{alpha:0.2});
         },
         
         setText:function(str){
-            this.text.setText(str);
         },
         getNeibhoors:function(){
             var result = [];
@@ -124,6 +83,14 @@ var Block = (function(){
             var nbr = Block.find(ab(this.x+1,this.maxx),this.y); if(nbr) result.push(nbr);
             var nbt = Block.find(ab(this.x,this.maxx),this.y-1); if(nbt) result.push(nbt);
             var nbb = Block.find(ab(this.x,this.maxx),this.y+1); if(nbb) result.push(nbb);
+            return result;
+        },
+        getTypeNeibhoorsBinary:function(){
+            var result = 0;
+            var nbt = Block.find(ab(this.x,this.maxx),this.y-1); if(!nbt || nbt.type != this.type) result = result | 1;
+            var nbr = Block.find(ab(this.x+1,this.maxx),this.y); if(!nbr || nbr.type != this.type) result = result | 2;
+            var nbb = Block.find(ab(this.x,this.maxx),this.y+1); if(!nbb || nbb.type != this.type) result = result | 4;
+            var nbl = Block.find(ab(this.x-1,this.maxx),this.y); if(!nbl || nbl.type != this.type) result = result | 8;
             return result;
         },
         getTypeNeibhoors:function(){
@@ -183,9 +150,9 @@ var Block = (function(){
                 fakeblockseen = true;
             }
             if(fakeblockseen){
-                this.fakeGraphics.visible = true;
+                // this.fakeGraphics.visible = true;
             } else {
-                this.fakeGraphics.visible = false;
+                // this.fakeGraphics.visible = false;
             }
              
             if(fall){
@@ -208,43 +175,20 @@ var Block = (function(){
             if(findedBlock){
                 findedBlock.moveDown();
             }
-            // this.graphics.alpha = 0.2;
-            // this.graphics.rotation = Math.PI/180*45;
-            // this.graphics.scale.x = 0.5;
-            // this.graphics.scale.y = 0.5;
-            // TweenLite.to(this.graphics.scale,0.2,{
-            //     x:.5,
-            //     y:.5
-            // });
-
-            // TweenLite.to(this.graphics,0.4,{
-            //     alpha:0.4
-            // });
-
-            // TweenLite.to(this.graphics,0.1,{
-            //     alpha:0,
-            //     delay:0.3
-            // });
-
             TweenLite.to(this.graphics.scale,0.3,{
                 x:0,
                 y:0,
-                // ease:Elastic.easeOut,
-                // delay:0,
                 onComplete:function(){
                     this.graphics.clear();
                     for (var i = 0; i < this.layer.children.length; i++) {
-                        if(this.layer.children[i] == this.graphics){
+                        if(this.layer.children[i] == this.DOC){
                             this.layer.removeChildAt(i);
                         }
                     };
                     Block.destroy(this);
                 }.bind(this)
             });
-            // setTimeout(Block.check,FALL_TIMEOUT*1000);
             Block.remove(this);
-
-            // Block.check();
         },
         moveDown:function(){
             var findedBlock = Block.find(this.x,this.y-1);
@@ -261,20 +205,6 @@ var Block = (function(){
                 findedBlock = Block.find(this.x,this.y+1);
             }
             this.move(this.x,this.y+1);
-            // Block.check();
-            // Block.check();
-        },
-        check:function(){
-            var findedBlockLeft = Block.find(this.x-1,this.y);
-            var findedBlockRight = Block.find(this.x+1,this.y);
-            if(findedBlockLeft && findedBlockRight)
-            {
-                if(findedBlockLeft.type !== this.type && this.type !== findedBlockRight.type){
-                    // console.log('yay!');
-                    return true;
-                }
-            }
-            return false;
         },
         moveUp:function(){
             var findedBlock = Block.find(this.x,this.y-1);
@@ -284,11 +214,11 @@ var Block = (function(){
             this.move(this.x,this.y-1);
         },
         update:function(){
-            this.graphics.x = this.animx*BlockSize + BlockSize/2;
-            this.graphics.y = this.animy*BlockSize + BlockSize/2-4;
+            this.DOC.x = this.animx*BlockSize + BlockSize/2;
+            this.DOC.y = this.animy*BlockSize + BlockSize/2-4;
 
-            this.fakeGraphics.x = this.animfx*BlockSize + BlockSize/2;
-            this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2-4;
+            // this.fakeGraphics.x = this.animfx*BlockSize + BlockSize/2;
+            // this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2-4;
         }
     }
     Block.update = function(){
@@ -314,9 +244,6 @@ var Block = (function(){
         return false;
     }
     Block.check = function(){
-        // console.log('check');
-
-        // console.clear();
         var tmp = [];
         for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
             tmp.push(Block.prototype.gameobjects[i]);
@@ -338,32 +265,23 @@ var Block = (function(){
         var hasToRemove = false;
         var gameover = false;
         for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
+            Block.prototype.gameobjects[n].drawBorders();
             if(Block.prototype.gameobjects[n].y < Block.prototype.gameobjects[n].game.height-4){
-                
                 gameover = true
             }
             if(inArray(Block.prototype.gameobjects[n],tmp)){
                 if(!!tmp.length){
                     var elements = check(Block.prototype.gameobjects[n],tmp,[]);
                     for (var i = 0; i < elements.length; i++) {
-                        // elements[i].setText(elements.length.toString());
-
                         if(elements.length >= 10){
                             elements[i].remove();
                             hasToRemove = true;
-                        } else if (elements.length == 9){
-                            elements[i].flash();
                         }
                     };
                 }
             }
         };
-        // if(hasToRemove) Block.prototype.gameobjects[0].game.resonance();
         if(gameover) Block.prototype.gameobjects[0].game.gameover();
-        // while(el){
-        //     i++;
-        //     el = tmp[i];
-        // }
     }
 
     Block.destroy = function(block){

@@ -50,18 +50,18 @@ var Deadline = (function(){
 		    			}.bind(this)
 		    		});
     		}else{
-	    		if(this.animtween){
-	    			this.animtween.kill();
-		    	}
-		    		this.animtween = TweenLite.to(this,2,{
-                        animy:this.game.height*20,
-                        alpha:1,
-		    			onComplete:function(){
-		    				this.reset();
-                            this.game.gameover();
-		    				// this.game.adder.moveUp();
-		    			}.bind(this)
-		    		});
+	    		// if(this.animtween){
+	    		// 	this.animtween.kill();
+		    	// }
+		    	// 	this.animtween = TweenLite.to(this,2,{
+       //                  animy:this.game.height*20,
+       //                  alpha:1,
+		    	// 		onComplete:function(){
+		    	// 			this.reset();
+       //                      this.game.gameover();
+		    	// 			// this.game.adder.moveUp();
+		    	// 		}.bind(this)
+		    	// 	});
     		}
     	},
     	update:function(){
