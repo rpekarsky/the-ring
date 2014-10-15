@@ -11,8 +11,9 @@ var Block = (function(){
         this.animy = this.y;
         this.DOC = new PIXI.DisplayObjectContainer();
         this.graphics = new PIXI.Graphics();
+        this.flashgraphics = new PIXI.Graphics();
         this.DOC.addChild(this.graphics);
-        this.borders = new BlockBorders(this);
+        this.DOC.addChild(this.flashgraphics);
         this.DOC.pivot.x = BlockSize/2;
         this.DOC.pivot.y = BlockSize/2;
         // this.fakeGraphics = new PIXI.Graphics();
@@ -42,42 +43,31 @@ var Block = (function(){
             this.layer.addChild(this.DOC);
             // this.layer.addChild(this.fakeGraphics);
         },
-        drawBorders:function(){
-            this.borders.draw();
-        },
         setType:function(type){
             function drawBlock(gr,color,bcolor,borderWidth){
                 gr.beginFill(bcolor);
                 gr.drawRect(0, 0, BlockSize, BlockSize);
                 gr.endFill();
-
                 gr.beginFill(color);
                 gr.drawRect(0, borderWidth, BlockSize, BlockSize-borderWidth);   
                 gr.endFill();
-
-                // gr.beginFill(color);
-                // gr.drawRect(borderWidth, borderWidth, BlockSize-borderWidth*2, BlockSize-borderWidth*2);   
-                // gr.endFill();
             }
 
+            var borderWidth = 0.5;
             this.type = type;
             this.graphics.clear();
-            var color = 0x555555;
-            var bcolor = 0x222222;
-            if(this.type){
-                color = 0xf0f0f0;
-                bcolor = 0xcccccc;
-            }
-            var borderWidth = 0.5;
+            color = 0xf0f0f0;
+            bcolor = 0xcccccc;
             drawBlock(this.graphics,color,bcolor,borderWidth);
-            // drawBlock(this.fakeGraphics,color,bcolor,borderWidth);
         },
         flash:function(){
-            this.graphics.beginFill(0xffffff);
-            this.graphics.drawRect(BlockSize/4, BlockSize/4, BlockSize/2, BlockSize/2);
-            this.graphics.endFill();
+            this.flashgraphics.beginFill(0xffffff);
+            this.flashgraphics.drawRect(0,0, BlockSize, BlockSize);
+            this.flashgraphics.endFill();
         },
-        
+        removeFlash:function(){
+            this.flashgraphics.clear();
+        },
         setText:function(str){
         },
         getNeibhoors:function(){
@@ -178,9 +168,12 @@ var Block = (function(){
             if(findedBlock){
                 findedBlock.moveDown();
             }
-            // this.DOC.alpha = 2;
-            TweenLite.to(this.DOC.scale,0.4,{
-                x:0,
+
+            TweenLite.to(this,0.8,{
+                animy:this.animy + 5,
+            });
+
+            TweenLite.to(this.DOC.scale,0.6,{
                 y:0,
                 onComplete:function(){
                     this.graphics.clear();
@@ -267,36 +260,45 @@ var Block = (function(){
         };
 
 
-        var hasToRemove = false;
-        var gameover = false;
-        for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
-            Block.prototype.gameobjects[n].drawBorders();
-            if(Block.prototype.gameobjects[n].y < Block.prototype.gameobjects[n].game.height-4){
-                gameover = true
+        for (var i = 0; i < 24; i++) {
+            var filled = true;
+            for (var j = 5; j > 1; j--) {
+                var bl = Block.find(i,j);
+                if(!bl){
+                    filled = false;
+                    continue;
+                } else {
+                    bl.removeFlash();
+                }
+            };
+            if(filled){
+                for (var j = 5; j > 1; j--) {
+                    var bl = Block.find(i,j);
+                    if(bl){
+                        bl.flash();
+                    } 
+                };   
             }
-            // if(inArray(Block.prototype.gameobjects[n],tmp)){
-            //     if(!!tmp.length){
-            //         var elements = check(Block.prototype.gameobjects[n],tmp,[]);
-            //         for (var i = 0; i < elements.length; i++) {
-            //             if(elements.length >= 10){
-            //                 elements[i].remove();
-            //                 hasToRemove = true;
-            //             }
-            //         };
-            //     }
-            // }
         };
+
 
         var completed = true;
         for (var i = 0; i < 24; i++) {
             if(!Block.find(i,5)) completed = false;
         };
         if(completed){
-            // console.log('COMPLETED');
             for (var i = 0; i < 24; i++) {
                 Block.find(i,5).remove();
             };  
         }
+
+        var gameover = false;
+        for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
+            if(Block.prototype.gameobjects[n].y < Block.prototype.gameobjects[n].game.height-4){
+                gameover = true
+            }
+        };
+        
         if(gameover) Block.prototype.gameobjects[0].game.gameover();
     }
 

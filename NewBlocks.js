@@ -58,6 +58,7 @@ var NewBlocks = (function(){
                 bl.add();
                 bl.moveUp();
             };
+            this.x += Math.floor(Math.random()*24);
             this.create();
         },
         update:function(){

@@ -27,7 +27,7 @@ aloader.addEventListener('onComplete',function(){
 	logo.x = 360/2;
 	logo.y = 480/2;
 	logo.alpha = 1;
-	basestage.addChild(logo);
+	// basestage.addChild(logo);
 	
 	quad.update();
 	animate();
