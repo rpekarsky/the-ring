@@ -1,16 +1,23 @@
 var Background = (function(){
-
+	var cur = Math.ceil(Math.random()*10)%3
 	// DEFAULT
-	// var bgColor = 0x1a6dff;
-	// var bgColor2 = 0x16f5ff;
+	var bgColor = 0x1a6dff;
+	var bgColor2 = 0x16f5ff;
 
-	// RED
-	// var bgColor = 0xE54028;
-	// var bgColor2 = 0xF18D05;
+	if(cur == 1){	
+		// RED
+		var bgColor = 0xE54028;
+		var bgColor2 = 0xF18D05;
+	}
 
-	// LIGHT
-	var bgColor = 0x7BDF43;
-	var bgColor2 = 0xF0FBFD;
+
+	if(cur == 2){	
+		// LIGHT
+		var bgColor = 0x7BDF43;
+		var bgColor2 = 0xF0FBFD;
+	}
+
+
 	function Particle(layer){
 		this.layer = layer;
 		this.flare = new PIXI.Sprite.fromFrame('bokeh.png');
