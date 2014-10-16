@@ -127,7 +127,6 @@ PIXI.CustomPixiShader.prototype.initUniforms = function()
             if (uniform.value !== null)
             {
                 this.initSampler2D(uniform);
-                console.log('initSampler2D');
             }
         }
         else if (type === 'mat2' || type === 'mat3' || type === 'mat4')
@@ -184,7 +183,6 @@ PIXI.CustomPixiShader.prototype.initSampler2D = function(uniform)
 {
     if (!uniform.value || !uniform.value.baseTexture || !uniform.value.baseTexture.hasLoaded)
     {
-        console.log(uniform.value.baseTexture.hasLoaded)
         return;
     }
 
@@ -192,12 +190,10 @@ PIXI.CustomPixiShader.prototype.initSampler2D = function(uniform)
 
     gl.activeTexture(gl['TEXTURE' + this.textureCount]);
     gl.bindTexture(gl.TEXTURE_2D, uniform.value.baseTexture._glTextures[gl.id]);
-    console.log('this.textureCount',this.textureCount);
-
+    
     //  Extended texture data
     if (uniform.textureData)
     {
-        console.log('uniform.textureData');
         var data = uniform.textureData;
 
         // GLTexture = mag linear, min linear_mipmap_linear, wrap repeat + gl.generateMipmap(gl.TEXTURE_2D);

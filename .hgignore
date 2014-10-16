@@ -1,0 +1,5 @@
+syntax: glob
+node_modules/*
+out/*
+out.js
+out.min.js

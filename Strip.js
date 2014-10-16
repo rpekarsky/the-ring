@@ -46,8 +46,6 @@ PIXI.Strip = function(texture)
     for (var j = 0; j < RN; j++) {
         var innRadiusFac = j/RN
         var outRadiusFac = (j+1)/RN
-        console.log('innRadiusFac',innRadiusFac);
-        console.log('outRadiusFac',outRadiusFac);
         for (var i = 0; i <= segs; i++) {
             var x = Math.sin(Math.PI*2/segs*i + Math.PI*2/segs*0.5)*rad*outRadiusFac;
             var y = Math.cos(Math.PI*2/segs*i + Math.PI*2/segs*0.5)*rad*outRadiusFac;
@@ -77,8 +75,6 @@ PIXI.Strip = function(texture)
             indn++;
         };
     };
-
-    console.log(this.verticies.length);
     this.blendMode = PIXI.blendModes.NORMAL;
     this.dirty = true;
 };

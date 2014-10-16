@@ -44,6 +44,7 @@ var Block = (function(){
             // this.layer.addChild(this.fakeGraphics);
         },
         setType:function(type){
+            var borderWidth = 2;
             function drawBlock(gr,color,bcolor,borderWidth){
                 gr.beginFill(bcolor);
                 gr.drawRect(0, 0, BlockSize, BlockSize);
@@ -53,7 +54,6 @@ var Block = (function(){
                 gr.endFill();
             }
 
-            var borderWidth = 0.5;
             this.type = type;
             this.graphics.clear();
             color = 0xf0f0f0;

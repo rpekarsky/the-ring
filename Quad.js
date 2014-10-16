@@ -194,7 +194,6 @@ PIXI.Quad.prototype._renderQuad = function(renderSession)
         gl.bindBuffer(gl.ARRAY_BUFFER, this._uvBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, this.uvs, gl.STATIC_DRAW);
         gl.vertexAttribPointer(shader.aTextureCoord, 2, gl.FLOAT, false, 0, 0);
-        console.log(this.uvs);
         // console.log(shader.aTextureCoord);
         // gl.bindBuffer(gl.ARRAY_BUFFER, this._colorBuffer);
         // gl.vertexAttribPointer(shader.colorAttribute, 2, gl.FLOAT, false, 0, 0);

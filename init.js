@@ -4,9 +4,6 @@ var renderer = PIXI.autoDetectRenderer(360,480);
 PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.gl.DST_COLOR];
 var renderTexture = new PIXI.RenderTexture(360, 480);
 var backgroundTexture = new PIXI.RenderTexture(360, 480);
-
-var bgTex = PIXI.Texture.fromImage('bgsmall.jpg');
-
 var stage = new PIXI.Stage(0x000000);
 var bgStage = new PIXI.Stage(0x000000);
 
@@ -17,7 +14,7 @@ document.body.appendChild(renderer.view);
 
 var background = new Background;
 bgStage.addChild(background.layer);
-var aloader = new PIXI.AssetLoader(['bgsmall.jpg','blink_alpha.png','spriteSheet.json']);
+var aloader = new PIXI.AssetLoader(['spriteSheet.json']);
 aloader.addEventListener('onComplete',function(){
 	background.init();
 
@@ -37,8 +34,7 @@ aloader.load();
 
 
 function animate() {
-    requestAnimFrame( animate );
-    
+    requestAnimFrame( animate );    
     Game.render();
 
     backgroundTexture.clear();
