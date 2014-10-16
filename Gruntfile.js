@@ -1,5 +1,23 @@
 module.exports = function(grunt) {
-  var files = ['pixi.js','utils.js','CustomPixiShader.js','BlendShader.js','Strip.js','Quad.js','TweenLite.js','EasePack.min.js','mousetrap.js','Deadline.js','Background.js','Game.js','BlockBorders.js','Block.js','NewBlocks.js','init.js','input.js'];
+  var files = ['victor.js'
+              ,'pixi.js'
+              ,'utils.js'
+              ,'CustomPixiShader.js'
+              ,'BlendShader.js'
+              ,'Strip.js'
+              ,'Quad.js'
+              ,'TweenLite.js'
+              ,'EasePack.min.js'
+              ,'mousetrap.js'
+              ,'Deadline.js'
+              ,'Background.js'
+              ,'Game.js'
+              ,'BlockBorders.js'
+              ,'Score.js'
+              ,'Block.js'
+              ,'NewBlocks.js'
+              ,'init.js'
+              ,'input.js'];
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
@@ -17,7 +35,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'out/out.min.js': ['<%= concat.dist.dest %>']
+          'out/out.js': ['<%= concat.dist.dest %>']
         }
       }
     }
@@ -25,6 +43,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.registerTask('default', ['concat', 'uglify']);
+
+  grunt.registerTask('default', ['concat']);
+  grunt.registerTask('ugly', ['concat', 'uglify']);
 
 };

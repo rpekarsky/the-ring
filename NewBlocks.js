@@ -50,6 +50,9 @@ var NewBlocks = (function(){
             for (var i = 0; i < this.blocks.length; i++) {
                 this.blocks[i].move(this.blocks[i].x+delta,this.y);
             };
+            if(navigator.vibrate){
+                navigator.vibrate(10);
+            }
         },
         moveUp:function(){
             this.game.deadline.reset();
@@ -60,6 +63,11 @@ var NewBlocks = (function(){
             };
             this.x += Math.floor(Math.random()*24);
             this.create();
+            this.game.bulk();
+            Score.addScore(100);
+            // if(navigator.vibrate){
+            //     navigator.vibrate(20);
+            // }
         },
         update:function(){
         }

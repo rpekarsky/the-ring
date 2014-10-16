@@ -70,30 +70,6 @@ var Block = (function(){
         },
         setText:function(str){
         },
-        getNeibhoors:function(){
-            var result = [];
-            var nbl = Block.find(ab(this.x-1,this.maxx),this.y); if(nbl) result.push(nbl);
-            var nbr = Block.find(ab(this.x+1,this.maxx),this.y); if(nbr) result.push(nbr);
-            var nbt = Block.find(ab(this.x,this.maxx),this.y-1); if(nbt) result.push(nbt);
-            var nbb = Block.find(ab(this.x,this.maxx),this.y+1); if(nbb) result.push(nbb);
-            return result;
-        },
-        getTypeNeibhoorsBinary:function(){
-            var result = 0;
-            var nbt = Block.find(ab(this.x,this.maxx),this.y-1); if(!nbt || nbt.type != this.type) result = result | 1;
-            var nbr = Block.find(ab(this.x+1,this.maxx),this.y); if(!nbr || nbr.type != this.type) result = result | 2;
-            var nbb = Block.find(ab(this.x,this.maxx),this.y+1); if(!nbb || nbb.type != this.type) result = result | 4;
-            var nbl = Block.find(ab(this.x-1,this.maxx),this.y); if(!nbl || nbl.type != this.type) result = result | 8;
-            return result;
-        },
-        getTypeNeibhoors:function(){
-            var nb = this.getNeibhoors();
-            var result = [];
-            for (var i = 0; i < nb.length; i++) {
-                if(nb[i].type == this.type) result.push(nb[i]);
-            };
-            return result;
-        },
         add:function(){
             this.added = true;
             this.gameobjects.push(this);
@@ -242,46 +218,6 @@ var Block = (function(){
         return false;
     }
     Block.check = function(){
-        var tmp = [];
-        for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
-            tmp.push(Block.prototype.gameobjects[i]);
-        };
-
-        function check(el,arr,result){
-            var nb = el.getTypeNeibhoors();
-            result.push(el);
-            removeEl(el,arr);
-            var filtered = filter(nb,arr);
-            arrRemoveArr(filtered,arr);
-            for (var i = 0; i < filtered.length; i++) {
-                var els = check(filtered[i],arr,result);
-            };
-            return result;
-        };
-
-
-        for (var i = 0; i < 24; i++) {
-            var filled = true;
-            for (var j = 5; j > 1; j--) {
-                var bl = Block.find(i,j);
-                if(!bl){
-                    filled = false;
-                    continue;
-                } else {
-                    bl.removeFlash();
-                }
-            };
-            if(filled){
-                for (var j = 5; j > 1; j--) {
-                    var bl = Block.find(i,j);
-                    if(bl){
-                        bl.flash();
-                    } 
-                };   
-            }
-        };
-
-
         var completed = true;
         for (var i = 0; i < 24; i++) {
             if(!Block.find(i,5)) completed = false;
@@ -289,16 +225,18 @@ var Block = (function(){
         if(completed){
             for (var i = 0; i < 24; i++) {
                 Block.find(i,5).remove();
-            };  
+            };
+            Score.addScore(1000);
+            if(navigator.vibrate){
+                navigator.vibrate(100);
+            }
         }
-
         var gameover = false;
         for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
             if(Block.prototype.gameobjects[n].y < Block.prototype.gameobjects[n].game.height-4){
                 gameover = true
             }
         };
-        
         if(gameover) Block.prototype.gameobjects[0].game.gameover();
     }
 

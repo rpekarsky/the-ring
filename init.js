@@ -14,6 +14,9 @@ stage.addChild(quad);
 PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.gl.DST_COLOR];
 document.body.appendChild(renderer.view);
 
+Score.init();
+
+
 var background = new Background;
 bgStage.addChild(background.layer);
 var aloader = new PIXI.AssetLoader(['spriteSheet.json']);
@@ -26,10 +29,12 @@ aloader.addEventListener('onComplete',function(){
 	logo.x = gameWidth/2;
 	logo.y = gameHeight/2;
 	logo.alpha = 1;
-	basestage.addChild(logo);
+	// basestage.addChild(logo);
 	
 	quad.update();
-	animate();
+	if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
+		animate();
+	}
 },false)
 aloader.load();
 

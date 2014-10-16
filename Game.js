@@ -46,6 +46,10 @@ var Game = (function(){
 				delay:0.1,
 				ease:Elastic.easeOut
 			})
+
+            if(navigator.vibrate){
+                navigator.vibrate(50);
+            };
 		},
 		resonance:function(){
 			TweenLite.killTweensOf(this);
@@ -70,7 +74,14 @@ var Game = (function(){
 				ringAnimScale:1,
 				delay:.1,
 				ease:Elastic.easeOut
-			})
+			});
+			if(ga){
+				ga('send', 'event', 'gameaction', 'gameover', 'score', Score.getScore());
+			}
+			Score.setScore(0);
+            if(navigator.vibrate){
+                navigator.vibrate(200);
+            };
 		},
 		resetDeadline:function(){
 			this.deadline.reset();

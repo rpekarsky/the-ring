@@ -8,14 +8,33 @@
             margin: 0;
             padding: 0;
             background-color: #000000;
+            position: relative;
         }
         canvas {
             display: block;
             margin: 0;
         }
+        .over {
+            z-index: 10;
+            position: absolute;
+            top: 0px;
+            display: inline-block;
+            font-family: monospace;
+            font-weight: bold;
+            width: auto;
+            color: white;
+            font-size: 12px;
+        }
+        .left{
+            left: 0px;
+        }
+        .right{
+            right: 0px;
+        }
     </style>
 </head>
 <body>
+    <script src="victor.js"></script>
     <script src="pixi.js"></script>
     <script src="utils.js"></script>
     <script src="CustomPixiShader.js"></script>
@@ -30,6 +49,7 @@
     <script src="Game.js"></script>
     <script src="BlockBorders.js"></script>
     <script src="Block.js"></script>
+    <script src="Score.js"></script>
     <script src="NewBlocks.js"></script>
     <script src="init.js"></script>
     <script src="input.js"></script>
