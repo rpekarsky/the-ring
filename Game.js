@@ -26,8 +26,8 @@ var Game = (function(){
 		this.adder = this.createAdder();
 		this.deadline = this.createDeadline();
 		
-		this.ring.x = 360/2;
-		this.ring.y = 480/2;
+		this.ring.x = gameWidth/2;
+		this.ring.y = gameHeight/2;
 		this.ring.alpha = 4;
 		basestage.addChild(this.ring);
 	}

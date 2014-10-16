@@ -1,15 +1,16 @@
 var Background = (function(){
+
 	// DEFAULT
-	var bgColor = 0x1a6dff;
-	var bgColor2 = 0x16f5ff;
+	// var bgColor = 0x1a6dff;
+	// var bgColor2 = 0x16f5ff;
 
 	// RED
-	// var bgColor = 0xE54028;
-	// var bgColor2 = 0xF18D05;
+	var bgColor = 0xE54028;
+	var bgColor2 = 0xF18D05;
 
 	// LIGHT
-	var bgColor = 0x7BDF43;
-	var bgColor2 = 0xF0FBFD;
+	// var bgColor = 0x7BDF43;
+	// var bgColor2 = 0xF0FBFD;
 	function Particle(layer){
 		this.layer = layer;
 		this.flare = new PIXI.Sprite.fromFrame('bokeh.png');
@@ -18,6 +19,12 @@ var Background = (function(){
 	}
 	Particle.prototype = {
 		creating:function(){
+			var ParticlesContainerWidth = gameWidth;
+			var ParticlesContainerHeight = gameHeight;
+			if(ParticlesContainerWidth > 100){
+				ParticlesContainerWidth = 100;
+			}
+
 			if(Math.random()>0.5){
 				this.flare.setTexture(PIXI.Texture.fromFrame('bokeh.png'));
 			} else {
@@ -29,11 +36,11 @@ var Background = (function(){
 			this.flare.alpha = 0;
 			this.flare.rotation = Math.random()*Math.PI*2;
 			this.flare.tint = (Math.random()>0.5)?bgColor2:bgColor;
-			this.flare.scale.set(this.scale);
 			this.flare.pivot.x = this.flare.width/2;
 			this.flare.pivot.y = this.flare.height/2;
-			this.flare.x = Math.random()*360*2-360/2;
-			this.flare.y = Math.random()*480*2-480/2;
+			this.flare.scale.set(this.scale);
+			this.flare.x = Math.random()*ParticlesContainerWidth*2-ParticlesContainerWidth/2 + gameWidth/2;
+			this.flare.y = Math.random()*ParticlesContainerHeight*2-ParticlesContainerHeight/2 + gameHeight/2;
 			this.scale = Math.random()+0.2;
 			this.alpha = Math.random()*0.2+0.4;
 			// this.alpha = 1;
@@ -88,8 +95,8 @@ var Background = (function(){
 			var flare = new PIXI.Sprite.fromFrame('bokeh-blur.png');
 			flare.pivot.x = flare.width/2;
 			flare.pivot.y = flare.height/2;
-			flare.x = 360/2;
-			flare.y = 480/2;
+			flare.x = gameWidth/2;
+			flare.y = gameHeight/2;
 			flare.alpha = 1;
 			flare.tint = bgColor;
 			flare.scale.x = 8;
@@ -99,7 +106,7 @@ var Background = (function(){
 			var flare = new PIXI.Sprite.fromFrame('bokeh-blur.png');
 			flare.pivot.x = flare.width/2;
 			flare.pivot.y = flare.height/2;
-			flare.x = 360/2;
+			flare.x = gameWidth/2;
 			flare.y = 0;
 			flare.tint = bgColor;
 			flare.alpha = 2;
@@ -111,8 +118,8 @@ var Background = (function(){
 			var flare = new PIXI.Sprite.fromFrame('bokeh-blur.png');
 			flare.pivot.x = flare.width/2;
 			flare.pivot.y = flare.height/2;
-			flare.x = 360/2;
-			flare.y = 480;
+			flare.x = gameWidth/2;
+			flare.y = gameHeight;
 			flare.alpha = 1;
 			flare.tint = bgColor;
 			flare.scale.x = 5;
