@@ -6,39 +6,47 @@ var Game = (function(){
 		this.blockLayer = new PIXI.DisplayObjectContainer();
 		this.blockPopLayer = new PIXI.DisplayObjectContainer();
 		this.deadlineLayer = new PIXI.DisplayObjectContainer();
-		this.stage.addChild(this.blockLayer);
-		// this.blockLayer.alpha = 5;
-		this.stage.addChild(this.blockPopLayer);
-		this.stage.addChild(this.deadlineLayer);
+		this.levelEdgeLayer = new PIXI.DisplayObjectContainer();
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
-
 		this.blackBorder = new PIXI.Graphics();
-        this.blackBorder.beginFill(0x000000);
-        this.blackBorder.alpha = 0.3;
-        this.blackBorder.drawRect(0, this.height*20-5, this.num*20, 2);
-        this.blackBorder.endFill();
-        // this.blackBorder.pivot.y = this.height*20;
-
-        this.blockPopLayer.addChild(this.blackBorder);
-		
+		this.levelEdge = new PIXI.Graphics();
 		this.ring = new PIXI.Strip(this.rtx);
-		this.ringAnimScale = 1;
-		this.adder = this.createAdder();
-		this.deadline = this.createDeadline();
-		
-		this.ring.x = gameWidth/2;
-		this.ring.y = gameHeight/2;
-		this.ring.alpha = 4;
-		basestage.addChild(this.ring);
+		this.init();
 	}
 	Game.prototype = {
 		init:function(){
+			console.log('Game init');
+			this.ringAnimScale = 1;
+			this.adder = this.createAdder();
+			this.deadline = this.createDeadline();
 
+	        this.blackBorder.beginFill(0x000000);
+	        this.blackBorder.alpha = 0.3;
+	        this.blackBorder.drawRect(0, this.height*20-5, this.num*20, 2);
+	        this.blackBorder.endFill();
+
+
+	        this.levelEdge.beginFill(0x000000);
+	        this.levelEdge.alpha = 0.1;
+	        this.levelEdge.drawRect(0, (this.height-4)*20-5, this.num*20, 2);
+	        this.levelEdge.endFill();
+
+			this.ring.x = gameWidth/2;
+			this.ring.y = gameHeight/2;
+			this.ring.alpha = 1;
+
+	        this.blockPopLayer.addChild(this.blackBorder);
+	        this.levelEdgeLayer.addChild(this.levelEdge);
+			this.stage.addChild(this.blockLayer);
+			this.stage.addChild(this.blockPopLayer);
+			this.stage.addChild(this.levelEdgeLayer);
+			this.stage.addChild(this.deadlineLayer);
+			basestage.addChild(this.ring);
 		},
 		bulk:function(){
 			TweenLite.killTweensOf(this);
 			TweenLite.to(this,0.1,{
-				ringAnimScale:.9,
+				ringAnimScale:.95,
 				// ease:Elastic.easeOut
 			})
 			TweenLite.to(this,2,{
@@ -75,10 +83,11 @@ var Game = (function(){
 				delay:.1,
 				ease:Elastic.easeOut
 			});
-			if(ga){
+			try{
 				ga('send', 'event', 'gameaction', 'gameover', 'score', Score.getScore());
-			}
+			} catch(e){}
 			Score.setScore(0);
+			background.removeParticles();
             if(navigator.vibrate){
                 navigator.vibrate(200);
             };

@@ -1,22 +1,21 @@
 var Background = (function(){
-	var cur = Math.ceil(Math.random()*10)%3
+	var cur = Math.ceil(Math.random()*10)%3;
+	cur = 2;
 	// DEFAULT
 	var bgColor = 0x1a6dff;
 	var bgColor2 = 0x16f5ff;
 
+	// RED
 	if(cur == 1){	
-		// RED
 		var bgColor = 0xE54028;
 		var bgColor2 = 0xF18D05;
 	}
 
-
+	// LIGHT
 	if(cur == 2){	
-		// LIGHT
 		var bgColor = 0x7BDF43;
 		var bgColor2 = 0xF0FBFD;
 	}
-
 
 	function Particle(layer){
 		this.layer = layer;
@@ -84,11 +83,23 @@ var Background = (function(){
 				alpha:this.alpha,
 				onComplete:this.fading.bind(this)
 			});
+		},
+		moveOutside:function(){
+			TweenLite.killTweensOf(this.flare);
+			var oldPos = new Victor(this.flare.x,this.flare.y);
+			var direction = oldPos.subtract(new Victor(gameWidth/2,gameHeight/2)).norm();
+			this.delay = Math.random()*5;
+			TweenLite.to(this.flare,Math.random()*1.5+0.5,{
+				alpha:0,
+				x:this.flare.x + direction.x*300,
+				y:this.flare.y + direction.y*300,
+				onComplete:this.creating.bind(this)
+			});
 		}
 	}
 
 	function Background(){
-		this.flares = [];
+		this.particles = [];
 		this.layer = new PIXI.DisplayObjectContainer();
 	}
 	Background.prototype = {
@@ -132,12 +143,17 @@ var Background = (function(){
 
 
 			for (var i = 0; i < 40; i++) {
-				var particle = new Particle(this.layer);
+				this.particles.push(new Particle(this.layer));
 			};
 
 		},
 		update:function(){
 
+		},
+		removeParticles:function(){
+			for (var i = 0; i < this.particles.length; i++) {
+				this.particles[i].moveOutside();
+			};
 		}
 	}
 	return Background;

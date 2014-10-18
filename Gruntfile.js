@@ -1,23 +1,27 @@
 module.exports = function(grunt) {
-  var files = ['victor.js'
-              ,'pixi.js'
-              ,'utils.js'
-              ,'CustomPixiShader.js'
-              ,'BlendShader.js'
-              ,'Strip.js'
-              ,'Quad.js'
-              ,'TweenLite.js'
-              ,'EasePack.min.js'
-              ,'mousetrap.js'
-              ,'Deadline.js'
-              ,'Background.js'
-              ,'Game.js'
-              ,'BlockBorders.js'
-              ,'Score.js'
-              ,'Block.js'
-              ,'NewBlocks.js'
-              ,'init.js'
-              ,'input.js'];
+  var files = [
+    'signals.js',
+    'signals-init.js',
+    'victor.js',
+    'pixi.js',
+    'utils.js',
+    'CustomPixiShader.js',
+    'BlendShader.js',
+    'Strip.js',
+    'Quad.js',
+    'TweenLite.js',
+    'EasePack.min.js',
+    'mousetrap.js',
+    'Deadline.js',
+    'Background.js',
+    'Game.js',
+    'BlockBorders.js',
+    'Score.js',
+    'Block.js',
+    'NewBlocks.js',
+    'init.js',
+    'TouchInput.js'
+  ];
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
