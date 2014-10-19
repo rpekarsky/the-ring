@@ -1,5 +1,5 @@
 var Deadline = (function(){
-	var color = 0xFFFFFF;
+	var color = 0x404040;
 	var objs = [];
     function Deadline(){
         this.DOC = new PIXI.DisplayObjectContainer();
@@ -54,7 +54,7 @@ var Deadline = (function(){
 	    		if(this.animtween){
 	    			this.animtween.kill();
 		    	}
-		    		this.animtween = TweenLite.to(this,1.5,{
+		    		this.animtween = TweenLite.to(this,this.game.level.deadline,{
                         animy:this.game.height*20,
                         alpha:0.8,
 		    			onComplete:function(){

@@ -2,8 +2,7 @@ var Block = (function(){
     var BlockSize = 20;
     var FALL_TIMEOUT = 0.6;
     var MOVE_TIMEOUT = 0.2;
-    function Block(x,y,type){
-        this.type = type;
+    function Block(x,y){
         this.falling = false;
         this.x = x;
         this.y = y;
@@ -24,7 +23,27 @@ var Block = (function(){
         init:function(game){
             this.game = game;
             this.maxx = this.game.num;
-            this.setType(this.type);
+
+
+            var borderWidth = 2;
+            function drawBlock(gr,color,bcolor,borderWidth){
+                gr.beginFill(bcolor);
+                gr.drawRect(0, 0, BlockSize, BlockSize);
+                gr.endFill();
+                gr.beginFill(color);
+                gr.drawRect(0, borderWidth, BlockSize, BlockSize-borderWidth);   
+                gr.endFill();
+            }
+            this.graphics.clear();
+
+            this.flashgraphics.visible = false;
+            this.flashgraphics.beginFill(0x000000);
+            this.flashgraphics.drawRect(0,0, BlockSize, BlockSize);
+            this.flashgraphics.endFill();
+
+            drawBlock(this.graphics,0x424242,0x353535,borderWidth);
+
+
             this.x = ab(this.x,this.game.num);
             this.y = this.y;
             this.animx = this.x;
@@ -43,30 +62,29 @@ var Block = (function(){
             this.layer.addChild(this.DOC);
             // this.layer.addChild(this.fakeGraphics);
         },
-        setType:function(type){
-            var borderWidth = 2;
-            function drawBlock(gr,color,bcolor,borderWidth){
-                gr.beginFill(bcolor);
-                gr.drawRect(0, 0, BlockSize, BlockSize);
-                gr.endFill();
-                gr.beginFill(color);
-                gr.drawRect(0, borderWidth, BlockSize, BlockSize-borderWidth);   
-                gr.endFill();
+        flashing:function(){
+            if(this.flashingAnim){
+                this.flashingAnim.kill();
             }
-
-            this.type = type;
-            this.graphics.clear();
-            color = 0xf0f0f0;
-            bcolor = 0xcccccc;
-            drawBlock(this.graphics,color,bcolor,borderWidth);
+            this.flashgraphics.alpha = 1;
+            this.flashingAnim = TweenLite.to(this.flashgraphics,0.2,{
+                alpha:0.1,
+                onComplete:this.flashing.bind(this)
+            });
         },
         flash:function(){
-            this.flashgraphics.beginFill(0xffffff);
-            this.flashgraphics.drawRect(0,0, BlockSize, BlockSize);
-            this.flashgraphics.endFill();
+            this.flashgraphics.visible = true;
+            if(!this.isFlashing){
+                this.flashing();
+                this.isFlashing = true;
+            }
         },
         removeFlash:function(){
-            this.flashgraphics.clear();
+            this.isFlashing = false;
+            this.flashgraphics.visible = false;
+            if(this.flashingAnim){
+                this.flashingAnim.kill();
+            }
         },
         setText:function(str){
         },
@@ -129,14 +147,15 @@ var Block = (function(){
                     animy:this.y,
                     ease: Bounce.easeOut
                 })
-                setTimeout(Block.check,FALL_TIMEOUT*1000);
+                // setTimeout(Block.check,FALL_TIMEOUT*1000);
             } 
             if(raise) {
                 this.moveYanim = TweenLite.to(this,0.3,{
                     animy:this.y,
                     // ease: Elastic.easeOut
+                    onComplete:Block.check
                 });
-                setTimeout(Block.check,0.3*1000);
+                // setTimeout(Block.check,0.3*1000);
             }
         },
         remove:function(){
@@ -161,6 +180,7 @@ var Block = (function(){
                     Block.destroy(this);
                 }.bind(this)
             });
+            this.removeFlash();
             Block.remove(this);
         },
         moveDown:function(){
@@ -222,14 +242,32 @@ var Block = (function(){
         for (var i = 0; i < 24; i++) {
             if(!Block.find(i,5)) completed = false;
         };
+
+        // check to flashing
+        for (var i = 0; i < 24; i++) {
+            if(Block.find(i,2)){
+                for (var j = 0; j < 10; j++) {
+                    var bl = Block.find(i,j);
+                    if(bl){
+                        bl.flash();
+                    }
+                };
+            } else {
+                for (var j = 0; j < 10; j++) {
+                    var bl = Block.find(i,j);
+                    if(bl){
+                        bl.removeFlash();
+                    }
+                };
+            }
+        };
+
+
         if(completed){
             for (var i = 0; i < 24; i++) {
                 Block.find(i,5).remove();
             };
-            Score.addScore(1000);
-            // if(navigator.vibrate){
-            //     navigator.vibrate(100);
-            // }
+            Game.ringSolved();
         }
         var gameover = false;
         for (var n = 0; n < Block.prototype.gameobjects.length; n++) {

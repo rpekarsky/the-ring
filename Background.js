@@ -1,28 +1,32 @@
 var Background = (function(){
-	var cur = Math.ceil(Math.random()*10)%3;
-	cur = 2;
-	// DEFAULT
-	var bgColor = 0x1a6dff;
-	var bgColor2 = 0x16f5ff;
-
-	// RED
-	if(cur == 1){	
-		var bgColor = 0xE54028;
-		var bgColor2 = 0xF18D05;
+	var blackColor = {
+		main: 	rColor.fromInt(100,100,100),
+		sec: 	rColor.fromInt(150,150,150)
 	}
-
-	// LIGHT
-	if(cur == 2){	
-		var bgColor = 0x7BDF43;
-		var bgColor2 = 0xF0FBFD;
-	}
+	var colors = [
+		{
+			main: 	rColor.fromInt(123, 223, 67),
+			sec: 	rColor.fromInt(240, 251, 253)
+		},
+		{
+			main: 	rColor.fromInt(26, 109, 255),
+			sec: 	rColor.fromInt(22, 245, 255)
+		},
+		{
+			main: 	rColor.fromInt(229, 64, 40),
+			sec: 	rColor.fromInt(241, 141, 5)
+		},
+	]
+	cur = 0;
+	var mainColor = colors[0].main.clone();
+	var secColor = colors[0].sec.clone();
 
 	function Particle(layer){
 		this.layer = layer;
 		this.flare = new PIXI.Sprite.fromFrame('bokeh.png');
 		this.delay = Math.random()*5;
-		// this.delay = 0;
 		this.creating();
+		rendered.add(this.update.bind(this));
 	}
 	Particle.prototype = {
 		creating:function(){
@@ -31,7 +35,7 @@ var Background = (function(){
 			if(ParticlesContainerWidth > 300){
 				ParticlesContainerWidth = 300;
 			}
-
+			this.color = (Math.random()>0.5)?secColor:mainColor;
 			var blur = (Math.random()>0.5);
 			if(blur){
 				this.flare.setTexture(PIXI.Texture.fromFrame('bokeh-blur.png'));
@@ -44,7 +48,7 @@ var Background = (function(){
 			this.direction = {x:Math.random()-0.5,y:Math.random()-0.5};
 			this.flare.alpha = 0;
 			this.flare.rotation = Math.random()*Math.PI*2;
-			this.flare.tint = (Math.random()>0.5)?bgColor2:bgColor;
+			this.flare.tint = (Math.random()>0.5)?this.color.getHex():this.color.getHex();
 			this.flare.pivot.x = this.flare.width/2;
 			this.flare.pivot.y = this.flare.height/2;
 
@@ -71,6 +75,9 @@ var Background = (function(){
 			});
 
 			this.delay = 0;
+		},
+		update:function(){
+			this.flare.tint = (Math.random()>0.5)?this.color.getHex():this.color.getHex();
 		},
 		fading:function(){
 			TweenLite.to(this.flare,this.duration*3,{
@@ -112,10 +119,11 @@ var Background = (function(){
 			flare.x = gameWidth/2;
 			flare.y = gameHeight/2;
 			flare.alpha = 1;
-			flare.tint = bgColor;
+			flare.tint = mainColor.getHex();
 			flare.scale.x = 8;
 			flare.scale.y = 8;
 			this.layer.addChild(flare);
+			this.bottomFlare = flare;
 
 			//TOP
 			var flare = new PIXI.Sprite.fromFrame('bokeh-blur.png');
@@ -123,11 +131,12 @@ var Background = (function(){
 			flare.pivot.y = flare.height/2;
 			flare.x = gameWidth/2;
 			flare.y = 0;
-			flare.tint = bgColor;
+			flare.tint = mainColor.getHex();
 			flare.alpha = 1;
 			flare.scale.x = 6;
 			flare.scale.y = 5;
 			this.layer.addChild(flare);
+			this.topFlare = flare;
 
 			//BOTTOM
 			var flare = new PIXI.Sprite.fromFrame('bokeh-blur.png');
@@ -136,19 +145,61 @@ var Background = (function(){
 			flare.x = gameWidth/2;
 			flare.y = gameHeight-50;
 			flare.alpha = 0.6;
-			flare.tint = bgColor;
+			flare.tint = mainColor.getHex();
 			flare.scale.x = 8;
 			flare.scale.y = 2;
 			this.layer.addChild(flare);
+			this.mainFlare = flare;
 
 
 			for (var i = 0; i < 40; i++) {
 				this.particles.push(new Particle(this.layer));
 			};
-
+			rendered.add(this.update.bind(this));
+		},
+		grayscale:function(){
+			this.mainColorTo = blackColor.main;
+			this.secColorTo = blackColor.sec;
+			TweenLite.to(mainColor,0.3,{
+				r:this.mainColorTo.r,
+				g:this.mainColorTo.g,
+				b:this.mainColorTo.b
+			});
+			TweenLite.to(secColor,0.3,{
+				r:this.secColorTo.r,
+				g:this.secColorTo.g,
+				b:this.secColorTo.b,
+				onComplete:function(){
+					setTimeout(this.updateColor.bind(this),2000);
+				}.bind(this)
+			});
+		},
+		updateColor:function(){
+			this.mainColorTo = colors[cur].main;
+			this.secColorTo = colors[cur].sec;
+			TweenLite.to(mainColor,1,{
+				r:this.mainColorTo.r,
+				g:this.mainColorTo.g,
+				b:this.mainColorTo.b
+			});
+			TweenLite.to(secColor,1,{
+				r:this.secColorTo.r,
+				g:this.secColorTo.g,
+				b:this.secColorTo.b
+			});
+		},
+		changeColor:function(){
+			nc = Math.ceil(Math.random()*colors.length)%colors.length;
+			while(nc == cur){
+				nc = Math.ceil(Math.random()*colors.length)%colors.length;
+			}
+			cur = nc;
+			this.updateColor();
 		},
 		update:function(){
-
+			this.topFlare.tint = mainColor.getHex();
+			this.bottomFlare.tint = mainColor.getHex();
+			this.mainFlare.tint = mainColor.getHex();
 		},
 		removeParticles:function(){
 			for (var i = 0; i < this.particles.length; i++) {

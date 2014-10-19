@@ -12,6 +12,10 @@ function filter (arr1,arr2){
     return result;
 };
 
+function range(a,b){
+    return Math.round(Math.random()*(b-a)+a);
+}
+
 function arrRemoveArr(arr1,arr2){
     var toRem = [];
     for (var i = 0; i < arr1.length; i++) {
@@ -32,3 +36,28 @@ function removeEl(el,arr){
         }
     };
 }
+
+function rgbToHex(r, g, b) {
+    return ab(r,256)*0x010000+ab(g,256)*0x000100+ab(b,256)*0x000001;
+}
+
+
+function rgbToHexFloat(r, g, b) {
+    return Math.ceil(ab(r*255,256))*0x010000+Math.ceil(ab(g*255,256))*0x000100+Math.ceil(ab(b*255,256))*0x000001;
+}
+
+function rColor(r,g,b){
+    this.r = r;
+    this.g = g;
+    this.b = b;
+}
+rColor.prototype.getHex = function() {
+    return rgbToHexFloat(this.r,this.g,this.b);
+};
+rColor.prototype.clone = function() {
+    return new rColor(this.r, this.g, this.b);
+};
+
+rColor.fromInt = function(r,g,b) {
+    return new rColor(r/256,g/256,b/256)
+};

@@ -17,29 +17,32 @@ PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.
 document.body.appendChild(renderer.view);
 
 
-Score.init();
+
 var background = new Background;
 bgStage.addChild(background.layer);
 var aloader = new PIXI.AssetLoader(['spriteSheet.json']);
 aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
-	var logo = new PIXI.Sprite.fromFrame('logo.png');
-	logo.pivot.x = logo.width/2;
-	logo.pivot.y = logo.height/2;
-	logo.x = gameWidth/2;
-	logo.y = gameHeight/2;
-	logo.alpha = 1;
+	
+	// var logo = new PIXI.Sprite.fromFrame('logo.png');
+	// logo.pivot.x = logo.width/2;
+	// logo.pivot.y = logo.height/2;
+	// logo.x = gameWidth/2;
+	// logo.y = gameHeight/2;
+	// logo.alpha = 1;
 	// basestage.addChild(logo);
 	
 	quad.update();
-	// if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
+	if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
 		animate();
-	// }
+	}
+
 },false)
 aloader.load();
 
 var Game = new Game();
+Score.init();
 
 function animate() {
 	rendered.dispatch();

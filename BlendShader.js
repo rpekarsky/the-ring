@@ -55,8 +55,9 @@ PIXI.BlendShader = function(gl,tex1,tex2)
             'vec4 inColor = texture2D(uSampler1, vTextureCoord.xy);',
             'vec4 overlay = texture2D(uSampler2, vTextureCoord.xy);',
             'vec4 outColor = vec4(0.0 ,0.0 ,0.0, inColor.a);',
-            'float factor = 1.8;',
-            'if (overlay.a <= 0.001)',
+            'float factor = 3.0;',
+            'float borderFactor = 2.5;',
+            'if (overlay.a <= 0.00001)',
             '{',
                 'gl_FragColor = inColor;',
                 'return;',
@@ -88,8 +89,10 @@ PIXI.BlendShader = function(gl,tex1,tex2)
             '{   ',
                 'outColor.b = ((2.0 * inColor.b) * overlay.b);',
             '}',
-            
-            'gl_FragColor = mix(outColor, inColor,1.0 - overlay.a*factor);',
+            // 'outColor *= factor;',
+            // 'gl_FragColor = mix(outColor, inColor,1.0 - overlay.a);',
+            'outColor *= factor;',
+            'gl_FragColor = mix(outColor, inColor,1.0 - overlay.a*borderFactor);',
             // 'gl_FragColor = mix(color1, outColor, color2.a);',
        '}'
     ];

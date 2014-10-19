@@ -1,5 +1,72 @@
 var Game = (function(){
+	var levels = [
+		{
+			deadline:3.5,
+			multipler:1,
+			groupsMax:1,
+			groupsMin:1,
+			blocksMax:7,
+			blocksMin:4,
+			toNext:2,
+		},
+		{
+			deadline:3,
+			multipler:2,
+			groupsMax:2,
+			groupsMin:1,
+			blocksMax:7,
+			blocksMin:4,
+			toNext:4,
+		},
+		{
+			deadline:2.5,
+			multipler:2,
+			groupsMax:2,
+			groupsMin:2,
+			blocksMax:4,
+			blocksMin:2,
+			toNext:5,
+		},
+		{
+			deadline:2,
+			multipler:3,
+			groupsMax:3,
+			groupsMin:2,
+			blocksMax:4,
+			blocksMin:2,
+			toNext:5,
+		},
+		{
+			deadline:1.8,
+			multipler:3,
+			groupsMax:5,
+			groupsMin:2,
+			blocksMax:4,
+			blocksMin:2,
+			toNext:5,
+		},
+		{
+			deadline:1.5,
+			multipler:4,
+			groupsMax:4,
+			groupsMin:2,
+			blocksMax:5,
+			blocksMin:2,
+			toNext:5,
+		},
+		{
+			deadline:1.5,
+			multipler:5,
+			groupsMax:6,
+			groupsMin:2,
+			blocksMax:3,
+			blocksMin:2,
+			toNext:5,
+		}
+	]
 	function Game(){
+		this.levelNum = 0;
+		this.level = Object.create(levels[this.levelNum]);
 		this.num = 24;
 		this.height = 6;
 		this.stage = new PIXI.Stage(0x000000);
@@ -16,6 +83,7 @@ var Game = (function(){
 	Game.prototype = {
 		init:function(){
 			console.log('Game init');
+			this.solvedRings = 0;
 			this.ringAnimScale = 1;
 			this.adder = this.createAdder();
 			this.deadline = this.createDeadline();
@@ -54,7 +122,6 @@ var Game = (function(){
 				delay:0.1,
 				ease:Elastic.easeOut
 			})
-
             // if(navigator.vibrate){
             //     navigator.vibrate(50);
             // };
@@ -71,7 +138,39 @@ var Game = (function(){
 				ease:Elastic.easeOut
 			})
 		},
+		added:function(){
+            this.bulk();
+            Score.addScore(100*this.level.multipler);
+		},
+		nextLevel:function(){
+			this.solvedRings = 0;
+			this.levelNum++;
+            background.changeColor();
+			if(levels[this.levelNum]){
+				this.level = Object.create(levels[this.levelNum]);
+				console.log('level: '+(this.levelNum+1));
+			} else {
+				if(this.level.deadline > 0.6){
+					this.level.deadline -= 0.1
+				}
+				this.level.multipler += 1;
+				console.log('last level');
+			}
+			Score.update();
+		},
+		ringSolved:function(){
+			this.solvedRings++
+			Score.addScore(1000*this.level.multipler);
+			console.log('to next level: '+(this.level.toNext-this.solvedRings));
+			if(this.solvedRings >= this.level.toNext){
+				this.nextLevel();
+			}
+		},
 		gameover:function(){
+			this.levelNum = 0;
+			this.level = Object.create(levels[0]);
+			console.log('level 1');
+
 			TweenLite.killTweensOf(this);
 			Block.clear();
 			TweenLite.to(this,0.1,{
@@ -88,6 +187,7 @@ var Game = (function(){
 			} catch(e){}
 			Score.setScore(0);
 			background.removeParticles();
+			background.grayscale();
             // if(navigator.vibrate){
             //     navigator.vibrate(200);
             // };
@@ -107,7 +207,6 @@ var Game = (function(){
 			var adder = new NewBlocks(3);
 			adder.init(this);
 			adder.create();
-
 			return adder;
 		},
 		createDeadline:function(){
@@ -115,8 +214,8 @@ var Game = (function(){
 			dl.init(this);
 			return dl;
 		},
-		createBlock:function(x,y,type){
-			var block = new Block(x,y,type);
+		createBlock:function(x,y){
+			var block = new Block(x,y);
 			block.init(this);
 			return block;
 		}
