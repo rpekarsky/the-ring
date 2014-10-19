@@ -50,9 +50,9 @@ var NewBlocks = (function(){
             for (var i = 0; i < this.blocks.length; i++) {
                 this.blocks[i].move(this.blocks[i].x+delta,this.y);
             };
-            if(navigator.vibrate){
-                navigator.vibrate(10);
-            }
+            // if(navigator.vibrate){
+            //     navigator.vibrate(10);
+            // }
         },
         moveUp:function(){
             this.game.deadline.reset();

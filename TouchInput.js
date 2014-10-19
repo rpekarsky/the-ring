@@ -6,6 +6,7 @@ var TouchInput = (function(){
 	var blobSplatAnim;
 	var moveStart = false
 	var touch = new Victor(gameWidth/2,gameHeight/2);
+	var lasttouch = touch.clone();
 	var startVec = touch.clone();
 	var touched = false;
 
@@ -48,6 +49,7 @@ var TouchInput = (function(){
 			}
 			var deltaStart = touch.clone().subtract(startVec);
 			var deltaVec = new Victor(lastVec.x,lastVec.y).subtract(vec);
+			var deltaTouchVec = lasttouch.clone().subtract(touch);
 			var deltaAng = deltaVec.angleDeg();
 			var blobVec = new Victor(blob.x,blob.y);
 			var directionVec = blobVec.clone().subtract(touch);
@@ -67,7 +69,8 @@ var TouchInput = (function(){
 				touchBlob.visible = true;
 				blob.visible = true;
 			}
-			if(moveStart && deltaVec.length() > 30){
+			if(moveStart && deltaTouchVec.length() > 30 && deltaVec.length() > 30){
+				lasttouch = touch.clone();
 				var CV = (vec.clone().norm().cross(lastVec.norm()) < 0);
 				if(CV){
 					GoLeft();
@@ -97,7 +100,7 @@ var TouchInput = (function(){
 				});
 			}
 
-			if(!moveStart && deltaStart.length() > 20){
+			if(!moveStart && deltaStart.length() > 30){
 				blob.alpha = 0.5;
 				moveStart = true;
 				lastVec = vec;

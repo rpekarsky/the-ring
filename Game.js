@@ -55,9 +55,9 @@ var Game = (function(){
 				ease:Elastic.easeOut
 			})
 
-            if(navigator.vibrate){
-                navigator.vibrate(50);
-            };
+            // if(navigator.vibrate){
+            //     navigator.vibrate(50);
+            // };
 		},
 		resonance:function(){
 			TweenLite.killTweensOf(this);
@@ -88,9 +88,9 @@ var Game = (function(){
 			} catch(e){}
 			Score.setScore(0);
 			background.removeParticles();
-            if(navigator.vibrate){
-                navigator.vibrate(200);
-            };
+            // if(navigator.vibrate){
+            //     navigator.vibrate(200);
+            // };
 		},
 		resetDeadline:function(){
 			this.deadline.reset();

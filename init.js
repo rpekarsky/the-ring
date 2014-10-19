@@ -33,9 +33,9 @@ aloader.addEventListener('onComplete',function(){
 	// basestage.addChild(logo);
 	
 	quad.update();
-	if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
+	// if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
 		animate();
-	}
+	// }
 },false)
 aloader.load();
 

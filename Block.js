@@ -227,9 +227,9 @@ var Block = (function(){
                 Block.find(i,5).remove();
             };
             Score.addScore(1000);
-            if(navigator.vibrate){
-                navigator.vibrate(100);
-            }
+            // if(navigator.vibrate){
+            //     navigator.vibrate(100);
+            // }
         }
         var gameover = false;
         for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
