@@ -74,6 +74,7 @@ var Game = (function(){
 		this.blockPopLayer = new PIXI.DisplayObjectContainer();
 		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 		this.levelEdgeLayer = new PIXI.DisplayObjectContainer();
+
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
 		this.blackBorder = new PIXI.Graphics();
 		this.levelEdge = new PIXI.Graphics();
@@ -140,6 +141,7 @@ var Game = (function(){
 		},
 		added:function(){
             this.bulk();
+            this.resetDeadline();
             Score.addScore(100*this.level.multipler);
 		},
 		nextLevel:function(){

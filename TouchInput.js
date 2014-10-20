@@ -28,6 +28,7 @@ var TouchInput = (function(){
 			touchBlob.y = gameHeight/2;
 			touchBlob.width = 80;
 			touchBlob.height = 80;
+			touchBlob.alpha = 0.2;
 			touchBlob.tint = 0x000000;
 			touchBlob.visible = false;
 			basestage.addChild(blob);
@@ -100,16 +101,16 @@ var TouchInput = (function(){
 				});
 			}
 
-			if(!moveStart && deltaStart.length() > 30){
-				blob.alpha = 0.5;
+			if(!moveStart && deltaStart.length() > 10){
+				blob.alpha = 0.2;
 				moveStart = true;
 				lastVec = vec;
 			}
 		},
 		initEvents:function(){
-			document.addEventListener('mousemove',onmousemove,false);
-			document.addEventListener('mousedown',onmousedown,false);
-			document.addEventListener('mouseup',onmouseup,false);	
+			// document.addEventListener('mousemove',onmousemove,false);
+			// document.addEventListener('mousedown',onmousedown,false);
+			// document.addEventListener('mouseup',onmouseup,false);	
 
 			document.addEventListener('touchmove',ontouchmove,false);
 			document.addEventListener('touchstart',ontouchstart,false);

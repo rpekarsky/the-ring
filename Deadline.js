@@ -42,27 +42,28 @@ var Deadline = (function(){
 	    		if(this.animtween){
 	    			this.animtween.kill();
 	    		}
-	    			this.animtween = TweenLite.to(this,0.5,{
-                        animy:0,
-                        alpha:-0.5,
-	    				// ease:Elastic.easeOut,
-		    			onComplete:function(){
-		    				this.reset(true);
-		    			}.bind(this)
-		    		});
+    			this.animtween = TweenLite.to(this,0.5,{
+                    animy:0,
+                    alpha:-0.5,
+    				// ease:Elastic.easeOut,
+	    			onComplete:function(){
+	    				this.reset(true);
+	    			}.bind(this)
+	    		});
     		}else{
 	    		if(this.animtween){
 	    			this.animtween.kill();
 		    	}
-		    		this.animtween = TweenLite.to(this,this.game.level.deadline,{
-                        animy:this.game.height*20,
-                        alpha:0.8,
-		    			onComplete:function(){
-		    				this.reset();
-                            // this.game.gameover();
-		    				this.game.adder.moveUp();
-		    			}.bind(this)
-		    		});
+	    		this.animtween = TweenLite.to(this,this.game.level.deadline,{
+                    animy:this.game.height*20,
+                    alpha:0.8,
+	    			onComplete:function(){
+	    				this.reset();
+                        console.log('no!');
+                        // this.game.gameover();
+	    				this.game.adder.moveUp();
+	    			}.bind(this)
+	    		});
     		}
     	},
     	update:function(){

@@ -48,7 +48,11 @@ var NewBlocks = (function(){
             };
         },
         moveUp:function(){
-            this.game.deadline.reset();
+            // try{
+            //     throw new Error();
+            // } catch(e){
+            //     console.log(e.stack);
+            // }
             for (var i = 0; i < this.blocks.length; i++) {
                 var bl = this.blocks[i];
                 bl.add();

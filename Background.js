@@ -1,7 +1,7 @@
 var Background = (function(){
 	var blackColor = {
-		main: 	rColor.fromInt(100,100,100),
-		sec: 	rColor.fromInt(150,150,150)
+		main: 	rColor.fromInt(50,50,50),
+		sec: 	rColor.fromInt(100,100,100)
 	}
 	var colors = [
 		{
@@ -17,6 +17,61 @@ var Background = (function(){
 			sec: 	rColor.fromInt(241, 141, 5)
 		},
 	]
+
+	// new colors
+	var colors = [
+		{
+			name: 	'green',
+			main: 	rColor.fromInt(92, 197, 85),
+			sec: 	rColor.fromInt(232, 241, 248)
+		},
+		{
+			name:   'cold grey',
+			main: 	rColor.fromInt(133, 110, 180),
+			sec: 	rColor.fromInt(250, 244, 245)
+		},
+		{
+			name: 	'cold dark blue',
+			main: 	rColor.fromInt(76, 56, 176),
+			sec: 	rColor.fromInt(245, 252, 242)
+		},
+		{
+			name: 	'cold red',
+			main: 	rColor.fromInt(215, 98, 75),
+			sec: 	rColor.fromInt(227, 167, 187)
+		},
+		{
+			name: 	'cold coffee',
+			main: 	rColor.fromInt(210, 132, 80),
+			sec: 	rColor.fromInt(243, 252, 242)
+		},
+		{
+			name: 	'cold choco',
+			main: 	rColor.fromInt(179, 164, 111),
+			sec: 	rColor.fromInt(251, 243, 248)
+		},
+		{
+			name: 	'cold blue',
+			main: 	rColor.fromInt(92, 110, 198),
+			sec: 	rColor.fromInt(227, 167, 187)
+		},
+		{
+			name: 	'cold cyan',
+			main: 	rColor.fromInt(90, 173, 200),
+			sec: 	rColor.fromInt(249, 243, 251)
+		},
+		{
+			name: 	'cold magent',
+			main: 	rColor.fromInt(160, 98, 192),
+			sec: 	rColor.fromInt(251, 245, 243)
+		},
+		{
+			name: 	'cold green',
+			main: 	rColor.fromInt(83, 207, 130),
+			sec: 	rColor.fromInt(242, 243, 252)
+		},
+	]
+
 	cur = 0;
 	var mainColor = colors[0].main.clone();
 	var secColor = colors[0].sec.clone();
@@ -108,21 +163,11 @@ var Background = (function(){
 	function Background(){
 		this.particles = [];
 		this.layer = new PIXI.DisplayObjectContainer();
+		this.layer.scale.set(1/2);
 		this.layerDebug = new PIXI.DisplayObjectContainer();
 	}
 	Background.prototype = {
 		init:function(){
-			var mainC = new PIXI.Graphics();
-
-			mainC.clear();
-            mainC.beginFill(mainColor.getHex());
-            mainC.drawRect(0, gameHeight-20, 50, 20);
-            mainC.endFill();
-
-            mainC.beginFill(secColor.getHex());
-            mainC.drawRect(50, gameHeight-20, 50, 20);
-            mainC.endFill();
-            this.layerDebug.addChild(mainC);
 			//CENTER
 			var flare = new PIXI.Sprite.fromFrame('bokeh-blur.png');
 			flare.pivot.x = flare.width/2;
@@ -184,17 +229,6 @@ var Background = (function(){
 					setTimeout(this.updateColor.bind(this),2000);
 				}.bind(this)
 			});
-
-			
-			mainC.clear();
-            mainC.beginFill(mainColor.getHex());
-            mainC.drawRect(0, gameHeight-20, 50, 20);
-            mainC.endFill();
-
-            mainC.beginFill(secColor.getHex());
-            mainC.drawRect(50, gameHeight-20, 50, 20);
-            mainC.endFill();
-            this.layerDebug.addChild(mainC);
 		},
 		updateColor:function(){
 			this.mainColorTo = colors[cur].main;

@@ -6,12 +6,10 @@ var rendered = new Signal();
 var basestage = new PIXI.Stage(0x202020);
 var renderer = PIXI.autoDetectRenderer(gameWidth,gameHeight);
 var renderTexture = new PIXI.RenderTexture(gameWidth, gameHeight);
-var backgroundTexture = new PIXI.RenderTexture(gameWidth, gameHeight);
+var backgroundTexture = new PIXI.RenderTexture(gameWidth/2, gameHeight/2);
 var stage = new PIXI.Stage(0x000000);
 var bgStage = new PIXI.Stage(0x000000);
 
-var quad = new PIXI.Quad(backgroundTexture,renderTexture);
-stage.addChild(quad);
 
 PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.gl.DST_COLOR];
 document.body.appendChild(renderer.view);
@@ -45,6 +43,9 @@ aloader.load();
 var Game = new Game();
 Score.init();
 
+
+var quad = new PIXI.Quad(backgroundTexture,renderTexture);
+stage.addChild(quad);
 function animate() {
 	rendered.dispatch();
     requestAnimFrame( animate );    
@@ -56,6 +57,8 @@ function animate() {
     renderTexture.clear();
     renderTexture.render(basestage);
     renderer.render(stage);
+
+    // renderer.render(basestage);
 }
 
 
