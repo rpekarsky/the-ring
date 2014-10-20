@@ -20,6 +20,7 @@ document.body.appendChild(renderer.view);
 
 var background = new Background;
 bgStage.addChild(background.layer);
+bgStage.addChild(background.layerDebug);
 var aloader = new PIXI.AssetLoader(['spriteSheet.json']);
 aloader.addEventListener('onComplete',function(){
 	background.init();

@@ -108,10 +108,21 @@ var Background = (function(){
 	function Background(){
 		this.particles = [];
 		this.layer = new PIXI.DisplayObjectContainer();
+		this.layerDebug = new PIXI.DisplayObjectContainer();
 	}
 	Background.prototype = {
 		init:function(){
+			var mainC = new PIXI.Graphics();
 
+			mainC.clear();
+            mainC.beginFill(mainColor.getHex());
+            mainC.drawRect(0, gameHeight-20, 50, 20);
+            mainC.endFill();
+
+            mainC.beginFill(secColor.getHex());
+            mainC.drawRect(50, gameHeight-20, 50, 20);
+            mainC.endFill();
+            this.layerDebug.addChild(mainC);
 			//CENTER
 			var flare = new PIXI.Sprite.fromFrame('bokeh-blur.png');
 			flare.pivot.x = flare.width/2;
@@ -173,6 +184,17 @@ var Background = (function(){
 					setTimeout(this.updateColor.bind(this),2000);
 				}.bind(this)
 			});
+
+			
+			mainC.clear();
+            mainC.beginFill(mainColor.getHex());
+            mainC.drawRect(0, gameHeight-20, 50, 20);
+            mainC.endFill();
+
+            mainC.beginFill(secColor.getHex());
+            mainC.drawRect(50, gameHeight-20, 50, 20);
+            mainC.endFill();
+            this.layerDebug.addChild(mainC);
 		},
 		updateColor:function(){
 			this.mainColorTo = colors[cur].main;

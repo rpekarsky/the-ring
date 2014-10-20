@@ -13,7 +13,7 @@ function filter (arr1,arr2){
 };
 
 function range(a,b){
-    return Math.round(Math.random()*(b-a)+a);
+  return Math.round(Math.random()*(b-a)+a);
 }
 
 function arrRemoveArr(arr1,arr2){
