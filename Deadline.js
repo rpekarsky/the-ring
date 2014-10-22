@@ -54,16 +54,16 @@ var Deadline = (function(){
 	    		if(this.animtween){
 	    			this.animtween.kill();
 		    	}
-	    		this.animtween = TweenLite.to(this,this.game.level.deadline,{
-                    animy:this.game.height*20,
-                    alpha:0.8,
-	    			onComplete:function(){
-	    				this.reset();
-                        console.log('no!');
-                        // this.game.gameover();
-	    				this.game.adder.moveUp();
-	    			}.bind(this)
-	    		});
+	    		// this.animtween = TweenLite.to(this,this.game.level.deadline,{
+       //              animy:this.game.height*20,
+       //              alpha:0.8,
+	    		// 	onComplete:function(){
+	    		// 		this.reset();
+       //                  console.log('no!');
+       //                  // this.game.gameover();
+	    		// 		this.game.adder.moveUp();
+	    		// 	}.bind(this)
+	    		// });
     		}
     	},
     	update:function(){

@@ -57,8 +57,6 @@ function animate() {
     renderTexture.clear();
     renderTexture.render(basestage);
     renderer.render(stage);
-
-    // renderer.render(basestage);
 }
 
 

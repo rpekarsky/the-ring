@@ -46,6 +46,7 @@ var NewBlocks = (function(){
             for (var i = 0; i < this.blocks.length; i++) {
                 this.blocks[i].move(this.blocks[i].x+delta,this.y);
             };
+            Sound.play('move');
         },
         moveUp:function(){
             // try{

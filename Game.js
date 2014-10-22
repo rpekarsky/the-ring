@@ -142,6 +142,7 @@ var Game = (function(){
 		added:function(){
             this.bulk();
             this.resetDeadline();
+            Sound.play('place');
             Score.addScore(100*this.level.multipler);
 		},
 		nextLevel:function(){
@@ -162,6 +163,7 @@ var Game = (function(){
 		},
 		ringSolved:function(){
 			this.solvedRings++
+			Sound.play('complete');
 			Score.addScore(1000*this.level.multipler);
 			console.log('to next level: '+(this.level.toNext-this.solvedRings));
 			if(this.solvedRings >= this.level.toNext){
@@ -169,6 +171,7 @@ var Game = (function(){
 			}
 		},
 		gameover:function(){
+
 			this.levelNum = 0;
 			this.level = Object.create(levels[0]);
 			console.log('level 1');
@@ -193,6 +196,7 @@ var Game = (function(){
             // if(navigator.vibrate){
             //     navigator.vibrate(200);
             // };
+            Sound.play('death');
 		},
 		resetDeadline:function(){
 			this.deadline.reset();

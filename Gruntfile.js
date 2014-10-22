@@ -4,6 +4,9 @@ module.exports = function(grunt) {
     'signals-init.js',
     'victor.js',
     'pixi.js',
+    'howler.min.js',
+
+
     'utils.js',
     'CustomPixiShader.js',
     'BlendShader.js',
@@ -20,6 +23,7 @@ module.exports = function(grunt) {
     'Block.js',
     'NewBlocks.js',
     'init.js',
+    'sounds.js',
     'TouchInput.js'
   ];
   grunt.initConfig({
