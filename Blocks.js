@@ -1,0 +1,46 @@
+var Blocks = (function(){
+    function Blocks(game){
+        this.game = game;
+        this.objects = [];
+        this.gameobjects = [];
+    }
+    Blocks.prototype = {
+        update:function(){
+            for (var i = 0; i < this.objects.length; i++) {
+                this.objects[i].update();
+            };
+        },
+        clear:function(){
+            var toRemove = []
+            for (var i = 0; i < this.gameobjects.length; i++) {
+                toRemove.push(this.gameobjects[i]);
+            };
+            for (var i = 0; i < toRemove.length; i++) {
+                toRemove[i].remove();
+            };
+        },
+        find:function(x,y){
+            for (var i = 0; i < this.gameobjects.length; i++) {
+                if(this.gameobjects[i].x == ab(x,this.gameobjects[i].game.num) && 
+                   this.gameobjects[i].y == y) 
+                   return this.gameobjects[i];
+            };
+            return false;
+        },
+        destroy:function(block){
+            for (var i = 0; i < this.objects.length; i++) {
+                if(this.objects[i] == block){
+                    this.objects.splice(i,1);
+                }
+            };
+        },
+        remove:function(block){
+            for (var i = 0; i < this.gameobjects.length; i++) {
+                if(this.gameobjects[i] == block){
+                    this.gameobjects.splice(i,1);
+                }
+            };
+        }
+    };
+    return Blocks;
+})();

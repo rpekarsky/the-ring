@@ -19,17 +19,24 @@ document.body.appendChild(renderer.view);
 var background = new Background;
 bgStage.addChild(background.layer);
 bgStage.addChild(background.layerDebug);
+
+
+var game = new Maratron();
+
+
 var aloader = new PIXI.AssetLoader(['spriteSheet.json']);
 aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
+	game.init();
+	Score.init();
 	
 	// var logo = new PIXI.Sprite.fromFrame('logo.png');
 	// logo.pivot.x = logo.width/2;
 	// logo.pivot.y = logo.height/2;
 	// logo.x = gameWidth/2;
 	// logo.y = gameHeight/2;
-	// logo.alpha = 1;
+	// logo.tint = 0x404040;
 	// basestage.addChild(logo);
 	
 	quad.update();
@@ -40,16 +47,12 @@ aloader.addEventListener('onComplete',function(){
 },false)
 aloader.load();
 
-var Game = new Game();
-Score.init();
-
 
 var quad = new PIXI.Quad(backgroundTexture,renderTexture);
 stage.addChild(quad);
 function animate() {
 	rendered.dispatch();
-    requestAnimFrame( animate );    
-    Game.render();
+    requestAnimFrame( animate );
 
     backgroundTexture.clear();
     backgroundTexture.render(bgStage);

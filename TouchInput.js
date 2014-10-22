@@ -11,6 +11,9 @@ var TouchInput = (function(){
 	var touched = false;
 
 	TouchInput = {
+		tapped:new Signal(),
+		turnedCV:new Signal(),
+		turnedCCV:new Signal(),
 		init:function(){
 			blob = new PIXI.Sprite.fromFrame('bokeh.png');
 			blob.pivot.x = blob.width/2;
@@ -74,9 +77,9 @@ var TouchInput = (function(){
 				lasttouch = touch.clone();
 				var CV = (vec.clone().norm().cross(lastVec.norm()) < 0);
 				if(CV){
-					GoLeft();
+					TouchInput.turnedCV.dispatch();
 				} else {
-					GoRight();
+					TouchInput.turnedCCV.dispatch();
 				}
 				lastVec = vec;
 				var blobSplat = new PIXI.Sprite.fromFrame('bokeh.png');
@@ -108,31 +111,18 @@ var TouchInput = (function(){
 			}
 		},
 		initEvents:function(){
-			// document.addEventListener('mousemove',onmousemove,false);
-			// document.addEventListener('mousedown',onmousedown,false);
-			// document.addEventListener('mouseup',onmouseup,false);	
+			document.addEventListener('mousemove',onmousemove,false);
+			document.addEventListener('mousedown',onmousedown,false);
+			document.addEventListener('mouseup',onmouseup,false);	
 
 			document.addEventListener('touchmove',ontouchmove,false);
 			document.addEventListener('touchstart',ontouchstart,false);
 			document.addEventListener('touchend',ontouchend,false);	
-			Mousetrap.bind('left', GoLeft);
-			Mousetrap.bind('right', GoRight);
-			Mousetrap.bind('up', GoUp);			
+			Mousetrap.bind('left', TouchInput.turnedCCV.dispatch);
+			Mousetrap.bind('right', TouchInput.turnedCV.dispatch);
+			Mousetrap.bind('up', TouchInput.tapped.dispatch);
 		}
 	};
-
-	function GoLeft () {
-		Game.adder.move(-1);
-	}
-	function GoRight () {
-		Game.adder.move(1);
-	}
-	function GoUp () {
-		Game.adder.moveUp();
-	}
-
-
-
 
 	function onmousedown(e){
 		touched = true;
@@ -144,7 +134,7 @@ var TouchInput = (function(){
 	function onmouseup(e){
 		touched = false;
 		if(moveStart == false){
-			GoUp();
+			TouchInput.tapped.dispatch();
 		}
 		touch = new Victor(gameWidth/2,gameHeight/2);
 		startVec = touch.clone();
@@ -168,7 +158,7 @@ var TouchInput = (function(){
 
 	function ontouchend(e){
 		if(moveStart == false){
-			GoUp();
+			TouchInput.tapped.dispatch();
 		}
 		touch = new Victor(gameWidth/2,gameHeight/2);
 		startVec = touch.clone();
@@ -181,6 +171,16 @@ var TouchInput = (function(){
 	function ontouchmove(e){
 		touch = new Victor(e.touches[0].pageX,e.touches[0].pageY);
 	}
+	// TouchInput.tapped.add(function(){
+	// 	console.log('tapped');
+	// });
 
+	// TouchInput.turnedCV.add(function(){
+	// 	console.log('turnedCV');
+	// });
+
+	// TouchInput.turnedCCV.add(function(){
+	// 	console.log('turnedCCV');
+	// });
 	return TouchInput;
 })();

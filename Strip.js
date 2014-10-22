@@ -30,6 +30,8 @@ PIXI.Strip = function(texture)
     
     var RN = this.ringsNum;
     var rad = 20*8;
+    // var rad = 20*6;
+    // var rad = 20*10;
 
     this.verticesNum = (this.segs+1)*2;
     this.verticies = new PIXI.Float32Array( this.verticesNum*RN*2 );

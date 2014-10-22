@@ -26,12 +26,12 @@ var NewBlocks = (function(){
             this.y = game.height;
             this.num = game.num;
         },
-        create:function(count){
+        create:function(groupsMin,groupsMax,blocksMin,blocksMax){
             count = 1;
             this.blocks = [];
             var s = 0;
-            for (var j = 0; j < range(this.game.level.groupsMin,this.game.level.groupsMax); j++) {
-                var secN = range(this.game.level.blocksMin,this.game.level.blocksMax);
+            for (var j = 0; j < range(groupsMin,groupsMax); j++) {
+                var secN = range(blocksMin,blocksMax);
                 for (var i = 0; i < secN; i++) {
                     var nx = this.x+i+s;
                     if(!find.call(this,nx)){
@@ -61,7 +61,7 @@ var NewBlocks = (function(){
             };
             this.x += Math.floor(Math.random()*24);
             this.game.added();
-            this.create();
+            
         },
         update:function(){
         }

@@ -18,12 +18,10 @@ var Block = (function(){
         // this.fakeGraphics = new PIXI.Graphics();
     }
     Block.prototype = {
-        objects:[],
-        gameobjects:[],
         init:function(game){
             this.game = game;
+            this.blocks = game.blocks;
             this.maxx = this.game.num;
-
 
             var borderWidth = 2;
             function drawBlock(gr,color,bcolor,borderWidth){
@@ -51,7 +49,7 @@ var Block = (function(){
             this.animy = this.y;
             this.layer = this.game.blockLayer;
             this.show();
-            this.objects.push(this);
+            this.blocks.objects.push(this);
             this.update();
         },
         hide:function(){
@@ -90,7 +88,7 @@ var Block = (function(){
         },
         add:function(){
             this.added = true;
-            this.gameobjects.push(this);
+            this.blocks.gameobjects.push(this);
         },
         move:function(x,y){
             if(this.moveXanim) this.moveXanim.kill();
@@ -153,13 +151,13 @@ var Block = (function(){
                 this.moveYanim = TweenLite.to(this,0.3,{
                     animy:this.y,
                     // ease: Elastic.easeOut
-                    onComplete:Block.check
+                    onComplete:this.game.check.bind(this.game)
                 });
                 // setTimeout(Block.check,0.3*1000);
             }
         },
         remove:function(){
-            var findedBlock = Block.find(this.x,this.y-1);
+            var findedBlock = this.blocks.find(this.x,this.y-1);
             if(findedBlock){
                 findedBlock.moveDown();
             }
@@ -177,14 +175,14 @@ var Block = (function(){
                             this.layer.removeChildAt(i);
                         }
                     };
-                    Block.destroy(this);
+                    this.blocks.destroy(this);
                 }.bind(this)
             });
             this.removeFlash();
-            Block.remove(this);
+            this.blocks.remove(this);
         },
         moveDown:function(){
-            var findedBlock = Block.find(this.x,this.y-1);
+            var findedBlock = this.blocks.find(this.x,this.y-1);
             if(findedBlock){
                 findedBlock.moveDown();
                 this.falling = true;
@@ -192,15 +190,15 @@ var Block = (function(){
                 this.falling = false;
             }
 
-            var findedBlock = Block.find(this.x,this.y+1);
+            var findedBlock = this.blocks.find(this.x,this.y+1);
             while(!findedBlock){
                 this.y++;
-                findedBlock = Block.find(this.x,this.y+1);
+                findedBlock = this.blocks.find(this.x,this.y+1);
             }
             this.move(this.x,this.y+1);
         },
         moveUp:function(){
-            var findedBlock = Block.find(this.x,this.y-1);
+            var findedBlock = this.blocks.find(this.x,this.y-1);
             // console.log(this.x,this.y-1);
             if(findedBlock){
                 findedBlock.moveUp();
@@ -214,84 +212,6 @@ var Block = (function(){
             // this.fakeGraphics.x = this.animfx*BlockSize + BlockSize/2;
             // this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2-4;
         }
-    }
-    Block.update = function(){
-        for (var i = 0; i < Block.prototype.objects.length; i++) {
-            Block.prototype.objects[i].update();
-        };
-    }
-    Block.clear = function(){
-        var toRemove = []
-        for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
-            toRemove.push(Block.prototype.gameobjects[i]);
-        };
-        for (var i = 0; i < toRemove.length; i++) {
-            toRemove[i].remove();
-        };
-    }
-    Block.find = function(x,y){
-        for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
-            if(Block.prototype.gameobjects[i].x == ab(x,Block.prototype.gameobjects[i].game.num) && 
-               Block.prototype.gameobjects[i].y == y) 
-               return Block.prototype.gameobjects[i];
-        };
-        return false;
-    }
-    Block.check = function(){
-        var completed = true;
-        for (var i = 0; i < 24; i++) {
-            if(!Block.find(i,5)) completed = false;
-        };
-
-        // check to flashing
-        for (var i = 0; i < 24; i++) {
-            if(Block.find(i,2)){
-                for (var j = 0; j < 10; j++) {
-                    var bl = Block.find(i,j);
-                    if(bl){
-                        bl.flash();
-                    }
-                };
-            } else {
-                for (var j = 0; j < 10; j++) {
-                    var bl = Block.find(i,j);
-                    if(bl){
-                        bl.removeFlash();
-                    }
-                };
-            }
-        };
-
-
-        if(completed){
-            for (var i = 0; i < 24; i++) {
-                Block.find(i,5).remove();
-            };
-            Game.ringSolved();
-        }
-        var gameover = false;
-        for (var n = 0; n < Block.prototype.gameobjects.length; n++) {
-            if(Block.prototype.gameobjects[n].y < Block.prototype.gameobjects[n].game.height-4){
-                gameover = true
-            }
-        };
-        if(gameover) Block.prototype.gameobjects[0].game.gameover();
-    }
-
-    Block.destroy = function(block){
-        for (var i = 0; i < Block.prototype.objects.length; i++) {
-            if(Block.prototype.objects[i] == block){
-                Block.prototype.objects.splice(i,1);
-            }
-        };
-    }
-
-    Block.remove = function(block){
-        for (var i = 0; i < Block.prototype.gameobjects.length; i++) {
-            if(Block.prototype.gameobjects[i] == block){
-                Block.prototype.gameobjects.splice(i,1);
-            }
-        };
     }
     return Block;
 })();

@@ -24,8 +24,15 @@ var Score = (function () {
 		update:function(){
 			curScoreDOM.textContent = 'Score: '+ curScore;
 			maxScoreDOM.textContent = 'Max Score: '+ maxScore;
-			multiplerDOM.textContent = 'x'+Game.level.multipler;
-			LevelDOM.textContent = 'Level: '+ ((Game.levelNum||0)+1);
+			// multiplerDOM.textContent = 'x'+game.level.multipler;
+			// LevelDOM.textContent = 'Level: '+ ((game.levelNum||0)+1);
+		},
+		setLevel:function(score){
+			curScore = score;
+			if(curScore > maxScore){
+				this.setMaxScore(curScore);
+			}
+			this.update();
 		},
 		setScore:function(score){
 			curScore = score;

@@ -2,6 +2,8 @@ var Deadline = (function(){
 	var color = 0x404040;
 	var objs = [];
     function Deadline(){
+        this.fired = new Signal();
+        this.canceled = new Signal();
         this.DOC = new PIXI.DisplayObjectContainer();
     	this.graphics = new PIXI.Graphics();
         this.graphicsbg = new PIXI.Graphics();
@@ -37,35 +39,27 @@ var Deadline = (function(){
             this.reset(true);
     	},
 
-    	reset:function(start){
-    		if(!start){
-	    		if(this.animtween){
-	    			this.animtween.kill();
-	    		}
-    			this.animtween = TweenLite.to(this,0.5,{
-                    animy:0,
-                    alpha:-0.5,
-    				// ease:Elastic.easeOut,
-	    			onComplete:function(){
-	    				this.reset(true);
-	    			}.bind(this)
-	    		});
-    		}else{
-	    		if(this.animtween){
-	    			this.animtween.kill();
-		    	}
-	    		// this.animtween = TweenLite.to(this,this.game.level.deadline,{
-       //              animy:this.game.height*20,
-       //              alpha:0.8,
-	    		// 	onComplete:function(){
-	    		// 		this.reset();
-       //                  console.log('no!');
-       //                  // this.game.gameover();
-	    		// 		this.game.adder.moveUp();
-	    		// 	}.bind(this)
-	    		// });
+    	reset:function(){
+    		if(this.animtween){
+    			this.animtween.kill();
     		}
+			this.animtween = TweenLite.to(this,0.5,{
+                animy:0,
+                alpha:-0.5,
+				// ease:Elastic.easeOut,
+    			onComplete:this.canceled.dispatch
+    		});
     	},
+        start:function(time){
+            if(this.animtween){
+                this.animtween.kill();
+            }
+            this.animtween = TweenLite.to(this,time,{
+                animy:this.game.height*20,
+                alpha:0.8,
+                onComplete:this.fired.dispatch
+            });
+        },
     	update:function(){
     		this.DOC.y = this.animy-5;
             this.DOC.alpha = this.alpha;

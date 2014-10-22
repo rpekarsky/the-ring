@@ -1,94 +1,22 @@
-var Game = (function(){
-	var levels = [
-		{
-			deadline:3.5,
-			multipler:1,
-			groupsMax:1,
-			groupsMin:1,
-			blocksMax:7,
-			blocksMin:4,
-			toNext:2,
-		},
-		{
-			deadline:3,
-			multipler:2,
-			groupsMax:2,
-			groupsMin:1,
-			blocksMax:7,
-			blocksMin:4,
-			toNext:4,
-		},
-		{
-			deadline:2.5,
-			multipler:2,
-			groupsMax:2,
-			groupsMin:2,
-			blocksMax:4,
-			blocksMin:2,
-			toNext:5,
-		},
-		{
-			deadline:2,
-			multipler:3,
-			groupsMax:3,
-			groupsMin:2,
-			blocksMax:4,
-			blocksMin:2,
-			toNext:5,
-		},
-		{
-			deadline:1.8,
-			multipler:3,
-			groupsMax:5,
-			groupsMin:2,
-			blocksMax:4,
-			blocksMin:2,
-			toNext:5,
-		},
-		{
-			deadline:1.5,
-			multipler:4,
-			groupsMax:4,
-			groupsMin:2,
-			blocksMax:5,
-			blocksMin:2,
-			toNext:5,
-		},
-		{
-			deadline:1.5,
-			multipler:5,
-			groupsMax:6,
-			groupsMin:2,
-			blocksMax:3,
-			blocksMin:2,
-			toNext:5,
-		}
-	]
-	function Game(){
-		this.levelNum = 0;
-		this.level = Object.create(levels[this.levelNum]);
+var GameClass = (function(){
+	function GameClass(){
 		this.num = 24;
 		this.height = 6;
+		this.blocks = new Blocks();
 		this.stage = new PIXI.Stage(0x000000);
 		this.blockLayer = new PIXI.DisplayObjectContainer();
 		this.blockPopLayer = new PIXI.DisplayObjectContainer();
-		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 		this.levelEdgeLayer = new PIXI.DisplayObjectContainer();
-
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
 		this.blackBorder = new PIXI.Graphics();
 		this.levelEdge = new PIXI.Graphics();
 		this.ring = new PIXI.Strip(this.rtx);
-		this.init();
 	}
-	Game.prototype = {
+	GameClass.prototype = {
 		init:function(){
-			console.log('Game init');
 			this.solvedRings = 0;
 			this.ringAnimScale = 1;
 			this.adder = this.createAdder();
-			this.deadline = this.createDeadline();
-
 	        this.blackBorder.beginFill(0x000000);
 	        this.blackBorder.alpha = 0.3;
 	        this.blackBorder.drawRect(0, this.height*20-5, this.num*20, 2);
@@ -109,8 +37,13 @@ var Game = (function(){
 			this.stage.addChild(this.blockLayer);
 			this.stage.addChild(this.blockPopLayer);
 			this.stage.addChild(this.levelEdgeLayer);
-			this.stage.addChild(this.deadlineLayer);
+			// this.stage.addChild(this.deadlineLayer);
 			basestage.addChild(this.ring);
+
+			rendered.add(this.render.bind(this));
+			TouchInput.tapped.add(this.adder.moveUp.bind(this.adder));
+			TouchInput.turnedCV.add(this.adder.move.bind(this.adder,-1));
+			TouchInput.turnedCCV.add(this.adder.move.bind(this.adder,1));
 		},
 		bulk:function(){
 			TweenLite.killTweensOf(this);
@@ -141,43 +74,42 @@ var Game = (function(){
 		},
 		added:function(){
             this.bulk();
-            this.resetDeadline();
             Sound.play('place');
-            Score.addScore(100*this.level.multipler);
 		},
 		nextLevel:function(){
-			this.solvedRings = 0;
-			this.levelNum++;
-            background.changeColor();
-			if(levels[this.levelNum]){
-				this.level = Object.create(levels[this.levelNum]);
-				console.log('level: '+(this.levelNum+1));
-			} else {
-				if(this.level.deadline > 0.6){
-					this.level.deadline -= 0.1
-				}
-				this.level.multipler += 1;
-				console.log('last level');
-			}
+			// this.solvedRings = 0;
+			// this.levelNum++;
+   //          background.changeColor();
+			// if(levels[this.levelNum]){
+			// 	this.level = Object.create(levels[this.levelNum]);
+			// 	console.log('level: '+(this.levelNum+1));
+			// } else {
+			// 	if(this.level.deadline > 0.6){
+			// 		this.level.deadline -= 0.1
+			// 	}
+			// 	this.level.multipler += 1;
+			// 	console.log('last level');
+			// }
 			Score.update();
 		},
 		ringSolved:function(){
 			this.solvedRings++
 			Sound.play('complete');
-			Score.addScore(1000*this.level.multipler);
-			console.log('to next level: '+(this.level.toNext-this.solvedRings));
-			if(this.solvedRings >= this.level.toNext){
-				this.nextLevel();
-			}
+			this.check();
+			// Score.addScore(1000*this.level.multipler);
+			// console.log('to next level: '+(this.level.toNext-this.solvedRings));
+			// if(this.solvedRings >= this.level.toNext){
+			// 	this.nextLevel();
+			// }
 		},
 		gameover:function(){
 
-			this.levelNum = 0;
-			this.level = Object.create(levels[0]);
-			console.log('level 1');
+			// this.levelNum = 0;
+			// this.level = Object.create(levels[0]);
+			// console.log('level 1');
 
 			TweenLite.killTweensOf(this);
-			Block.clear();
+			this.blocks.clear();
 			TweenLite.to(this,0.1,{
 				ringAnimScale:1.5,
 				// ease:Elastic.easeOut
@@ -187,10 +119,10 @@ var Game = (function(){
 				delay:.1,
 				ease:Elastic.easeOut
 			});
-			try{
-				ga('send', 'event', 'gameaction', 'gameover', 'score', Score.getScore());
-			} catch(e){}
-			Score.setScore(0);
+			// try{
+			// 	ga('send', 'event', 'gameaction', 'gameover', 'score', Score.getScore());
+			// } catch(e){}
+			// Score.setScore(0);
 			background.removeParticles();
 			background.grayscale();
             // if(navigator.vibrate){
@@ -198,11 +130,8 @@ var Game = (function(){
             // };
             Sound.play('death');
 		},
-		resetDeadline:function(){
-			this.deadline.reset();
-		},
 		render:function(){
-			Block.update();
+			this.blocks.update();
 			Deadline.update();	
 		    this.rtx.clear();
 		    this.rtx.render(this.stage);
@@ -212,19 +141,53 @@ var Game = (function(){
 		createAdder:function(){
 			var adder = new NewBlocks(3);
 			adder.init(this);
-			adder.create();
 			return adder;
-		},
-		createDeadline:function(){
-			var dl = new Deadline();
-			dl.init(this);
-			return dl;
 		},
 		createBlock:function(x,y){
 			var block = new Block(x,y);
 			block.init(this);
 			return block;
-		}
+		},
+		check:function(){
+            var completed = true;
+            for (var i = 0; i < 24; i++) {
+                if(!this.blocks.find(i,5)) completed = false;
+            };
+
+            // check to flashing
+            for (var i = 0; i < 24; i++) {
+                if(this.blocks.find(i,2)){
+                    for (var j = 0; j < 10; j++) {
+                        var bl = this.blocks.find(i,j);
+                        if(bl){
+                            bl.flash();
+                        }
+                    };
+                } else {
+                    for (var j = 0; j < 10; j++) {
+                        var bl = this.blocks.find(i,j);
+                        if(bl){
+                            bl.removeFlash();
+                        }
+                    };
+                }
+            };
+
+
+            if(completed){
+                for (var i = 0; i < 24; i++) {
+                    this.blocks.find(i,5).remove();
+                };
+                this.ringSolved();
+            }
+            var gameover = false;
+            for (var n = 0; n < this.blocks.gameobjects.length; n++) {
+                if(this.blocks.gameobjects[n].y < this.height-4){
+                    gameover = true
+                }
+            };
+            if(gameover) this.gameover();
+        }
 	}
-	return Game;
+	return GameClass;
 })();
