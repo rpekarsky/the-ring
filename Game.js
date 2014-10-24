@@ -7,6 +7,7 @@ var GameClass = (function(){
 		this.blockLayer = new PIXI.DisplayObjectContainer();
 		this.blockPopLayer = new PIXI.DisplayObjectContainer();
 		this.levelEdgeLayer = new PIXI.DisplayObjectContainer();
+		this.layer = new PIXI.DisplayObjectContainer();
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
 		this.blackBorder = new PIXI.Graphics();
 		this.levelEdge = new PIXI.Graphics();
@@ -14,6 +15,7 @@ var GameClass = (function(){
 	}
 	GameClass.prototype = {
 		init:function(){
+			if(this.inited) return;
 			this.solvedRings = 0;
 			this.ringAnimScale = 1;
 			this.adder = this.createAdder();
@@ -37,34 +39,101 @@ var GameClass = (function(){
 			this.stage.addChild(this.blockLayer);
 			this.stage.addChild(this.blockPopLayer);
 			this.stage.addChild(this.levelEdgeLayer);
-			// this.stage.addChild(this.deadlineLayer);
-			basestage.addChild(this.ring);
+			this.layer.addChild(this.ring)
+			basestage.addChild(this.layer);
 
-			rendered.add(this.render.bind(this));
-			TouchInput.tapped.add(this.adder.moveUp.bind(this.adder));
-			TouchInput.turnedCV.add(this.adder.move.bind(this.adder,-1));
-			TouchInput.turnedCCV.add(this.adder.move.bind(this.adder,1));
+			this.renderedBinding = rendered.add(this.render.bind(this));
+			this.tappedBinding = TouchInput.tapped.add(this.adder.moveUp.bind(this.adder));
+			this.turnedCVBinding = TouchInput.turnedCV.add(this.adder.move.bind(this.adder,-1));
+			this.turnedCCVBinding = TouchInput.turnedCCV.add(this.adder.move.bind(this.adder,1));
+
+			this.renderedBinding.active = false;
+			this.tappedBinding.active = false;
+			this.turnedCVBinding.active = false;
+			this.turnedCCVBinding.active = false;
+			this.inited = true;
+		},
+		close:function(){
+			this.renderedBinding.active = false;
+			this.tappedBinding.active = false;
+			this.turnedCVBinding.active = false;
+			this.turnedCCVBinding.active = false;
+			this.layer.visible = false;
+			if(this.onClose){
+				this.onClose();
+			}
+		},
+		open:function(){
+			this.renderedBinding.active = true;
+			this.tappedBinding.active = true;
+			this.turnedCVBinding.active = true;
+			this.turnedCCVBinding.active = true;
+			this.layer.visible = true;
+
+
+
+			// this.ring.y = gameHeight/2 + 50;
+			// this.ringAnimScale = 0.7;
+			// this.ring.scale.y = 0.2;
+
+			// if(this.showAnim){
+			// 	this.showAnim.restart();
+			// } else {
+			// 	this.showAnim = TweenLite.to(this.ring,3,{
+			// 		y:gameHeight/2,
+			// 		ease:Elastic.easeOut
+			// 	});
+			// }
+
+			// if(this.showAnimScale){
+			// 	this.showAnimScale.restart();
+			// } else {
+			// 	this.showAnimScale = TweenLite.to(this.ring.scale,4,{
+			// 		x:1,
+			// 		y:1,
+			// 		ease:Elastic.easeOut
+			// 	});				
+			// }
+
+
+			if(this.onOpen){
+				this.onOpen();
+			}
 		},
 		bulk:function(){
 			TweenLite.killTweensOf(this);
 			TweenLite.to(this,0.1,{
 				ringAnimScale:.95,
-				// ease:Elastic.easeOut
 			})
 			TweenLite.to(this,2,{
 				ringAnimScale:1,
 				delay:0.1,
 				ease:Elastic.easeOut
 			})
-            // if(navigator.vibrate){
-            //     navigator.vibrate(50);
-            // };
+		},
+		setCenterNum:function(num){
+			this.centerNumText.setText(num.toString());
+			this.bulkText();
+		},
+		bulkText:function(){
+			if(this.centerNumText){
+				TweenLite.killTweensOf(this.centerNumText);
+				TweenLite.to(this.centerNumText.scale,0.1,{
+					x:1.25,
+					y:1.25,
+				})
+				TweenLite.to(this.centerNumText.scale,3,{
+					x:1,
+					y:1,
+					delay:0.1,
+					ease:Elastic.easeOut
+				})
+			}
 		},
 		resonance:function(){
 			TweenLite.killTweensOf(this);
 			TweenLite.to(this,0.05,{
 				ringAnimScale:1.06,
-				// ease:Elastic.easeOut
 			})
 			TweenLite.to(this,1,{
 				ringAnimScale:1,
@@ -76,67 +145,43 @@ var GameClass = (function(){
             this.bulk();
             Sound.play('place');
 		},
-		nextLevel:function(){
-			// this.solvedRings = 0;
-			// this.levelNum++;
-   //          background.changeColor();
-			// if(levels[this.levelNum]){
-			// 	this.level = Object.create(levels[this.levelNum]);
-			// 	console.log('level: '+(this.levelNum+1));
-			// } else {
-			// 	if(this.level.deadline > 0.6){
-			// 		this.level.deadline -= 0.1
-			// 	}
-			// 	this.level.multipler += 1;
-			// 	console.log('last level');
-			// }
-			Score.update();
-		},
 		ringSolved:function(){
 			this.solvedRings++
 			Sound.play('complete');
 			this.check();
-			// Score.addScore(1000*this.level.multipler);
-			// console.log('to next level: '+(this.level.toNext-this.solvedRings));
-			// if(this.solvedRings >= this.level.toNext){
-			// 	this.nextLevel();
-			// }
 		},
 		gameover:function(){
-
-			// this.levelNum = 0;
-			// this.level = Object.create(levels[0]);
-			// console.log('level 1');
-
 			TweenLite.killTweensOf(this);
 			this.blocks.clear();
 			TweenLite.to(this,0.1,{
 				ringAnimScale:1.5,
-				// ease:Elastic.easeOut
 			})
 			TweenLite.to(this,2,{
 				ringAnimScale:1,
 				delay:.1,
 				ease:Elastic.easeOut
 			});
-			// try{
-			// 	ga('send', 'event', 'gameaction', 'gameover', 'score', Score.getScore());
-			// } catch(e){}
-			// Score.setScore(0);
 			background.removeParticles();
 			background.grayscale();
-            // if(navigator.vibrate){
-            //     navigator.vibrate(200);
-            // };
             Sound.play('death');
 		},
 		render:function(){
+			if(this.centerNumText){
+		        this.centerNumText.position.x = gameWidth/2 - this.centerNumText.width/2+ this.centerNumText.text.length*1.5+5;
+				if(this.centerNumText.text == '0'){
+		        	this.centerNumText.position.x = gameWidth/2 + 10 - this.centerNumText.width/2;
+				}
+		        this.centerNumText.position.y = gameHeight/2 - this.centerNumText.height/2;;
+			}
+
+
 			this.blocks.update();
-			Deadline.update();	
 		    this.rtx.clear();
 		    this.rtx.render(this.stage);
 		    this.ring.scale.x = this.ringAnimScale;
 		    this.ring.scale.y = this.ringAnimScale;
+
+
 		},
 		createAdder:function(){
 			var adder = new NewBlocks(3);

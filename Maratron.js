@@ -11,6 +11,7 @@ var Maratron = (function () {
 		this.deadline = this.createDeadline();
 		this.stage.addChild(this.deadlineLayer);
 		this.newBlocks();
+		background.changeColor('cold coffee');
 	}
 	p.createDeadline = function(){
 		var dl = new Deadline();
@@ -20,7 +21,8 @@ var Maratron = (function () {
 		return dl;
 	},
 	p.newBlocks = function(){
-        this.adder.create(1,1,12,12);
+        // this.adder.create(1,1,1,1);
+        this.adder.create(1,3,2,7);
 	}
 	p.added = function(){
 		_super.added.call(this);
@@ -36,6 +38,13 @@ var Maratron = (function () {
 	p.onDeadline = function(){
 	    this.adder.moveUp();
 	    this.resetDeadline();
+	}
+	p.render = function(){
+		_super.render.call(this);
+		this.deadline.update();
+	}
+	p.onClose = function(){
+		this.deadline.destroy();
 	}
 	return Maratron;
 })();

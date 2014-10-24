@@ -244,7 +244,19 @@ var Background = (function(){
 				b:this.secColorTo.b
 			});
 		},
-		changeColor:function(){
+		changeColor:function(name){
+
+			if(name){
+				for (var i = 0; i < colors.length; i++) {
+					if(colors[i].name == name){
+						// console.log('finded ',name);
+						cur = i;
+						this.updateColor();
+						return;
+					}
+				};
+			}
+
 			nc = Math.ceil(Math.random()*colors.length)%colors.length;
 			while(nc == cur){
 				nc = Math.ceil(Math.random()*colors.length)%colors.length;

@@ -21,28 +21,20 @@ bgStage.addChild(background.layer);
 bgStage.addChild(background.layerDebug);
 
 
-var game = new Maratron();
 
+var states = new States();
 
-var aloader = new PIXI.AssetLoader(['spriteSheet.json']);
+var aloader = new PIXI.AssetLoader(['spriteSheet.json','font/Comfortaa.fnt']);
 aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
-	game.init();
 	Score.init();
-	
-	// var logo = new PIXI.Sprite.fromFrame('logo.png');
-	// logo.pivot.x = logo.width/2;
-	// logo.pivot.y = logo.height/2;
-	// logo.x = gameWidth/2;
-	// logo.y = gameHeight/2;
-	// logo.tint = 0x404040;
-	// basestage.addChild(logo);
+	states.open(states.states.menu);
 	
 	quad.update();
-	if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
+	// if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
 		animate();
-	}
+	// }
 
 },false)
 aloader.load();

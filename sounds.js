@@ -20,12 +20,12 @@ var Sound = (function () {
 			completeSnd = new Howl({
 			  urls: ['sounds/complete.mp3']
 			});
-			musicSnd = new Howl({
-			  	urls: ['sounds/music.mp3'],
-			  	autoplay: true,
-			  	volume: 0.3,
-		  		loop: true,
-			});
+			// musicSnd = new Howl({
+			//   	urls: ['sounds/music.mp3'],
+			//   	autoplay: true,
+			//   	volume: 0.3,
+		 //  		loop: true,
+			// });
 			sounds = {
 				'move':moveSnd,
 				'place':placeSnd,

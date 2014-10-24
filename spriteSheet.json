@@ -23,12 +23,36 @@
 			"frame": {"x":200,"y":90,"w":100,"h":100},
 			"spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
 			"sourceSize": {"w":0,"h":0}
+		},
+		"zen.png":
+		{
+			"frame": {"x":2,"y":220,"w":135,"h":180},
+			"spriteSourceSize": {"x":0,"y":0,"w":135,"h":180},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"koan.png":
+		{
+			"frame": {"x":147,"y":220,"w":124,"h":180},
+			"spriteSourceSize": {"x":0,"y":0,"w":124,"h":180},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"mondo.png":
+		{
+			"frame": {"x":277,"y":220,"w":163,"h":182},
+			"spriteSourceSize": {"x":0,"y":0,"w":163,"h":182},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"dharma.png":
+		{
+			"frame": {"x":445,"y":220,"w":196,"h":192},
+			"spriteSourceSize": {"x":0,"y":0,"w":196,"h":192},
+			"sourceSize": {"w":0,"h":0}
 		}
 	},
 	"meta": {
-		"image": "the_ring_sprite_tr.png",
+		"image": "sprite.png",
 		"format": "RGBA8888",
-		"size": {"w":482,"h":250},
+		"size": {"w":1024,"h":512},
 		"scale": "1"
 	}
 }

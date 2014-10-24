@@ -63,7 +63,12 @@ var Deadline = (function(){
     	update:function(){
     		this.DOC.y = this.animy-5;
             this.DOC.alpha = this.alpha;
-    	}
+    	},
+        destroy:function(){
+            if(this.animtween){
+                this.animtween.kill();
+            }
+        }
     };
     Deadline.update = function(){
     	for (var i = 0; i < objs.length; i++) {
