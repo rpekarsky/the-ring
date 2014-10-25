@@ -9,10 +9,7 @@ var Zen = (function () {
 	p.init = function(){
 		_super.init.call(this);
 		this.newBlocks();
-
-
-		this.centerNumText = new PIXI.BitmapText("0", {font: "60px Comfortaa", align: "right"});
-        this.layer.addChild(this.centerNumText);
+		this.createCenterNum();
 		background.changeColor('cold green');
 		this.a = 0;
 	}
@@ -21,18 +18,18 @@ var Zen = (function () {
 	},
 	p.render = function(){
 		_super.render.call(this);
-	},
+	}
 	p.gameover = function(){
 		_super.gameover.call(this);
 		this.a = 0;
 		this.setCenterNum(this.a);
-	},
+	}
 	p.ringSolved =function(){
 		_super.ringSolved.call(this);
 		this.a += 1;
 		this.setCenterNum(this.a);
 		this.bulkText();
-	},
+	}
 	p.added = function(){
 		_super.added.call(this);
         this.newBlocks();

@@ -49,18 +49,26 @@ var NewBlocks = (function(){
             Sound.play('move');
         },
         moveUp:function(){
+            var time = Date.now();
+            if(this.lastTime == undefined){
+                this.lastTime = 0;
+            }
+            if(time > this.lastTime + 100){  
+                for (var i = 0; i < this.blocks.length; i++) {
+                    var bl = this.blocks[i];
+                    bl.add();
+                    bl.moveUp();
+                };
+                this.x += Math.floor(Math.random()*24);
+                this.game.added();
+                this.lastTime = time;
+            }
             // try{
             //     throw new Error();
             // } catch(e){
             //     console.log(e.stack);
             // }
-            for (var i = 0; i < this.blocks.length; i++) {
-                var bl = this.blocks[i];
-                bl.add();
-                bl.moveUp();
-            };
-            this.x += Math.floor(Math.random()*24);
-            this.game.added();
+
             
         },
         update:function(){

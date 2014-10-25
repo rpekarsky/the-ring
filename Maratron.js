@@ -11,6 +11,8 @@ var Maratron = (function () {
 		this.deadline = this.createDeadline();
 		this.stage.addChild(this.deadlineLayer);
 		this.newBlocks();
+		this.createCenterNum();
+		this.a = 0;
 		background.changeColor('cold coffee');
 	}
 	p.createDeadline = function(){
@@ -22,7 +24,7 @@ var Maratron = (function () {
 	},
 	p.newBlocks = function(){
         // this.adder.create(1,1,1,1);
-        this.adder.create(1,3,2,7);
+        this.adder.create(2,4,2,6);
 	}
 	p.added = function(){
 		_super.added.call(this);
@@ -33,7 +35,7 @@ var Maratron = (function () {
 		this.deadline.reset();
 	}
 	p.startDeadLine = function(){
-		this.deadline.start(2);
+		this.deadline.start(0.8);
 	}
 	p.onDeadline = function(){
 	    this.adder.moveUp();
@@ -42,6 +44,17 @@ var Maratron = (function () {
 	p.render = function(){
 		_super.render.call(this);
 		this.deadline.update();
+	}
+	p.gameover = function(){
+		_super.gameover.call(this);
+		this.a = 0;
+		this.setCenterNum(this.a);
+	}
+	p.ringSolved =function(){
+		_super.ringSolved.call(this);
+		this.a += 1;
+		this.setCenterNum(this.a);
+		this.bulkText();
 	}
 	p.onClose = function(){
 		this.deadline.destroy();

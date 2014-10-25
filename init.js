@@ -20,7 +20,7 @@ var background = new Background;
 bgStage.addChild(background.layer);
 bgStage.addChild(background.layerDebug);
 
-
+var topMenu = new TopMenu();
 
 var states = new States();
 
@@ -29,6 +29,7 @@ aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
 	Score.init();
+	topMenu.init();
 	states.open(states.states.menu);
 	
 	quad.update();

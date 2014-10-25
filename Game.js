@@ -59,6 +59,7 @@ var GameClass = (function(){
 			this.turnedCVBinding.active = false;
 			this.turnedCCVBinding.active = false;
 			this.layer.visible = false;
+			topMenu.hideBack();
 			if(this.onClose){
 				this.onClose();
 			}
@@ -69,7 +70,7 @@ var GameClass = (function(){
 			this.turnedCVBinding.active = true;
 			this.turnedCCVBinding.active = true;
 			this.layer.visible = true;
-
+			topMenu.showBack();
 
 
 			// this.ring.y = gameHeight/2 + 50;
@@ -110,6 +111,11 @@ var GameClass = (function(){
 				delay:0.1,
 				ease:Elastic.easeOut
 			})
+		},
+		createCenterNum:function(){
+			this.centerNumText = new PIXI.BitmapText("0", {font: "60px Comfortaa", align: "right"});
+			this.centerNumText.alpha = 0.9;
+	        this.layer.addChild(this.centerNumText);
 		},
 		setCenterNum:function(num){
 			this.centerNumText.setText(num.toString());
