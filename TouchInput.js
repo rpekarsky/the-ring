@@ -81,7 +81,9 @@ var TouchInput = (function(){
 			// var dir = lasttouch.clone().subtract(touch).norm();
 			var dir = vec.clone().subtract(touch).norm();
 			if(moveStart && deltaTouchVec.length() > 30){
-				var CV = dir.clone().cross(lastDir);
+				// var CV = dir.clone().cross(lastDir);
+				var CV = vec.clone().norm().cross(lastVec.norm());
+					
 				var LControl = (Math.abs(CV) < 0.1);
 				// if(LControl){
 				// }
@@ -102,13 +104,12 @@ var TouchInput = (function(){
 					this.linearControl = true; // finger circle
 					var centerVec = new Victor(gameWidth/2 - touch.x, gameHeight/2 - touch.y);
 					var CV = (centerVec.clone().norm().cross(lastCenterVec.norm()) < 0);
+					lastCenterVec = centerVec;
 					if(CV){
 						TouchInput.turnedCV.dispatch();
 					} else {
 						TouchInput.turnedCCV.dispatch();
 					}
-					lastVec = vec;
-					lastCenterVec = centerVec;
 					// addBlob();
 				} else {
 
@@ -120,15 +121,21 @@ var TouchInput = (function(){
 
 					// this.linearControl = false;
 					// console.log(Math.abs(CV));
+
+
+					if(!lastVec){
+						lastVec = vec;
+					}
 					var isCV = (CV < 0);
 					if(isCV){
 						TouchInput.turnedCV.dispatch();
 					} else {
 						TouchInput.turnedCCV.dispatch();
 					}
-					lastCenterVec = dir;
 					addBlob();
 				}
+				
+				lastVec = vec;
 				lastDir = dir;
 				lasttouch = touch.clone();
 			}
@@ -137,9 +144,9 @@ var TouchInput = (function(){
 				blob.alpha = 0.1;
 				moveStart = true;
 				lasttouch = touch.clone();
-				// this.fingerControlPhases = 0;
-				// lastDir = dir;
-				// lastVec = vec;
+				this.fingerControlPhases = 0;
+				lastDir = dir;
+				lastVec = vec;
 				lastCenterVec = new Victor(gameWidth/2 - touch.x, gameHeight/2 - touch.y);
 			}
 		},
