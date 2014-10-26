@@ -31,6 +31,7 @@ PIXI.Strip = function(texture)
     var RN = this.ringsNum;
     var rad = 20*8;
     // var rad = 20*6;
+    // var rad = 20*4;//gear 2
     // var rad = 20*10;
 
     this.verticesNum = (this.segs+1)*2;

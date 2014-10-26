@@ -26,7 +26,7 @@ var Zen = (function () {
 	}
 	p.ringSolved =function(){
 		_super.ringSolved.call(this);
-		this.a += 1;
+		this.a += Math.round(Math.random()*30+500);
 		this.setCenterNum(this.a);
 		this.bulkText();
 	}

@@ -113,7 +113,8 @@ var GameClass = (function(){
 			})
 		},
 		createCenterNum:function(){
-			this.centerNumText = new PIXI.BitmapText("0", {font: "60px Comfortaa", align: "right"});
+			// this.centerNumText = new PIXI.BitmapText("0", {font: "60px Comfortaa", align: "right"});
+			this.centerNumText = new PIXI.BitmapText("0", {font: "50px Comfortaa", align: "right"});
 			this.centerNumText.alpha = 0.9;
 	        this.layer.addChild(this.centerNumText);
 		},

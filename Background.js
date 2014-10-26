@@ -111,6 +111,12 @@ var Background = (function(){
 			if(blur){
 				this.scale = Math.random()*2+0.2;
 			}
+
+			// this.scale = Math.random()/2+0.1;
+			// if(blur){
+			// 	this.scale = Math.random()+0.1;
+			// }
+
 			this.flare.scale.set(this.scale);
 
 			this.flare.x = Math.random()*ParticlesContainerWidth-ParticlesContainerWidth/2 + gameWidth/2;
@@ -178,6 +184,8 @@ var Background = (function(){
 			flare.tint = mainColor.getHex();
 			flare.scale.x = 8;
 			flare.scale.y = 8;
+			// flare.scale.x = 2;
+			// flare.scale.y = 4;
 			this.layer.addChild(flare);
 			this.bottomFlare = flare;
 

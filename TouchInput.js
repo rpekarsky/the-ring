@@ -80,7 +80,7 @@ var TouchInput = (function(){
 
 			// var dir = lasttouch.clone().subtract(touch).norm();
 			var dir = vec.clone().subtract(touch).norm();
-			if(moveStart && deltaTouchVec.length() > 30){
+			if(moveStart && deltaTouchVec.length() > 20){
 				// var CV = dir.clone().cross(lastDir);
 				var CV = vec.clone().norm().cross(lastVec.norm());
 					

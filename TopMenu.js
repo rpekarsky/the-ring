@@ -2,14 +2,14 @@ var TopMenu = (function () {
 	function TopMenu(){
 		this.IconsLayer = new PIXI.DisplayObjectContainer();
 		this.IconsBG = new PIXI.Graphics();
-		this.IconsLayer.addChild(this.IconsBG);
+		// this.IconsLayer.addChild(this.IconsBG);
 	};	
 	TopMenu.prototype = {
 		init:function(){
-	        this.IconsBG.beginFill(0x000000);
-	        this.IconsBG.alpha = 0.2;
-	        this.IconsBG.drawRect(0, 0, gameWidth, 42);
-	        this.IconsBG.endFill();
+	        // this.IconsBG.alpha = 0.2;
+	        // this.IconsBG.beginFill(0x000000);
+	        // this.IconsBG.drawRect(0, 0, gameWidth, 42);
+	        // this.IconsBG.endFill();
 	    	this.IconsLayer.alpha = 0.4;
 
 			this.mIcon = new PIXI.Sprite.fromFrame('m-icon.png');
@@ -17,15 +17,19 @@ var TopMenu = (function () {
 			this.IconsLayer.addChild(this.mIcon);
 
 			this.sIcon = new PIXI.Sprite.fromFrame('s-icon.png');
-	        this.sIcon.x = (42+6)*1;
+	        // this.sIcon.x = (42+6)*1;
+	        this.sIcon.x = gameWidth-this.sIcon.width;
 			this.IconsLayer.addChild(this.sIcon);
 
 			this.vIcon = new PIXI.Sprite.fromFrame('v-icon.png');
-	        this.vIcon.x = (42+6)*2;
+	        // this.vIcon.x = (42+6)*2;
+	        this.vIcon.y = gameHeight-this.vIcon.height;
+
 			this.IconsLayer.addChild(this.vIcon);
 
 			this.backIcon = new PIXI.Sprite.fromFrame('back-icon.png');
 	        this.backIcon.x = gameWidth-this.backIcon.width;
+	        this.backIcon.y = gameHeight-this.backIcon.height;
 			this.backIcon.visible = false;
 			this.IconsLayer.addChild(this.backIcon);
 
