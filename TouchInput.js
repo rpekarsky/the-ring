@@ -13,6 +13,7 @@ var TouchInput = (function(){
 	var touched = false;
 
 	TouchInput = {
+		enabled:true,
 		fingerControlPhases:0,
 		tapped:new Signal(),
 		back:new Signal(),
@@ -46,6 +47,7 @@ var TouchInput = (function(){
 			rendered.add(this.update.bind(this));
 		},
 		update:function(){
+			if(!this.enabled) return;
 			var posx = blob.x-touch.x;
 			var posy = blob.y-touch.y;
 			var vec = new Victor(posx,posy);
@@ -110,7 +112,7 @@ var TouchInput = (function(){
 					} else {
 						TouchInput.turnedCCV.dispatch();
 					}
-					// addBlob();
+					addBlob();
 				} else {
 
 					this.fingerControlPhases++;

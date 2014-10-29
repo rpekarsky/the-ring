@@ -7,7 +7,7 @@ var Zen = (function () {
 	Zen.prototype = Object.create(_super);
 	var p = Zen.prototype;
 	p.init = function(){
-		_super.init.call(this);
+		if(_super.init.call(this)) return;
 		this.newBlocks();
 		this.createCenterNum();
 		background.changeColor('cold green');
@@ -26,13 +26,23 @@ var Zen = (function () {
 	}
 	p.ringSolved =function(){
 		_super.ringSolved.call(this);
-		this.a += Math.round(Math.random()*30+500);
+		this.a += 1;//Math.round(Math.random()*30+500);
 		this.setCenterNum(this.a);
 		this.bulkText();
 	}
 	p.added = function(){
 		_super.added.call(this);
         this.newBlocks();
+        this.addLevelBulk();
+	}
+	var instance = false;
+	Zen.create = function(){
+		if(instance){
+			console.log('return created');
+			return instance;
+		}
+		instance = new Zen();
+		return instance;
 	}
 	return Zen;
 })();

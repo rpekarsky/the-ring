@@ -64,9 +64,14 @@ var Deadline = (function(){
     		this.DOC.y = this.animy-5;
             this.DOC.alpha = this.alpha;
     	},
-        destroy:function(){
+        pause:function(){
             if(this.animtween){
-                this.animtween.kill();
+                this.animtween.pause();
+            }
+        },
+        resume:function(){
+            if(this.animtween){
+                this.animtween.resume();
             }
         }
     };

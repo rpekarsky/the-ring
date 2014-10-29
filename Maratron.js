@@ -7,7 +7,7 @@ var Maratron = (function () {
 	Maratron.prototype = Object.create(_super);
 	var p = Maratron.prototype;
 	p.init = function(){
-		_super.init.call(this);
+		if(_super.init.call(this)) return;
 		this.deadline = this.createDeadline();
 		this.stage.addChild(this.deadlineLayer);
 		this.newBlocks();
@@ -56,8 +56,20 @@ var Maratron = (function () {
 		this.setCenterNum(this.a);
 		this.bulkText();
 	}
+	p.onOpen = function(){
+		this.deadline.resume();
+	}
 	p.onClose = function(){
-		this.deadline.destroy();
+		this.deadline.pause();
+	}
+	var instance = false;
+	Maratron.create = function(){
+		if(instance){
+			console.log('return created');
+			return instance;
+		}
+		instance = new Maratron();
+		return instance;
 	}
 	return Maratron;
 })();

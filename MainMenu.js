@@ -115,38 +115,60 @@ var MainMenu = (function () {
 			this.tappedBinding.active = false;
 			this.turnedCVBinding.active = false;
 			this.turnedCCVBinding.active = false;
-			this.layer.visible = false;
+			// this.layer.visible = false;
 			// this.ring.visible = false;
+			if(this.showAnimScale){
+				this.showAnimScale.kill();
+			}
+
+			if(this.hideAnim){
+				this.hideAnim.restart();
+			} else {
+				this.hideAnim = TweenLite.to(this.layer.scale,0.2,{
+					x:0,
+					y:0,
+					onComplete:function(){
+						this.layer.visible = false;
+						this.ring.visible = false;
+					}.bind(this)
+				});	
+			}
+
 		},
 		open:function(){
 			this.renderedBinding.active = true;
 			this.tappedBinding.active = true;
 			this.turnedCVBinding.active = true;
 			this.turnedCCVBinding.active = true;
-			// this.ring.visible = true;
+			this.ring.visible = true;
 			this.layer.visible = true;
 			background.changeColor('cold blue');
 
-			this.layer.y = gameHeight/2 + 50;
-			this.layer.scale.x = 0.7;
-			this.layer.scale.y = 0.2;
+			// this.layer.y = gameHeight/2 + 50;
+			this.layer.y = gameHeight/2;
+			this.layer.scale.x = 0.4;
+			this.layer.scale.y = 0.4;
 
 			// this.layer.scale.x = -1;
 			// this.layer.scale.y = -6;
 
-			if(this.showAnim){
-				this.showAnim.restart();
-			} else {
-				this.showAnim = TweenLite.to(this.layer,3,{
-					y:gameHeight/2,
-					ease:Elastic.easeOut
-				});
-			}
+			// if(this.showAnim){
+			// 	this.showAnim.restart();
+			// } else {
+			// 	this.showAnim = TweenLite.to(this.layer,1,{
+			// 		y:gameHeight/2,
+			// 		ease:Elastic.easeOut
+			// 	});
+			// }
 
+			if(this.hideAnim){
+				this.hideAnim.kill();
+			}
+			
 			if(this.showAnimScale){
 				this.showAnimScale.restart();
 			} else {
-				this.showAnimScale = TweenLite.to(this.layer.scale,4,{
+				this.showAnimScale = TweenLite.to(this.layer.scale,1,{
 					x:1,
 					y:1,
 					ease:Elastic.easeOut

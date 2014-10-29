@@ -15,7 +15,7 @@ var GameClass = (function(){
 	}
 	GameClass.prototype = {
 		init:function(){
-			if(this.inited) return;
+			if(this.inited) return true;
 			this.solvedRings = 0;
 			this.ringAnimScale = 1;
 			this.adder = this.createAdder();
@@ -47,11 +47,41 @@ var GameClass = (function(){
 			this.turnedCVBinding = TouchInput.turnedCV.add(this.adder.move.bind(this.adder,-1));
 			this.turnedCCVBinding = TouchInput.turnedCCV.add(this.adder.move.bind(this.adder,1));
 
+
+			this.levelText = new PIXI.BitmapText("26", {font: "35px Comfortaa", align: "right"});
+			this.levelText.alpha = 0.9;
+			this.levelText.x = 5;
+			this.levelText.y = 3;
+	        this.layer.addChild(this.levelText);
+
 			this.renderedBinding.active = false;
 			this.tappedBinding.active = false;
 			this.turnedCVBinding.active = false;
 			this.turnedCCVBinding.active = false;
 			this.inited = true;
+		},
+		addLevelBulk:function(){
+			var blobSplat = new PIXI.Sprite.fromFrame('bokeh.png');
+			blobSplat.pivot.x = blobSplat.width/2;
+			blobSplat.pivot.y = blobSplat.height/2;
+			blobSplat.x = 5;
+			blobSplat.y = 15;
+			blobSplat.tint = 0x000000;
+			// blobSplat.tint = 0xFFFFFF;
+			blobSplat.alpha = 0.5;
+			blobSplat.width = 60;
+			blobSplat.height = 60;
+
+			basestage.addChild(blobSplat);
+
+			TweenLite.to(blobSplat,1,{
+				alpha:0.03,
+				width:700,
+				height:700,
+				onComplete:function(){
+					basestage.removeChild(blobSplat)
+				}
+			});
 		},
 		close:function(){
 			this.renderedBinding.active = false;
@@ -59,7 +89,7 @@ var GameClass = (function(){
 			this.turnedCVBinding.active = false;
 			this.turnedCCVBinding.active = false;
 			this.layer.visible = false;
-			topMenu.hideBack();
+			// topMenu.hideBack();
 			if(this.onClose){
 				this.onClose();
 			}
@@ -70,7 +100,7 @@ var GameClass = (function(){
 			this.turnedCVBinding.active = true;
 			this.turnedCCVBinding.active = true;
 			this.layer.visible = true;
-			topMenu.showBack();
+			// topMenu.showBack();
 
 
 			// this.ring.y = gameHeight/2 + 50;
@@ -241,5 +271,6 @@ var GameClass = (function(){
             if(gameover) this.gameover();
         }
 	}
+	
 	return GameClass;
 })();

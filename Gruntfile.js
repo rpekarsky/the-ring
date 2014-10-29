@@ -1,9 +1,11 @@
 module.exports = function(grunt) {
   var files = [
+    'stats.min.js',
     'signals.js',
     'signals-init.js',
     'victor.js',
     'pixi.js',
+    'mousetrap.js',
     'howler.min.js',
 
 
@@ -17,10 +19,23 @@ module.exports = function(grunt) {
     'mousetrap.js',
     'Deadline.js',
     'Background.js',
+
+
+    'MenuIcons.js',
+    'Settings.js',
+    'MainMenu.js',
+    'States.js',
+
+
     'Game.js',
+    'Maratron.js',
+    'Zen.js',
+
+
     'BlockBorders.js',
-    'Score.js',
+    'Blocks.js',
     'Block.js',
+    'Score.js',
     'NewBlocks.js',
     'init.js',
     'sounds.js',
@@ -40,9 +55,9 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
-	mangle: {toplevel: true},
-	squeeze: {dead_code: false},
-    	codegen: {quote_keys: true}
+	       mangle: {toplevel: false},
+	       squeeze: {dead_code: false},
+    	 codegen: {quote_keys: false}
       },
       dist: {
         files: {

@@ -4,11 +4,20 @@ var gameHeight = window.innerHeight;
 var gameWidth = 360;
 var gameHeight = 480;
 
-var gameWidth = 320;
-var gameHeight = 320;
-// gameWidth /= 1.8;
+// var gameWidth = 320;
+// var gameHeight = 320;
+// gameWidth /= 1.8;;
 // gameWidth = (360/2)/320*360;
 // gameHeight = (360/2)/320*480;
+
+
+var stats = new Stats();
+stats.setMode(0); // 0: fps, 1: ms
+
+// align top-left
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = '0px';
+stats.domElement.style.top = '50px';
 
 
 var PixelRatio = window.devicePixelRatio;
@@ -25,23 +34,35 @@ var bgStage = new PIXI.Stage(0x000000);
 PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.gl.DST_COLOR];
 document.body.appendChild(renderer.view);
 
+document.body.appendChild( stats.domElement );
+
 
 
 var background = new Background;
 bgStage.addChild(background.layer);
 bgStage.addChild(background.layerDebug);
 
-var topMenu = new TopMenu();
+// var topMenu = new TopMenu();
 
 var states = new States();
 
+
+var settingsIcon = new SettingIcon();
+var backIcon = new BackIcon();
+// var settings = new Settings();
 var aloader = new PIXI.AssetLoader(['spriteSheet.json','font/Comfortaa.fnt']);
 aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
 	Score.init();
-	topMenu.init();
+	// topMenu.init();
+	settingsIcon.init();
+	backIcon.init();
+
+
+
 	states.open(states.states.menu);
+	// settings.init();
 	
 	quad.update();
 	// if(window.location.href.match(/mothgames.ru/) || window.location.href.match(/home\/roman/)){
@@ -55,6 +76,7 @@ aloader.load();
 var quad = new PIXI.Quad(backgroundTexture,renderTexture);
 stage.addChild(quad);
 function animate() {
+    stats.begin();
 	rendered.dispatch();
     requestAnimFrame( animate );
 
@@ -64,6 +86,7 @@ function animate() {
     renderTexture.clear();
     renderTexture.render(basestage);
     renderer.render(stage);
+    stats.end();
 }
 
 
