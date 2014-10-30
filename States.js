@@ -5,31 +5,34 @@ var States = (function () {
 			maratron: 	Maratron,
 			zen: 		Zen,
 			settings:   Settings,
+			levelBlocked: LevelBlocked,
 		}
 		this.current;
 		this.history = [];
 	}
 	States.prototype = {
-		open:function(type){
+		open:function(type,options){
 			if(type != this.current){
 				if(this.current){
 					this.current.close();
-					this.history.push(this.current);
+					this.history.push({state:this.current,options:this.current.options});
 				}
 				if(type.create){
 					this.current = type.create();
 				} else {
 					this.current = new type();
 				}
-				this.current.init();
+				this.current.init(options);
 				this.current.open();
 			}
 		},
 		back:function(){
-			var state = this.history.pop();
-			if(state){
+			var historyState = this.history.pop();
+			if(historyState){
+				var state = historyState.state;
+				var options = historyState.options;
 				this.current.close();
-				state.init();
+				state.init(options);
 				state.open();
 				this.current = state;
 			}

@@ -9,7 +9,20 @@ var baseIcon = (function(){
 		this.logo.y = gameHeight/2;
 		this.logo.tint = 0x404040;
 		this.logo.visible = false;
+
+
+		this.locked = new PIXI.Sprite.fromFrame('locked');
+		this.locked.x = this.locked.width/2;
+		this.locked.y = this.locked.height/2;
+
+		this.locked.x = gameWidth/2 + 35;
+		this.locked.y = gameHeight/2 - 80;
+		this.locked.visible = false;
+		this.locked.tint = 0x404040;
+
+
 		this.layer.addChild(this.logo);
+		this.layer.addChild(this.locked);
 		this.onhide = this.onHide.bind(this);
 	}
 	baseIcon.prototype = {
@@ -26,6 +39,7 @@ var baseIcon = (function(){
 			}
 
 			this.logo.visible = true;
+			this.locked.visible = true;
 			this.logo.alpha = 0;
 			this.logo.scale.x = 1;
 			this.logo.scale.y = 1;
@@ -46,6 +60,7 @@ var baseIcon = (function(){
 			}
 		},
 		hide:function(dir){
+			this.locked.visible = false;
 			if(this.showAnim){
 				this.showAnim.kill();
 			}
@@ -90,7 +105,7 @@ var Icons = {
 	Zen:(function() {
 		var _super = baseIcon.prototype;
 		var Zen = function(menu){
-			baseIcon.call(this,'zen.png',menu);
+			baseIcon.call(this,'resume',menu);
 		};
 		Zen.prototype = Object.create(_super);
 		var p = Zen.prototype;
@@ -127,7 +142,7 @@ var Icons = {
 		Mondo.prototype = Object.create(_super);
 		var p = Mondo.prototype;
 		p.select = function(){
-			states.open(states.states.maratron);
+			states.open(states.states.levelBlocked,{image:'mondo.png'});
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);

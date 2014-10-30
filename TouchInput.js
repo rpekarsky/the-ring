@@ -11,6 +11,7 @@ var TouchInput = (function(){
 	var startVec = touch.clone();
 	var lastDir = new Victor(0,0);
 	var touched = false;
+	var gameRect = new PIXI.Rectangle(0,0,gameWidth,gameHeight);
 
 	TouchInput = {
 		enabled:true,
@@ -200,11 +201,15 @@ var TouchInput = (function(){
 	function onmouseup(e){
 		touched = false;
 		if(moveStart == false){
+
+			if(gameRect.contains(touch.x,touch.y)){
+				
 			// if(touch.y < 50){
 			// 	TouchInput.back.dispatch();
 			// } else {
 				TouchInput.tapped.dispatch(touch);
 			// }
+			}
 		}
 		touch = new Victor(gameWidth/2,gameHeight/2);
 		startVec = touch.clone();
@@ -216,7 +221,9 @@ var TouchInput = (function(){
 
 	function onmousemove(e){
 		if(touched){
-			touch = new Victor(e.pageX,e.pageY);
+			if(gameRect.contains(e.pageX,e.pageY)){
+				touch = new Victor(e.pageX,e.pageY);
+			}			
 		}
 	}
 
@@ -228,10 +235,19 @@ var TouchInput = (function(){
 
 	function ontouchend(e){
 		if(moveStart == false){
+
+			if(gameRect.contains(touch.x,touch.y)){
+				
 			// if(touch.y < 50){
 			// 	TouchInput.back.dispatch();
 			// } else {
 				TouchInput.tapped.dispatch(touch);
+			// }
+			}
+			// if(touch.y < 50){
+			// 	TouchInput.back.dispatch();
+			// } else {
+				// TouchInput.tapped.dispatch(touch);
 			// }
 		}
 		touch = new Victor(gameWidth/2,gameHeight/2);
@@ -243,7 +259,10 @@ var TouchInput = (function(){
 	}
 
 	function ontouchmove(e){
-		touch = new Victor(e.touches[0].pageX,e.touches[0].pageY);
+
+		if(gameRect.contains(e.touches[0].pageX,e.touches[0].pageY)){
+			touch = new Victor(e.touches[0].pageX,e.touches[0].pageY);
+		}
 	}
 	// TouchInput.tapped.add(function(){
 	// 	console.log('tapped');

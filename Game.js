@@ -48,7 +48,7 @@ var GameClass = (function(){
 			this.turnedCCVBinding = TouchInput.turnedCCV.add(this.adder.move.bind(this.adder,1));
 
 
-			this.levelText = new PIXI.BitmapText("26", {font: "35px Comfortaa", align: "right"});
+			this.levelText = new PIXI.BitmapText("147150100", {font: "25px Comfortaa", align: "right"});
 			this.levelText.alpha = 0.9;
 			this.levelText.x = 5;
 			this.levelText.y = 3;

@@ -9,10 +9,15 @@ var Block = (function(){
         this.animx = this.x;
         this.animy = this.y;
         this.DOC = new PIXI.DisplayObjectContainer();
-        this.graphics = new PIXI.Graphics();
-        this.flashgraphics = new PIXI.Graphics();
-        this.DOC.addChild(this.graphics);
-        this.DOC.addChild(this.flashgraphics);
+        // this.graphics = new PIXI.Graphics();
+        this.sprite = new PIXI.Sprite.fromFrame('block');
+        this.sprite.width = BlockSize;
+        // this.sprite.tint = 0x424242;
+        this.sprite.height = BlockSize;
+        // this.flashgraphics = new PIXI.Graphics();
+        // this.DOC.addChild(this.graphics);
+        // this.DOC.addChild(this.flashgraphics);
+        this.DOC.addChild(this.sprite);
         this.DOC.pivot.x = BlockSize/2;
         this.DOC.pivot.y = BlockSize/2;
         // this.fakeGraphics = new PIXI.Graphics();
@@ -32,14 +37,14 @@ var Block = (function(){
                 gr.drawRect(0, borderWidth, BlockSize, BlockSize-borderWidth);   
                 gr.endFill();
             }
-            this.graphics.clear();
+            // this.graphics.clear();
 
-            this.flashgraphics.visible = false;
-            this.flashgraphics.beginFill(0x000000);
-            this.flashgraphics.drawRect(0,0, BlockSize, BlockSize);
-            this.flashgraphics.endFill();
+            // this.flashgraphics.visible = false;
+            // this.flashgraphics.beginFill(0x000000);
+            // this.flashgraphics.drawRect(0,0, BlockSize, BlockSize);
+            // this.flashgraphics.endFill();
 
-            drawBlock(this.graphics,0x424242,0x353535,borderWidth);
+            // drawBlock(this.graphics,0x424242,0x353535,borderWidth);
 
 
             this.x = ab(this.x,this.game.num);
@@ -64,25 +69,25 @@ var Block = (function(){
             if(this.flashingAnim){
                 this.flashingAnim.kill();
             }
-            this.flashgraphics.alpha = 1;
-            this.flashingAnim = TweenLite.to(this.flashgraphics,0.2,{
-                alpha:0.1,
-                onComplete:this.flashing.bind(this)
-            });
+            // this.flashgraphics.alpha = 1;
+            // this.flashingAnim = TweenLite.to(this.flashgraphics,0.2,{
+            //     alpha:0.1,
+            //     onComplete:this.flashing.bind(this)
+            // });
         },
         flash:function(){
-            this.flashgraphics.visible = true;
-            if(!this.isFlashing){
-                this.flashing();
-                this.isFlashing = true;
-            }
+            // this.flashgraphics.visible = true;
+            // if(!this.isFlashing){
+            //     this.flashing();
+            //     this.isFlashing = true;
+            // }
         },
         removeFlash:function(){
             this.isFlashing = false;
-            this.flashgraphics.visible = false;
-            if(this.flashingAnim){
-                this.flashingAnim.kill();
-            }
+            // this.flashgraphics.visible = false;
+            // if(this.flashingAnim){
+            //     this.flashingAnim.kill();
+            // }
         },
         setText:function(str){
         },
@@ -169,7 +174,7 @@ var Block = (function(){
             TweenLite.to(this.DOC.scale,0.6,{
                 y:0,
                 onComplete:function(){
-                    this.graphics.clear();
+                    // this.graphics.clear();
                     for (var i = 0; i < this.layer.children.length; i++) {
                         if(this.layer.children[i] == this.DOC){
                             this.layer.removeChildAt(i);

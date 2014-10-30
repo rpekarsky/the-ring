@@ -93,13 +93,15 @@ var SettingIcon = (function(){
 			basestage.addChild(this.backIcon);
 		},
 		toggleSettings:function(touch){
-			if(touch.y <= this.backIcon.height){
-				if(touch.x >= this.backIcon.x){
-					if(states.current instanceof states.states.settings){
-						states.back();
-					} else {
-						states.open(states.states.settings);
-					}
+
+			var rect = this.backIcon.getBounds();
+			rect.y = gameHeight - rect.y - rect.height;
+
+			if(rect.contains(touch.x,touch.y)){
+				if(states.current instanceof states.states.settings){
+					states.back();
+				} else {
+					states.open(states.states.settings);
 				}
 				return false;
 			}
@@ -119,15 +121,17 @@ var BackIcon = (function(){
 			this.backIcon = new PIXI.Sprite.fromFrame('settings');
 			this.backIcon.tint = 0x404040;
 			this.backIcon.x = 0;
+			this.backIcon.alpha = 0;
 			this.bindingIcon = TouchInput.tapped.add(this.toggleSettings.bind(this), null, 3);
 			basestage.addChild(this.backIcon);
 		},
 		toggleSettings:function(touch){
-			if(touch.y <= this.backIcon.height){
-				if(touch.x <= this.backIcon.width){
-					states.back();
-					return false;
-				}
+			var rect = this.backIcon.getBounds();
+			rect.y = gameHeight - rect.y - rect.height;
+
+			if(rect.contains(touch.x,touch.y)){
+				states.back();
+				return false;
 			}
 		}
 	}

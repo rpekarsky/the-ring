@@ -78,7 +78,7 @@ var MainMenu = (function () {
 			// Mousetrap.bind('down', function(){
 			// 	states.open(states.states.menu);
 			// }.bind(this));
-			TouchInput.back.add(function(){states.open(states.states.menu)});
+			TouchInput.back.add(function(){states.back()});
 
 			basestage.addChild(this.layer);
 			this.set(this.MenuStates[this.state]);
