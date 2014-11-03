@@ -1,56 +1,100 @@
 var Score = (function () {
-	var curScore = 0;
-	var maxScore = JSON.parse(localStorage.getItem('maxScore') || 0);
-
-	var maxScoreDOM = document.createElement('div');
-	maxScoreDOM.className = 'over highscore';
-	var curScoreDOM = document.createElement('div');
-	curScoreDOM.className = 'over score';
-
-	var LevelDOM = document.createElement('div');
-	LevelDOM.className = 'over level';
-
-	var multiplerDOM = document.createElement('div');
-	multiplerDOM.className = 'over multipler';
+	var scores = {};
+	var scoreSprite = undefined;
+	var highScoreSprite = undefined;
+	var newHighScoreSprite = undefined;
+	var layer = new PIXI.DisplayObjectContainer();
 
 	return {
 		init:function(){
-			document.body.appendChild(curScoreDOM);
-			document.body.appendChild(maxScoreDOM);
-			document.body.appendChild(LevelDOM);
-			document.body.appendChild(multiplerDOM);
-			this.update();
+			scoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('yourscore'));
+			scoreSprite.tint = 0x404040;
+			scoreSprite.pivot.x = scoreSprite.width/2;
+			scoreSprite.x = gameWidth/2;
+
+			highScoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('highscore'));
+			highScoreSprite.tint = 0x404040;
+			highScoreSprite.pivot.x = highScoreSprite.width/2;
+			highScoreSprite.x = gameWidth/2;
+
+			highScoreSprite.y = 50;
+
+			newHighScoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('new_highscore'));
+			newHighScoreSprite.tint = 0x404040;
+			newHighScoreSprite.pivot.x = newHighScoreSprite.width/2;
+			newHighScoreSprite.x = gameWidth/2;
+
+			newHighScoreSprite.y = 100;
+
+			layer.pivot.x = gameWidth/2;
+			layer.pivot.y = gameHeight/2;
+
+			layer.x = gameWidth/2;
+			layer.y = gameHeight/2;
+
+
+			layer.addChild(scoreSprite);
+			layer.addChild(highScoreSprite);
+			layer.addChild(newHighScoreSprite);
+			basestage.addChild(layer);
+			layer.visible = false;
+			scores = Storage.get('scores') || {
+				total:0,
+				zen:{
+					score:0,
+					highScore:0
+				},
+				mondo:{
+					score:0,
+					highScore:0
+				},
+				dharma:{
+					score:0,
+					highScore:0
+				},
+				koan:{
+					score:0,
+					highScore:0
+				}
+			};
 		},
 		update:function(){
-			curScoreDOM.textContent = 'Score: '+ curScore;
-			maxScoreDOM.textContent = 'Max Score: '+ maxScore;
-			// multiplerDOM.textContent = 'x'+game.level.multipler;
-			// LevelDOM.textContent = 'Level: '+ ((game.levelNum||0)+1);
+			Storage.set('scores',scores);
 		},
-		setLevel:function(score){
-			curScore = score;
-			if(curScore > maxScore){
-				this.setMaxScore(curScore);
+		showAnimation:function(){
+
+		},
+		setScore:function(type,score){
+			if(scores[type] == undefined) {
+				scores[type] = {};
+			}
+			scores[type].score = score;
+			this.update();
+		},
+		getScore:function(type){
+			return scores[type].score || 0;
+		},
+		getTotal:function(){
+			return scores.total || 0;
+		},
+		getHighScore:function(type){
+			return scores[type].highScore || 0;
+		},
+		addScore:function(type,score){
+			if(scores[type] == undefined) {
+				scores[type] = {};
+			}
+			scores.total += score;
+			scores[type].score += score;
+			this.update();
+			return scores[type].score;
+		},
+		updateHighScore:function(type){
+			if(scores[type].score > scores[type].highScore){
+				scores[type].highScore = scores[type].score;
 			}
 			this.update();
-		},
-		setScore:function(score){
-			curScore = score;
-			if(curScore > maxScore){
-				this.setMaxScore(curScore);
-			}
-			this.update();
-		},
-		setMaxScore:function(score){
-			maxScore = score;
-			localStorage.setItem('maxScore',maxScore);
-			this.update();
-		},
-		getScore:function(){
-			return curScore;
-		},
-		addScore:function(scoreToAdd){
-			this.setScore(curScore+scoreToAdd);
+			return scores[type].highScore;
 		}
 	};
 })();

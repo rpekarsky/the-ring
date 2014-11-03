@@ -89,6 +89,7 @@ var SettingIcon = (function(){
 			this.backIcon = new PIXI.Sprite.fromFrame('settings');
 			this.backIcon.tint = 0x404040;
 			this.backIcon.x = gameWidth-this.backIcon.width;
+			this.backIcon.y = 3;
 			this.bindingIcon = TouchInput.tapped.add(this.toggleSettings.bind(this), null, 2);
 			basestage.addChild(this.backIcon);
 		},
@@ -147,7 +148,6 @@ var Settings = (function () {
 		this.vibro = new SettingsOption('vibro-opt');
 		this.binding = TouchInput.tapped.add(this.processTouch.bind(this), null, 1);
 		this.binding.active = false;
-
 		basestage.addChild(this.layer);
 	};	
 	Settings.prototype = {

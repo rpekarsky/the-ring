@@ -25,6 +25,7 @@ var MainMenu = (function () {
 				return
 			}
 
+
 	        this.bg.beginFill(0x000000);
 	        this.bg.alpha = 0.3;
 	        this.bg.drawRect(0, 120-5, 24*20, 2);

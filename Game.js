@@ -1,9 +1,137 @@
 var GameClass = (function(){
+	var CurrentScore = function(game){
+		this.game = game;
+		this.layer = new PIXI.DisplayObjectContainer();
+
+		this.layer.x = gameWidth/2;
+		this.layer.y = gameHeight/2;
+
+
+		this.bg = new PIXI.Sprite(PIXI.Texture.fromFrame('bokeh-blur.png'));
+		this.bg.tint = 0x000000;
+		this.bg.alpha = 3;
+		this.bg.pivot.x = this.bg.width/2;
+		this.bg.pivot.y = this.bg.height/2;
+		this.bg.width = 300;
+		this.bg.height = 300;
+
+
+		this.layer.addChild(this.bg);
+
+		this.scoreLayer = new PIXI.DisplayObjectContainer();
+		this.scoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('yourscore'));
+		this.scoreSprite.pivot.x = this.scoreSprite.width/2;
+		this.scoreSprite.tint = 0x454545;
+        this.scoreLayer.addChild(this.scoreSprite);
+
+		this.scoreText = new PIXI.BitmapText('', {font: "40px Comfortaa", align: "right"});
+        this.scoreText.alpha = 0.9;
+		this.scoreText.x = - this.scoreText.width/2 + 5;
+		this.scoreText.y = 30;
+        this.scoreLayer.addChild(this.scoreText);
+
+
+
+		this.highScoreLayer = new PIXI.DisplayObjectContainer();
+		this.highScoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('highscore'));
+		this.highScoreSprite.pivot.x = this.highScoreSprite.width/2;
+		this.highScoreSprite.tint = 0x454545;
+        this.highScoreLayer.addChild(this.highScoreSprite);
+
+		this.highScoreText = new PIXI.BitmapText('', {font: "40px Comfortaa", align: "right"});
+        this.highScoreText.alpha = 0.9;
+		this.highScoreText.x = - this.highScoreText.width/2 + 5;
+		this.highScoreText.y = 30;
+        this.highScoreLayer.addChild(this.highScoreText);
+
+
+
+		this.newHighScoreLayer = new PIXI.DisplayObjectContainer();
+		this.newHighScoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('new_highscore'));
+		this.newHighScoreSprite.pivot.x = this.newHighScoreSprite.width/2;
+		this.newHighScoreSprite.tint = 0x454545;
+        this.newHighScoreLayer.addChild(this.newHighScoreSprite);
+
+
+        this.scoreLayer.y = -50;
+        this.highScoreLayer.y = 30;
+        this.newHighScoreLayer.y = -gameHeight/2+30;
+
+        this.layer.addChild(this.scoreLayer);
+        this.layer.addChild(this.highScoreLayer);
+        this.layer.addChild(this.newHighScoreLayer);
+
+
+        this.layer.visible = false;
+
+		this.binding = TouchInput.tapped.add(this.processTouch.bind(this), null, 1);
+		this.binding.active = false;
+
+		this.renderedBinding = rendered.add(this.updateScorePos.bind(this));
+		this.renderedBinding.active = false;
+	}
+	CurrentScore.prototype = {
+		processTouch:function(){
+			this.hide();
+			return false;
+		},
+		show:function(){
+			// this.game.close();
+			this.renderedBinding.active = true;
+			this.binding.active = true;
+        	this.layer.visible = true;
+        	this.newHighScoreLayer.visible = false;
+        	var score = Score.getScore(this.game.type);
+        	var highscore = Score.getHighScore(this.game.type);
+
+        	if(score > highscore){
+        		this.newHighScoreLayer.visible = true;
+        	}
+
+			this.scoreText.setText(score.toString());
+	        this.scoreText.alpha = 0.9;
+
+			this.highScoreText.setText(highscore.toString());
+	        this.highScoreText.alpha = 0.9;
+
+			// this.scoreLayer.visible = true;
+			// this.scoreLayer.scale.x = this.scoreLayer.scale.y = 0;
+			// TweenLite.killTweensOf(this.scoreLayer.scale);
+			// TweenLite.to(this.scoreLayer.scale,0.7,{
+			// 	x:1,
+			// 	y:1,
+			// 	ease:Elastic.easeOut
+			// });
+			
+		},
+		updateScorePos:function(){
+			this.scoreText.x = - this.scoreText.width/2 + 5;
+			this.highScoreText.x = - this.highScoreText.width/2 + 5;
+		},
+		hide:function(){
+			this.renderedBinding.active = false;
+			this.binding.active = false;
+        	this.layer.visible = false;
+        	// this.game.open();
+			// TweenLite.killTweensOf(this.scoreLayer.scale);
+			// TweenLite.to(this.scoreLayer.scale,0.3,{
+			// 	x:0,
+			// 	y:0,
+			// 	onComplete:function(){
+			// 		this.scoreLayer.visible = false;
+			// 	}.bind(this)
+			// });
+		}
+	}
+
+
+
 	function GameClass(){
 		this.num = 24;
 		this.height = 6;
+		this.type = 'none';
 		this.blocks = new Blocks();
-		this.stage = new PIXI.Stage(0x000000);
+		this.stage = GameClass.stage;
 		this.blockLayer = new PIXI.DisplayObjectContainer();
 		this.blockPopLayer = new PIXI.DisplayObjectContainer();
 		this.levelEdgeLayer = new PIXI.DisplayObjectContainer();
@@ -13,8 +141,16 @@ var GameClass = (function(){
 		this.levelEdge = new PIXI.Graphics();
 		this.ring = new PIXI.Strip(this.rtx);
 	}
+	GameClass.stage = new PIXI.Stage(0x000000);
 	GameClass.prototype = {
 		init:function(){
+			Score.setScore(this.type,0);
+			while(this.stage.children.length){
+				this.stage.removeChildren(0,1);
+			}
+			this.stage.addChild(this.blockLayer);
+			this.stage.addChild(this.blockPopLayer);
+			this.stage.addChild(this.levelEdgeLayer);
 			if(this.inited) return true;
 			this.solvedRings = 0;
 			this.ringAnimScale = 1;
@@ -34,11 +170,10 @@ var GameClass = (function(){
 			this.ring.y = gameHeight/2;
 			this.ring.alpha = 1;
 
+			this.currentScore = new CurrentScore(this);
+
 	        this.blockPopLayer.addChild(this.blackBorder);
 	        this.levelEdgeLayer.addChild(this.levelEdge);
-			this.stage.addChild(this.blockLayer);
-			this.stage.addChild(this.blockPopLayer);
-			this.stage.addChild(this.levelEdgeLayer);
 			this.layer.addChild(this.ring)
 			basestage.addChild(this.layer);
 
@@ -47,17 +182,27 @@ var GameClass = (function(){
 			this.turnedCVBinding = TouchInput.turnedCV.add(this.adder.move.bind(this.adder,-1));
 			this.turnedCCVBinding = TouchInput.turnedCCV.add(this.adder.move.bind(this.adder,1));
 
+			this.scoreText = new PIXI.BitmapText('', {font: "25px Comfortaa", align: "right"});
+	        this.scoreText.alpha = 0.9;
+			this.scoreText.x = 25;
+			this.scoreText.y = 3;
+	        this.layer.addChild(this.scoreText);
 
-			this.levelText = new PIXI.BitmapText("147150100", {font: "25px Comfortaa", align: "right"});
-			this.levelText.alpha = 0.9;
-			this.levelText.x = 5;
-			this.levelText.y = 3;
-	        this.layer.addChild(this.levelText);
+			this.scoreIcon = new PIXI.Sprite.fromFrame('star');
+	        this.scoreIcon.tint = 0x404040;
+	        this.scoreIcon.scale.set(0.7);
+			this.scoreIcon.x = 3;
+			this.scoreIcon.y = 3;
+	        this.layer.addChild(this.scoreIcon);
+
+
+	        this.layer.addChild(this.currentScore.layer);
 
 			this.renderedBinding.active = false;
 			this.tappedBinding.active = false;
 			this.turnedCVBinding.active = false;
 			this.turnedCCVBinding.active = false;
+			this.updateScore();
 			this.inited = true;
 		},
 		addLevelBulk:function(){
@@ -181,11 +326,30 @@ var GameClass = (function(){
 		added:function(){
             this.bulk();
             Sound.play('place');
+            this.addScore(50);
+		},
+		setScore:function(score){
+			Score.setScore(this.type,score);
+			this.updateScore();
+		},
+		addScore:function(score){
+			Score.addScore(this.type,score);
+			this.updateScore();
 		},
 		ringSolved:function(){
 			this.solvedRings++
 			Sound.play('complete');
+			this.addScore(500);
 			this.check();
+		},
+		updateScore:function(){
+			var scoreText = Score.getScore(this.type).toString();
+			this.scoreIcon.visible = true;
+			if(Score.getScore(this.type) == 0){
+				this.scoreIcon.visible = false;
+				scoreText = '';
+			}
+			this.scoreText.setText(scoreText);
 		},
 		gameover:function(){
 			TweenLite.killTweensOf(this);
@@ -201,6 +365,9 @@ var GameClass = (function(){
 			background.removeParticles();
 			background.grayscale();
             Sound.play('death');
+			this.currentScore.show();
+			Score.updateHighScore(this.type);
+            this.setScore(0);
 		},
 		render:function(){
 			if(this.centerNumText){

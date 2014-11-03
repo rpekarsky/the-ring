@@ -34,6 +34,17 @@ var Blocks = (function(){
                 }
             };
         },
+        clearAll:function(){
+            var toRemove = []
+            for (var i = 0; i < this.gameobjects.length; i++) {
+                toRemove.push(this.gameobjects[i]);
+            };
+            for (var i = 0; i < toRemove.length; i++) {
+                toRemove[i].destroy();
+                this.destroy(toRemove[i]);
+                this.remove(toRemove[i]);
+            };
+        },
         remove:function(block){
             for (var i = 0; i < this.gameobjects.length; i++) {
                 if(this.gameobjects[i] == block){

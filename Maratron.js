@@ -2,6 +2,7 @@ var Maratron = (function () {
 	var _super = GameClass.prototype;
 	function Maratron(){
 		GameClass.call(this);
+		this.type = 'mondo';
 		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 	}
 	Maratron.prototype = Object.create(_super);

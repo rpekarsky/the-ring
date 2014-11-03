@@ -150,7 +150,7 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Mondo = function(menu){
 			baseIcon.call(this,'mondo.png',menu);
-			this.setLocked();
+			// this.setLocked();
 		};
 		Mondo.prototype = Object.create(_super);
 		var p = Mondo.prototype;
@@ -177,7 +177,7 @@ var Icons = {
 		var p = Dharma.prototype;
 		p.select = function(){
 			if(this.locked){
-				states.open(states.states.levelBlocked);
+				states.open(states.states.levelBlocked,{needScore:10});
 				return;
 			}
 			states.open(states.states.maratron);
@@ -196,7 +196,7 @@ var Icons = {
 		Resume.prototype = Object.create(_super);
 		var p = Resume.prototype;
 		p.select = function(){
-			states.open(states.states.zen);
+			states.open(states.states.zen.resume);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);

@@ -2,6 +2,7 @@ var Zen = (function () {
 	var _super = GameClass.prototype;
 	function Zen(){
 		GameClass.call(this);
+		this.type = 'zen';
 		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 	}
 	Zen.prototype = Object.create(_super);
@@ -11,6 +12,8 @@ var Zen = (function () {
 		this.newBlocks();
 		this.createCenterNum();
 		background.changeColor('cold green');
+
+	    this.layer.addChild(this.currentScore.layer);
 		this.a = 0;
 	}
 	p.newBlocks = function(){
@@ -33,7 +36,7 @@ var Zen = (function () {
 	p.added = function(){
 		_super.added.call(this);
         this.newBlocks();
-        this.addLevelBulk();
+        // this.addLevelBulk();
 	}
 	var instance = false;
 	Zen.create = function(){
@@ -44,5 +47,6 @@ var Zen = (function () {
 		instance = new Zen();
 		return instance;
 	}
+	Zen.resume = Zen.create;
 	return Zen;
 })();

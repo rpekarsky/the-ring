@@ -34,7 +34,7 @@ var bgStage = new PIXI.Stage(0x000000);
 PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.gl.DST_COLOR];
 document.body.appendChild(renderer.view);
 
-document.body.appendChild( stats.domElement );
+// document.body.appendChild( stats.domElement );
 
 
 
@@ -87,13 +87,6 @@ function animate() {
     renderTexture.clear();
     renderTexture.render(basestage);
     renderer.render(stage);
-
-
-	// var now = Date.now();
-	// var delta = now - time;
-	// console.log(1000/30 - delta);
-	// setTimeout(animate,1000/10);
-	// time = now;
 }
 
 

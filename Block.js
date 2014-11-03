@@ -161,6 +161,13 @@ var Block = (function(){
                 // setTimeout(Block.check,0.3*1000);
             }
         },
+        destroy:function(){
+            for (var i = 0; i < this.layer.children.length; i++) {
+                if(this.layer.children[i] == this.DOC){
+                    this.layer.removeChildAt(i);
+                }
+            };
+        },
         remove:function(){
             var findedBlock = this.blocks.find(this.x,this.y-1);
             if(findedBlock){
@@ -175,11 +182,7 @@ var Block = (function(){
                 y:0,
                 onComplete:function(){
                     // this.graphics.clear();
-                    for (var i = 0; i < this.layer.children.length; i++) {
-                        if(this.layer.children[i] == this.DOC){
-                            this.layer.removeChildAt(i);
-                        }
-                    };
+                    this.destroy();
                     this.blocks.destroy(this);
                 }.bind(this)
             });

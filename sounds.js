@@ -25,12 +25,12 @@ var Sound = (function () {
 			    formats: [ "ogg" ]
 			});
 
-			musicSnd = new buzz.sound( "/sounds/music", {
-			    formats: [ "ogg" ],
-			    autoplay: true,
-			    loop: true,
-			    volume: 20
-			});
+			// musicSnd = new buzz.sound( "/sounds/music", {
+			//     formats: [ "ogg" ],
+			//     autoplay: true,
+			//     loop: true,
+			//     volume: 20
+			// });
 			// musicSnd.loop()
 
 

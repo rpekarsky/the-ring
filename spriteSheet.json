@@ -125,6 +125,48 @@
 			"frame": {"x":43,"y":400,"w":60,"h":54},
 			"spriteSourceSize": {"x":0,"y":0,"w":60,"h":54},
 			"sourceSize": {"w":0,"h":0}
+		},
+		"yourscore":
+		{
+			"frame": {"x":804,"y":468,"w":179,"h":44},
+			"spriteSourceSize": {"x":0,"y":0,"w":179,"h":44},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"highscore":
+		{
+			"frame": {"x":804,"y":418,"w":137,"h":50},
+			"spriteSourceSize": {"x":0,"y":0,"w":137,"h":50},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"new_highscore":
+		{
+			"frame": {"x":524,"y":459,"w":228,"h":52},
+			"spriteSourceSize": {"x":0,"y":0,"w":228,"h":52},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"new_level":
+		{
+			"frame": {"x":314,"y":459,"w":210,"h":52},
+			"spriteSourceSize": {"x":0,"y":0,"w":210,"h":52},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"star":
+		{
+			"frame": {"x":103,"y":400,"w":34,"h":34},
+			"spriteSourceSize": {"x":0,"y":0,"w":34,"h":34},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"tut1":
+		{
+			"frame": {"x":778,"y":98,"w":246,"h":122},
+			"spriteSourceSize": {"x":0,"y":0,"w":246,"h":122},
+			"sourceSize": {"w":0,"h":0}
+		},
+		"tut2":
+		{
+			"frame": {"x":595,"y":98,"w":183,"h":122},
+			"spriteSourceSize": {"x":0,"y":0,"w":183,"h":122},
+			"sourceSize": {"w":0,"h":0}
 		}
 	},
 	"meta": {
