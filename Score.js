@@ -64,37 +64,44 @@ var Score = (function () {
 		showAnimation:function(){
 
 		},
+		createDummy:function(type){
+			var scObj = {
+				score:0,
+				highscore:0
+			};
+			scores[type] = scObj;
+			return scObj;
+		},
 		setScore:function(type,score){
-			if(scores[type] == undefined) {
-				scores[type] = {};
-			}
-			scores[type].score = score;
+			var scObj = scores[type] || this.createDummy(type);
+			scObj.score = score;
 			this.update();
 		},
 		getScore:function(type){
+			var scObj = scores[type] || this.createDummy(type);
 			return scores[type].score || 0;
 		},
 		getTotal:function(){
 			return scores.total || 0;
 		},
 		getHighScore:function(type){
-			return scores[type].highScore || 0;
+			var scObj = scores[type] || this.createDummy(type);
+			return scObj.highScore || 0;
 		},
 		addScore:function(type,score){
-			if(scores[type] == undefined) {
-				scores[type] = {};
-			}
+			var scObj = scores[type] || this.createDummy(type);
 			scores.total += score;
-			scores[type].score += score;
+			scObj.score += score;
 			this.update();
-			return scores[type].score;
+			return scObj.score;
 		},
 		updateHighScore:function(type){
-			if(scores[type].score > scores[type].highScore){
-				scores[type].highScore = scores[type].score;
+			var scObj = scores[type] || this.createDummy(type);
+			if(scObj.score > scObj.highScore){
+				scObj.highScore = scObj.score;
 			}
 			this.update();
-			return scores[type].highScore;
+			return scObj.highScore;
 		}
 	};
 })();

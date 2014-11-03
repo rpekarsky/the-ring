@@ -4,8 +4,8 @@ var gameHeight = window.innerHeight;
 var gameWidth = 360;
 var gameHeight = 480;
 
-var gameWidth = 320;
-var gameHeight = 320;
+// var gameWidth = 320;
+// var gameHeight = 320;
 // gameWidth /= 1.8;;
 // gameWidth = (360/2)/320*360;
 // gameHeight = (360/2)/320*480;

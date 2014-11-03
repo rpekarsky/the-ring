@@ -112,6 +112,8 @@ var GameClass = (function(){
 			this.renderedBinding.active = false;
 			this.binding.active = false;
         	this.layer.visible = false;
+        	this.game.resume();
+			this.game.newBlocks();
         	// this.game.open();
 			// TweenLite.killTweensOf(this.scoreLayer.scale);
 			// TweenLite.to(this.scoreLayer.scale,0.3,{
@@ -130,11 +132,12 @@ var GameClass = (function(){
 		this.num = 24;
 		this.height = 6;
 		this.type = 'none';
-		this.blocks = new Blocks();
+		this.blocks = new Blocks(this);
 		this.stage = GameClass.stage;
 		this.blockLayer = new PIXI.DisplayObjectContainer();
 		this.blockPopLayer = new PIXI.DisplayObjectContainer();
 		this.levelEdgeLayer = new PIXI.DisplayObjectContainer();
+		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 		this.layer = new PIXI.DisplayObjectContainer();
 		this.rtx = new PIXI.RenderTexture(this.num*20, (this.height+1)*20);
 		this.blackBorder = new PIXI.Graphics();
@@ -151,6 +154,7 @@ var GameClass = (function(){
 			this.stage.addChild(this.blockLayer);
 			this.stage.addChild(this.blockPopLayer);
 			this.stage.addChild(this.levelEdgeLayer);
+			this.stage.addChild(this.deadlineLayer);
 			if(this.inited) return true;
 			this.solvedRings = 0;
 			this.ringAnimScale = 1;
@@ -205,6 +209,48 @@ var GameClass = (function(){
 			this.updateScore();
 			this.inited = true;
 		},
+		save:function(){
+			var data = {
+				adder:this.adder.save(),
+				blocks:this.blocks.save(),
+				type:this.type,
+				score:Score.getScore(this.type),
+			};
+			Storage.set('last_game',data);
+		},
+		pause:function(){
+			if(this.deadline){
+				this.deadline.pause();
+			}
+
+			if(this.adder){
+				this.adder.hide();
+			}
+
+			if(this.centerNumText){
+				this.centerNumText.visible = false;
+			}
+		},
+		resume:function(){
+			if(this.deadline){
+				this.deadline.resume();
+			}
+
+			if(this.adder){
+				this.adder.show();
+			}
+
+			if(this.centerNumText){
+				this.centerNumText.visible = true;
+			}
+		},
+		load:function(data){
+			this.adder.load(data.adder);
+			this.blocks.load(data.blocks);
+			Score.setScore(this.type,data.score);
+			this.updateScore();
+			console.log('loaded');
+		},
 		addLevelBulk:function(){
 			var blobSplat = new PIXI.Sprite.fromFrame('bokeh.png');
 			blobSplat.pivot.x = blobSplat.width/2;
@@ -238,6 +284,7 @@ var GameClass = (function(){
 			if(this.onClose){
 				this.onClose();
 			}
+			this.save();
 		},
 		open:function(){
 			this.renderedBinding.active = true;
@@ -245,32 +292,6 @@ var GameClass = (function(){
 			this.turnedCVBinding.active = true;
 			this.turnedCCVBinding.active = true;
 			this.layer.visible = true;
-			// topMenu.showBack();
-
-
-			// this.ring.y = gameHeight/2 + 50;
-			// this.ringAnimScale = 0.7;
-			// this.ring.scale.y = 0.2;
-
-			// if(this.showAnim){
-			// 	this.showAnim.restart();
-			// } else {
-			// 	this.showAnim = TweenLite.to(this.ring,3,{
-			// 		y:gameHeight/2,
-			// 		ease:Elastic.easeOut
-			// 	});
-			// }
-
-			// if(this.showAnimScale){
-			// 	this.showAnimScale.restart();
-			// } else {
-			// 	this.showAnimScale = TweenLite.to(this.ring.scale,4,{
-			// 		x:1,
-			// 		y:1,
-			// 		ease:Elastic.easeOut
-			// 	});				
-			// }
-
 
 			if(this.onOpen){
 				this.onOpen();
@@ -327,6 +348,8 @@ var GameClass = (function(){
             this.bulk();
             Sound.play('place');
             this.addScore(50);
+
+
 		},
 		setScore:function(score){
 			Score.setScore(this.type,score);
@@ -366,6 +389,8 @@ var GameClass = (function(){
 			background.grayscale();
             Sound.play('death');
 			this.currentScore.show();
+			this.pause();
+			this.adder.clear();
 			Score.updateHighScore(this.type);
             this.setScore(0);
 		},
@@ -396,6 +421,41 @@ var GameClass = (function(){
 			var block = new Block(x,y);
 			block.init(this);
 			return block;
+		},
+		getHoleIfExists:function(){
+			var holes = [];
+            for (var i = 0; i < 24; i++) {
+                if(!this.blocks.find(i,5)){
+                	holes.push(i);
+                }
+            };
+            if(!holes.length) return false;
+
+            var hole = [];
+            var holeStart = holes[0];
+            // console.log(holeStart);
+            var nextI = 1;
+            var prevI = 1;
+            var next = ab(holeStart+nextI,this.num);
+            var prev = ab(holeStart-prevI);
+            while(inArray(prev,holes) && !inArray(prev,hole)){
+            	// console.log('add prev',prev);
+            	hole.push(prev);
+            	prevI++;
+            	prev = ab(holeStart-prevI,this.num);
+            }
+            hole.push(holes[0]);
+            while(inArray(next,holes) && !inArray(next,hole)){
+            	// console.log('add next',next);
+            	hole.push(next);
+            	nextI++;
+            	next = ab(holeStart+nextI,this.num);
+            	// console.log('search',next);
+            }
+            // console.log(hole,holes);
+
+            if(hole.length != holes.length) return false;
+            return hole;
 		},
 		check:function(){
             var completed = true;

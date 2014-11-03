@@ -1,3 +1,26 @@
+var LockedSprite = (function(){
+	function LockedSprite(){
+		this.layer = new PIXI.DisplayObjectContainer();
+
+		this.lockedSprite = new PIXI.Sprite.fromFrame('locked');
+		this.lockedSprite.pivot.x = this.lockedSprite.width/2;
+		this.lockedSprite.pivot.y = this.lockedSprite.height/2;
+		this.lockedSprite.tint = 0x404040;
+
+		this.layer.addChild(this.lockedSprite);
+		this.layer.visible = false;
+	}
+	LockedSprite.prototype = {
+		show:function(){
+			this.layer.visible = true;
+		},
+		hide:function(){
+			this.layer.visible = false;
+		}
+	}
+	return LockedSprite;
+})();
+
 var baseIcon = (function(){
 	function baseIcon(image,menu){
 		this.menu = menu;
@@ -10,26 +33,25 @@ var baseIcon = (function(){
 		this.logo.tint = 0x404040;
 		this.logo.visible = false;
 
-		this.lockedSprite = new PIXI.Sprite.fromFrame('locked');
-		this.lockedSprite.x = this.lockedSprite.width/2;
-		this.lockedSprite.y = this.lockedSprite.height/2;
+		this.score = new ScoreLine();
+		this.lockedSprite = new LockedSprite();
+		this.lockedSprite.layer.x = gameWidth/2 + 55;
+		this.lockedSprite.layer.y = gameHeight/2 - 60;
 
-		this.lockedSprite.x = gameWidth/2 + 35;
-		this.lockedSprite.y = gameHeight/2 - 80;
-		this.lockedSprite.visible = false;
-		this.lockedSprite.tint = 0x404040;
-
+		this.score.layer.x = gameWidth/2;
+		this.score.layer.y = 20;
 
 		this.layer.addChild(this.logo);
-		this.layer.addChild(this.lockedSprite);
+		this.layer.addChild(this.lockedSprite.layer);
+		this.layer.addChild(this.score.layer);
 		this.onhide = this.onHide.bind(this);
 	}
 	baseIcon.prototype = {
 		show:function(dir){
-
 			// console.log('show',this);
 			// TweenLite.killTweensOf(this.logo);
 			// TweenLite.killTweensOf(this.logo.scale);
+			this.score.show();
 
 			if(this.hideAnim){
 				this.hideAnim.kill();
@@ -38,7 +60,7 @@ var baseIcon = (function(){
 				this.hideAnimScale.kill();
 			}
 			if(this.locked){
-				this.lockedSprite.visible = true;
+				this.lockedSprite.show();
 			}
 
 
@@ -62,12 +84,16 @@ var baseIcon = (function(){
 				});
 			}
 		},
+		update:function(){
+
+		},
 		setLocked:function(){
 			this.locked = true;
 			
 		},
 		hide:function(dir){
-			this.lockedSprite.visible = false;
+			this.lockedSprite.hide();
+			this.score.hide();
 			if(this.showAnim){
 				this.showAnim.kill();
 			}
@@ -121,7 +147,11 @@ var Icons = {
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
+			this.update();
 			background.changeColor('cold green');
+		}
+		p.update = function(){
+			this.score.set(Score.getHighScore('zen'));
 		}
 		return Zen;
 	})(),
@@ -142,7 +172,11 @@ var Icons = {
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
+			this.update();
 			background.changeColor('cold blue');
+		}
+		p.update = function(){
+			this.score.set(Score.getHighScore('koan'));
 		}
 		return Koan;
 	})(),
@@ -159,11 +193,15 @@ var Icons = {
 				states.open(states.states.levelBlocked,{needScore:10});
 				return;
 			}
-			states.open(states.states.maratron);
+			states.open(states.states.mondo);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
+			this.update();
 			background.changeColor('cold coffee');
+		}
+		p.update = function(){
+			this.score.set(Score.getHighScore('mondo'));
 		}
 		return Mondo;
 	})(),
@@ -184,7 +222,11 @@ var Icons = {
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
+			this.update();
 			background.changeColor('cold magent');
+		}
+		p.update = function(){
+			this.score.set(Score.getHighScore('dharma'));
 		}
 		return Dharma;
 	})(),
@@ -196,11 +238,21 @@ var Icons = {
 		Resume.prototype = Object.create(_super);
 		var p = Resume.prototype;
 		p.select = function(){
-			states.open(states.states.zen.resume);
+
+			if(this.saved_data){
+				console.log(this.saved_data);
+				states.open(states.states[this.saved_data.type],{data:this.saved_data});
+			}
+			// states.open(states.states.zen.resume);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
+			this.update();
 			background.changeColor('cold magent');
+		}
+		p.update = function(){
+			this.saved_data = Storage.get('last_game')||0;
+			this.score.set(this.saved_data.score);
 		}
 		return Resume;
 	})()

@@ -34,6 +34,21 @@ var Blocks = (function(){
                 }
             };
         },
+        load:function(data){
+            this.clearAll();
+            for (var i = 0; i < data.length; i++) {
+                var bl = this.game.createBlock(data[i].x,data[i].y);
+                bl.add();
+            };
+        },
+        save:function(){
+            var toSave = [];
+            for (var i = 0; i < this.gameobjects.length; i++) {
+                var bl = this.gameobjects[i];
+                toSave.push({x:bl.x,y:bl.y});
+            };
+            return toSave;
+        },
         clearAll:function(){
             var toRemove = []
             for (var i = 0; i < this.gameobjects.length; i++) {

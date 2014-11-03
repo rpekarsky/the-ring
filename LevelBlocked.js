@@ -13,35 +13,27 @@ var LevelBlocked = (function () {
 		this.info.pivot.x = this.info.width/2;
 		this.info.pivot.y = this.info.height/2;
 
-		this.needScoreText = new PIXI.BitmapText('0', {font: "40px Comfortaa", align: "right"});
-		this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;
-		this.needScoreText.y = gameHeight/2-25-10;
-		
+		this.scoreLine = new ScoreLine();
+		this.scoreLine.layer.x = gameWidth/2;
+		this.scoreLine.layer.y = 30;
 
 
+		this.scoreLineNeed = new ScoreLine();
+		this.scoreLineNeed.layer.x = gameWidth/2;
+		this.scoreLineNeed.layer.y = gameHeight/2-25-5;
+		this.scoreLineNeed.layer.scale.set(1.9);
 
-		this.totalScoreText = new PIXI.BitmapText('', {font: "25px Comfortaa", align: "right"});
-       	this.totalScoreText.alpha = 0.9;
-		this.totalScoreText.x = gameWidth/2 - this.totalScoreText.width/2;;
-		this.totalScoreText.y = gameHeight-25-20;
-        this.layer.addChild(this.totalScoreText);
-
-
-        this.highScoreIcon = new PIXI.Sprite(PIXI.Texture.fromFrame('star'));
-        this.highScoreIcon.scale.set(0.7);
-        this.highScoreIcon.tint = 0x404040;
-        this.highScoreIcon.x = this.totalScoreText.x  - this.totalScoreText.width/2 - 30;
-		this.highScoreIcon.y = gameHeight-25-20;
-
-        this.layer.addChild(this.highScoreIcon);
-
-
+		// this.needScoreText = new PIXI.BitmapText('0', {font: "40px Comfortaa", align: "right"});
+		// this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;
+		// this.needScoreText.y = gameHeight/2-25-10;
 
 		this.binding = TouchInput.tapped.add(this.processTouch.bind(this), null, 1);
 		this.binding.active = false;
 
 		this.layer.addChild(this.info);
-		this.layer.addChild(this.needScoreText);
+		// this.layer.addChild(this.needScoreText);
+		this.layer.addChild(this.scoreLine.layer);
+		this.layer.addChild(this.scoreLineNeed.layer);
 		basestage.addChild(this.layer);
 	};	
 	LevelBlocked.prototype = {
@@ -49,42 +41,38 @@ var LevelBlocked = (function () {
 			this.options = options || {};
 
 			var needScore = this.options.needScore || 150000;
-			this.needScoreText.setText(needScore.toString());
-			this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;		
-			this.totalScoreText.setText(Score.getTotal().toString());
+			// this.needScoreText.setText(needScore.toString());
+			// this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;	
 
-
-			this.totalScoreText.x = gameWidth/2 - this.totalScoreText.width/2;;
-			this.totalScoreText.y = gameHeight-25-20;
-	        this.highScoreIcon.x = this.totalScoreText.x - 30;
-			this.highScoreIcon.y = gameHeight-25-20;
-
+			this.scoreLine.set(Score.getTotal());
+			this.scoreLineNeed.set(needScore);
 
 			this.layer.visible = false;
 			this.binding.active = false;
 
-
-			this.renderedBinding = rendered.add(this.updateScorePos.bind(this));
-			this.renderedBinding.active = false;
+			// this.renderedBinding = rendered.add(this.updateScorePos.bind(this));
+			// this.renderedBinding.active = false;
 		},
 		processTouch:function(){
 			states.back();
 			return false;
 		},
-		updateScorePos:function(){
-			this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;
-			this.totalScoreText.x = gameWidth/2 - this.totalScoreText.width/2;;
-	        this.highScoreIcon.x = this.totalScoreText.x - 30;
-		},
+		// updateScorePos:function(){
+		// 	this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;
+		// },
 		close:function(){
+			this.scoreLine.hide();
+			this.scoreLineNeed.hide();
 			TouchInput.enabled = true;
 			this.binding.active = false;
-			this.renderedBinding.active = false;
+			// this.renderedBinding.active = false;
 			// this.layer.visible = false;
 			this.animateOut();
 		},
 		open:function(){
-			this.renderedBinding.active = true;
+			this.scoreLine.show();
+			this.scoreLineNeed.show();
+			// this.renderedBinding.active = true;
 			TouchInput.enabled = false;
 			this.layer.visible = true;
 			this.binding.active = true;

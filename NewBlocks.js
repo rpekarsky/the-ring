@@ -27,6 +27,7 @@ var NewBlocks = (function(){
             this.num = game.num;
         },
         create:function(groupsMin,groupsMax,blocksMin,blocksMax){
+            // this.clear();
             count = 1;
             this.blocks = [];
             var s = 0;
@@ -41,12 +42,45 @@ var NewBlocks = (function(){
                 s += secN + 3+Math.floor(Math.random()*12);
             };
         },
+        createByArr:function(array){
+            // this.clear();
+            this.blocks = [];
+            for (var i = 0; i < array.length; i++) {
+                this.blocks.push(this.game.createBlock(array[i],this.y));
+            };
+        },
+        clear:function(){
+            for (var i = 0; i < this.blocks.length; i++) {
+                var bl = this.blocks[i];
+                bl.destroy();
+            };
+            this.blocks = [];
+        },
+        save:function(){
+            var data = [];
+            for (var i = 0; i < this.blocks.length; i++) {
+                data.push({x:this.blocks[i].x,y:this.blocks[i].y});
+            };
+            return data;
+        },
+        load:function(data){
+            this.clear();
+            for (var i = 0; i < data.length; i++) {  
+                this.blocks.push(this.game.createBlock(data[i].x,data[i].y));
+            };
+        },
         move:function(delta){
             this.x+=delta;
             for (var i = 0; i < this.blocks.length; i++) {
                 this.blocks[i].move(this.blocks[i].x+delta,this.y);
             };
             Sound.play('move');
+        },
+        show:function(){
+            
+        },
+        hide:function(){
+            
         },
         moveUp:function(){
             var time = Date.now();

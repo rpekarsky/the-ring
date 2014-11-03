@@ -2,7 +2,7 @@ var States = (function () {
 	function States(){
 		this.states = {
 			menu: 		MainMenu,
-			maratron: 	Maratron,
+			mondo: 		Mondo,
 			zen: 		Zen,
 			settings:   Settings,
 			levelBlocked: LevelBlocked,

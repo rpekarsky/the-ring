@@ -7,7 +7,7 @@ var Zen = (function () {
 	}
 	Zen.prototype = Object.create(_super);
 	var p = Zen.prototype;
-	p.init = function(){
+	p.init = function(options){
 		if(_super.init.call(this)) return;
 		this.newBlocks();
 		this.createCenterNum();
@@ -15,9 +15,22 @@ var Zen = (function () {
 
 	    this.layer.addChild(this.currentScore.layer);
 		this.a = 0;
+
+		if(options){
+			if(options.data){
+				console.log('loading..',options.data)
+				this.load(options.data)
+			}
+		}
 	}
 	p.newBlocks = function(){
-        this.adder.create(1,3,2,7);
+		var hole = this.getHoleIfExists();
+		if(hole && hole.length < 10){
+			console.log('create HOLE!');
+			this.adder.createByArr(hole);
+		} else {
+        	this.adder.create(1,3,2,7);
+		}
 	},
 	p.render = function(){
 		_super.render.call(this);
@@ -36,17 +49,26 @@ var Zen = (function () {
 	p.added = function(){
 		_super.added.call(this);
         this.newBlocks();
+        this.save();
         // this.addLevelBulk();
 	}
 	var instance = false;
-	Zen.create = function(){
+	Zen.create = function(options){
+		var options = options || {};
 		if(instance){
 			console.log('return created');
+			// if(options.data){
+			// 	console.log('loading..',options.data)
+			// 	instance.load(options.data)
+			// }
 			return instance;
 		}
 		instance = new Zen();
+		// if(options.data){
+		// 	console.log('loading..',options.data)
+		// 	instance.load(options.data)
+		// }
 		return instance;
 	}
-	Zen.resume = Zen.create;
 	return Zen;
 })();

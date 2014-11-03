@@ -2,12 +2,14 @@ var MainMenu = (function () {
 	function MainMenu(){
 		this.IconsLayer = new PIXI.DisplayObjectContainer();
 		this.MenuStates = [
-			new Icons.Resume(this),
 			new Icons.Zen(this),
 			new Icons.Koan(this),
 			new Icons.Mondo(this),
 			new Icons.Dharma(this),
 		]
+		// if(){
+			this.MenuStates.splice(0,0,new Icons.Resume(this))
+		// }
 		window.a = this.MenuStates;
 		this.state = 0;
 		this.rtx = new PIXI.RenderTexture(24*20, 140);
@@ -102,15 +104,20 @@ var MainMenu = (function () {
 				this.cur.select();
 			}
 			Sound.play('place');
+			return false;
 		},
 		set:function(state,dir){
 			// console.log(dir);
-			if(this.cur == state) return;
+			if(this.cur == state){
+				this.cur.update();
+				return;	
+			} 
 			if(this.cur){
 				this.cur.hide(dir);
 			}
 			this.cur = state;
 			this.cur.show(dir);
+			this.cur.update();
 		},
 		close:function(){
 			this.renderedBinding.active = false;
@@ -176,7 +183,8 @@ var MainMenu = (function () {
 					ease:Elastic.easeOut
 				});				
 			}
-
+			console.log('open',this.cur);
+			this.cur.update();
 		},
 		render:function(){
 		    this.rtx.clear();

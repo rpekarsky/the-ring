@@ -29,14 +29,14 @@ var Block = (function(){
             this.maxx = this.game.num;
 
             var borderWidth = 2;
-            function drawBlock(gr,color,bcolor,borderWidth){
-                gr.beginFill(bcolor);
-                gr.drawRect(0, 0, BlockSize, BlockSize);
-                gr.endFill();
-                gr.beginFill(color);
-                gr.drawRect(0, borderWidth, BlockSize, BlockSize-borderWidth);   
-                gr.endFill();
-            }
+            // function drawBlock(gr,color,bcolor,borderWidth){
+            //     gr.beginFill(bcolor);
+            //     gr.drawRect(0, 0, BlockSize, BlockSize);
+            //     gr.endFill();
+            //     gr.beginFill(color);
+            //     gr.drawRect(0, borderWidth, BlockSize, BlockSize-borderWidth);   
+            //     gr.endFill();
+            // }
             // this.graphics.clear();
 
             // this.flashgraphics.visible = false;
@@ -167,6 +167,7 @@ var Block = (function(){
                     this.layer.removeChildAt(i);
                 }
             };
+            this.blocks.remove(this);
         },
         remove:function(){
             var findedBlock = this.blocks.find(this.x,this.y-1);

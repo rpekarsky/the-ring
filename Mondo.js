@@ -1,20 +1,29 @@
-var Maratron = (function () {
+var Mondo = (function () {
 	var _super = GameClass.prototype;
-	function Maratron(){
+	function Mondo(){
 		GameClass.call(this);
 		this.type = 'mondo';
-		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 	}
-	Maratron.prototype = Object.create(_super);
-	var p = Maratron.prototype;
-	p.init = function(){
+	Mondo.prototype = Object.create(_super);
+	var p = Mondo.prototype;
+	p.init = function(options){
+		console.log('INIt');
+		// if(this.deadline){
+		// 	this.stage.addChild(this.deadlineLayer);	
+		// }
 		if(_super.init.call(this)) return;
 		this.deadline = this.createDeadline();
-		this.stage.addChild(this.deadlineLayer);
+		// this.stage.addChild(this.deadlineLayer);
 		this.newBlocks();
 		this.createCenterNum();
 		this.a = 0;
 		background.changeColor('cold coffee');
+		if(options){
+			if(options.data){
+				console.log('loading..',options.data)
+				this.load(options.data)
+			}
+		}
 	}
 	p.createDeadline = function(){
 		var dl = new Deadline();
@@ -31,6 +40,7 @@ var Maratron = (function () {
 		_super.added.call(this);
         this.resetDeadline();
         this.newBlocks();
+        this.save();
 	}
 	p.resetDeadline = function(){
 		this.deadline.reset();
@@ -58,19 +68,30 @@ var Maratron = (function () {
 		this.bulkText();
 	}
 	p.onOpen = function(){
+		console.log('onOpen');
 		this.deadline.resume();
 	}
 	p.onClose = function(){
 		this.deadline.pause();
 	}
 	var instance = false;
-	Maratron.create = function(){
+	Mondo.create = function(options){
+		var options = options || {};
 		if(instance){
 			console.log('return created');
+			// if(options.data){
+			// 	console.log('loading..',options.data)
+			// 	instance.load(options.data)
+			// }
+			// instance.deadline.resume();
 			return instance;
 		}
-		instance = new Maratron();
+		instance = new Mondo();
+		// if(options.data){
+		// 	console.log('loading..',options.data)
+		// 	instance.load(options.data)
+		// }
 		return instance;
 	}
-	return Maratron;
+	return Mondo;
 })();
