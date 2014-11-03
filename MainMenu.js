@@ -2,6 +2,7 @@ var MainMenu = (function () {
 	function MainMenu(){
 		this.IconsLayer = new PIXI.DisplayObjectContainer();
 		this.MenuStates = [
+			new Icons.Resume(this),
 			new Icons.Zen(this),
 			new Icons.Koan(this),
 			new Icons.Mondo(this),
@@ -20,7 +21,7 @@ var MainMenu = (function () {
 		init:function(){
 
 			if(this.inited){
-				console.log('already inited');	
+				// console.log('already inited');	
 				return
 			}
 
@@ -185,7 +186,7 @@ var MainMenu = (function () {
 	MainMenu.create = function(){
 		
 		if(instance){
-			console.log('return created');
+			// console.log('return created');
 			return instance;
 		}
 		instance = new MainMenu();

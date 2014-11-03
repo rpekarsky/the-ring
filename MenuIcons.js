@@ -10,23 +10,23 @@ var baseIcon = (function(){
 		this.logo.tint = 0x404040;
 		this.logo.visible = false;
 
+		this.lockedSprite = new PIXI.Sprite.fromFrame('locked');
+		this.lockedSprite.x = this.lockedSprite.width/2;
+		this.lockedSprite.y = this.lockedSprite.height/2;
 
-		this.locked = new PIXI.Sprite.fromFrame('locked');
-		this.locked.x = this.locked.width/2;
-		this.locked.y = this.locked.height/2;
-
-		this.locked.x = gameWidth/2 + 35;
-		this.locked.y = gameHeight/2 - 80;
-		this.locked.visible = false;
-		this.locked.tint = 0x404040;
+		this.lockedSprite.x = gameWidth/2 + 35;
+		this.lockedSprite.y = gameHeight/2 - 80;
+		this.lockedSprite.visible = false;
+		this.lockedSprite.tint = 0x404040;
 
 
 		this.layer.addChild(this.logo);
-		this.layer.addChild(this.locked);
+		this.layer.addChild(this.lockedSprite);
 		this.onhide = this.onHide.bind(this);
 	}
 	baseIcon.prototype = {
 		show:function(dir){
+
 			// console.log('show',this);
 			// TweenLite.killTweensOf(this.logo);
 			// TweenLite.killTweensOf(this.logo.scale);
@@ -37,9 +37,12 @@ var baseIcon = (function(){
 			if(this.hideAnimScale){
 				this.hideAnimScale.kill();
 			}
+			if(this.locked){
+				this.lockedSprite.visible = true;
+			}
+
 
 			this.logo.visible = true;
-			this.locked.visible = true;
 			this.logo.alpha = 0;
 			this.logo.scale.x = 1;
 			this.logo.scale.y = 1;
@@ -59,8 +62,12 @@ var baseIcon = (function(){
 				});
 			}
 		},
+		setLocked:function(){
+			this.locked = true;
+			
+		},
 		hide:function(dir){
-			this.locked.visible = false;
+			this.lockedSprite.visible = false;
 			if(this.showAnim){
 				this.showAnim.kill();
 			}
@@ -105,7 +112,7 @@ var Icons = {
 	Zen:(function() {
 		var _super = baseIcon.prototype;
 		var Zen = function(menu){
-			baseIcon.call(this,'resume',menu);
+			baseIcon.call(this,'zen.png',menu);
 		};
 		Zen.prototype = Object.create(_super);
 		var p = Zen.prototype;
@@ -122,11 +129,16 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Koan = function(menu){
 			baseIcon.call(this,'koan.png',menu);
+			this.setLocked();
 		};
 		Koan.prototype = Object.create(_super);
 		var p = Koan.prototype;
 		p.select = function(){
-			states.open(states.states.zen);
+			if(this.locked){
+				states.open(states.states.levelBlocked);
+				return;
+			}
+			states.open(states.states.maratron);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
@@ -138,11 +150,16 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Mondo = function(menu){
 			baseIcon.call(this,'mondo.png',menu);
+			this.setLocked();
 		};
 		Mondo.prototype = Object.create(_super);
 		var p = Mondo.prototype;
 		p.select = function(){
-			states.open(states.states.levelBlocked,{image:'mondo.png'});
+			if(this.locked){
+				states.open(states.states.levelBlocked,{needScore:10});
+				return;
+			}
+			states.open(states.states.maratron);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
@@ -154,9 +171,30 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Dharma = function(menu){
 			baseIcon.call(this,'dharma.png',menu);
+			this.setLocked();
 		};
 		Dharma.prototype = Object.create(_super);
 		var p = Dharma.prototype;
+		p.select = function(){
+			if(this.locked){
+				states.open(states.states.levelBlocked);
+				return;
+			}
+			states.open(states.states.maratron);
+		}
+		p.show = function(dir){
+			_super.show.call(this,dir);
+			background.changeColor('cold magent');
+		}
+		return Dharma;
+	})(),
+	Resume:(function() {
+		var _super = baseIcon.prototype;
+		var Resume = function(menu){
+			baseIcon.call(this,'resume',menu);
+		};
+		Resume.prototype = Object.create(_super);
+		var p = Resume.prototype;
 		p.select = function(){
 			states.open(states.states.zen);
 		}
@@ -164,6 +202,6 @@ var Icons = {
 			_super.show.call(this,dir);
 			background.changeColor('cold magent');
 		}
-		return Dharma;
+		return Resume;
 	})()
 }

@@ -13,15 +13,27 @@ var LevelBlocked = (function () {
 		this.info.pivot.x = this.info.width/2;
 		this.info.pivot.y = this.info.height/2;
 
+		this.needScoreText = new PIXI.BitmapText('0', {font: "40px Comfortaa", align: "right"});
+		this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;
+		this.needScoreText.y = gameHeight/2-25-10;
+			
+
+
 		this.binding = TouchInput.tapped.add(this.processTouch.bind(this), null, 1);
 		this.binding.active = false;
 
 		this.layer.addChild(this.info);
+		this.layer.addChild(this.needScoreText);
 		basestage.addChild(this.layer);
 	};	
 	LevelBlocked.prototype = {
 		init:function(options){
-			this.options = options;
+			this.options = options || {};
+
+			var needScore = this.options.needScore || 150000;
+			this.needScoreText.setText(needScore.toString());
+			this.needScoreText.x = gameWidth/2 - this.needScoreText.width/2;		
+
 			this.layer.visible = false;
 			this.binding.active = false;
 		},
@@ -71,7 +83,7 @@ var LevelBlocked = (function () {
 	var instance = false;
 	LevelBlocked.create = function(){
 		if(instance){
-			console.log('return created');
+			// console.log('return created');
 			return instance;
 		}
 		instance = new LevelBlocked();

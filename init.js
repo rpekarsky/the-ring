@@ -12,12 +12,12 @@ var gameHeight = 320;
 
 
 var stats = new Stats();
-stats.setMode(0); // 0: fps, 1: ms
+stats.setMode(1); // 0: fps, 1: ms
 
 // align top-left
 stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = '0px';
-stats.domElement.style.top = '50px';
+stats.domElement.style.bottom = '0px';
 
 
 var PixelRatio = window.devicePixelRatio;
@@ -34,7 +34,7 @@ var bgStage = new PIXI.Stage(0x000000);
 PIXI.blendModesWebGL[PIXI.blendModes.OVERLAY] = [renderer.gl.DST_ALPHA,renderer.gl.DST_COLOR];
 document.body.appendChild(renderer.view);
 
-// document.body.appendChild( stats.domElement );
+document.body.appendChild( stats.domElement );
 
 
 
@@ -72,10 +72,11 @@ aloader.addEventListener('onComplete',function(){
 },false)
 aloader.load();
 
-
+var time = Date.now();
 var quad = new PIXI.Quad(backgroundTexture,renderTexture);
 stage.addChild(quad);
 function animate() {
+    stats.end();
     stats.begin();
 	rendered.dispatch();
     requestAnimFrame( animate );
@@ -86,7 +87,13 @@ function animate() {
     renderTexture.clear();
     renderTexture.render(basestage);
     renderer.render(stage);
-    stats.end();
+
+
+	// var now = Date.now();
+	// var delta = now - time;
+	// console.log(1000/30 - delta);
+	// setTimeout(animate,1000/10);
+	// time = now;
 }
 
 

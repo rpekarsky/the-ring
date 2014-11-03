@@ -8,18 +8,44 @@ var Sound = (function () {
 	
 	var Sound = {
 		init:function(){
-			moveSnd = new Howl({
-			  urls: ['sounds/move.mp3']
+
+			moveSnd = new buzz.sound( "/sounds/move", {
+			    formats: [ "mp3" ]
 			});
-			placeSnd = new Howl({
-			  urls: ['sounds/place.mp3']
+
+			placeSnd = new buzz.sound( "/sounds/place", {
+			    formats: [ "ogg" ]
 			});
-			deathSnd = new Howl({
-			  urls: ['sounds/death.mp3']
+
+			deathSnd = new buzz.sound( "/sounds/death", {
+			    formats: [ "ogg" ]
 			});
-			completeSnd = new Howl({
-			  urls: ['sounds/complete.mp3']
+
+			completeSnd = new buzz.sound( "/sounds/complete", {
+			    formats: [ "ogg" ]
 			});
+
+			musicSnd = new buzz.sound( "/sounds/music", {
+			    formats: [ "ogg" ],
+			    autoplay: true,
+			    loop: true,
+			    volume: 20
+			});
+			// musicSnd.loop()
+
+
+			// moveSnd = new Howl({
+			//   urls: ['sounds/move.mp3']
+			// });
+			// placeSnd = new Howl({
+			//   urls: ['sounds/place.mp3']
+			// });
+			// deathSnd = new Howl({
+			//   urls: ['sounds/death.mp3']
+			// });
+			// completeSnd = new Howl({
+			//   urls: ['sounds/complete.mp3']
+			// });
 			// musicSnd = new Howl({
 			//   	urls: ['sounds/music.mp3'],
 			//   	autoplay: true,
@@ -35,6 +61,12 @@ var Sound = (function () {
 			}
 		},
 		play:function(name){
+			// if(name == 'move'){
+			// 	new buzz.sound( "/sounds/move", {
+			// 	    formats: [ "mp3" ]
+			// 	}).play();
+			// 	return;
+			// }
 			if(sounds[name]){
 				sounds[name].play();
 			}
