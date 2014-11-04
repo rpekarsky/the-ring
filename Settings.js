@@ -27,14 +27,15 @@ var CheckBox = (function(){
 })();
 
 var SettingsOption = (function(){
-	function SettingsOption(sprite){
+	function SettingsOption(name,enabled){
 		this.layer = new PIXI.DisplayObjectContainer();
-		this.sprite = new PIXI.Sprite.fromFrame(sprite);
+		this.name = name;
+		this.sprite = new PIXI.Sprite.fromFrame(this.name);
 		this.layer.pivot.x = gameWidth/2;
 		this.layer.pivot.y = this.sprite.height/2;
 		this.sprite.x = gameWidth/2 - 220/2;
 		this.sprite.tint = 0x404040;
-		this.checkbox = new CheckBox(true);
+		this.checkbox = new CheckBox(enabled||false);
 		this.checkbox.sprite.x = this.sprite.x + 200;
 		this.checkbox.sprite.y = this.sprite.height/2-3;
 		this.layer.addChild(this.sprite);
@@ -44,7 +45,11 @@ var SettingsOption = (function(){
 	SettingsOption.prototype = {
 		toggle:function(){
 			this.checkbox.toggle();
+			console.log('set',this.name,this.checkbox.enabled)
+			Storage.set(this.name,this.checkbox.enabled);
 			this.animate();
+            Sound.play('move');
+            Vibrate(20);
 		},
 		animate:function(){
 			// this.layer.scale.y = 2;
@@ -104,6 +109,7 @@ var SettingIcon = (function(){
 				} else {
 					states.open(states.states.settings);
 				}
+				Sound.play('move');
 				return false;
 			}
 		}
@@ -143,9 +149,20 @@ var BackIcon = (function(){
 var Settings = (function () {
 	function Settings(){
 		this.layer = new PIXI.DisplayObjectContainer();
-		this.music = new SettingsOption('music-opt');
-		this.sound = new SettingsOption('sound-opt');
-		this.vibro = new SettingsOption('vibro-opt');
+
+		if(Storage.get('music-opt') == null){
+			Storage.set('music-opt',true);
+		}
+		if(Storage.get('sound-opt') == null){
+			Storage.set('sound-opt',true);
+		}
+		if(Storage.get('vibro-opt') == null){
+			Storage.set('vibro-opt',true);
+		}
+
+		this.music = new SettingsOption('music-opt',Storage.get('music-opt'));
+		this.sound = new SettingsOption('sound-opt',Storage.get('sound-opt'));
+		this.vibro = new SettingsOption('vibro-opt',Storage.get('vibro-opt'));
 		this.binding = TouchInput.tapped.add(this.processTouch.bind(this), null, 1);
 		this.binding.active = false;
 		basestage.addChild(this.layer);

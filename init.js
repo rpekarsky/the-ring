@@ -1,6 +1,7 @@
 var gameWidth = window.innerWidth;
 var gameHeight = window.innerHeight;
 
+// localStorage.clear();
 var gameWidth = 360;
 var gameHeight = 480;
 
@@ -61,7 +62,7 @@ aloader.addEventListener('onComplete',function(){
 
 
 
-	states.open(states.states.menu);
+	states.open(states.states.title);
 	// settings.init();
 	
 	quad.update();

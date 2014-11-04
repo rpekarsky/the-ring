@@ -347,6 +347,8 @@ var GameClass = (function(){
 		added:function(){
             this.bulk();
             Sound.play('place');
+
+            Vibrate(40);
             this.addScore(50);
 
 
@@ -363,6 +365,7 @@ var GameClass = (function(){
 			this.solvedRings++
 			Sound.play('complete');
 			this.addScore(500);
+			Vibrate(60);
 			this.check();
 		},
 		updateScore:function(){
@@ -393,6 +396,7 @@ var GameClass = (function(){
 			this.adder.clear();
 			Score.updateHighScore(this.type);
             this.setScore(0);
+            Vibrate(260);
 		},
 		render:function(){
 			if(this.centerNumText){
@@ -437,14 +441,14 @@ var GameClass = (function(){
             var nextI = 1;
             var prevI = 1;
             var next = ab(holeStart+nextI,this.num);
-            var prev = ab(holeStart-prevI);
+            var prev = ab(holeStart-prevI,this.num);
+            hole.push(holes[0]);
             while(inArray(prev,holes) && !inArray(prev,hole)){
             	// console.log('add prev',prev);
             	hole.push(prev);
             	prevI++;
             	prev = ab(holeStart-prevI,this.num);
             }
-            hole.push(holes[0]);
             while(inArray(next,holes) && !inArray(next,hole)){
             	// console.log('add next',next);
             	hole.push(next);

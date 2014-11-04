@@ -12,16 +12,16 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":8,"h":30},
 			"sourceSize": {"w":0,"h":0}
 		},
-		"logo.png":
+		"logo":
 		{
 			"frame": {"x":0,"y":0,"w":210,"h":100},
 			"spriteSourceSize": {"x":0,"y":0,"w":210,"h":100},
 			"sourceSize": {"w":0,"h":0}
 		},
-		"flare.png":
+		"flare":
 		{
-			"frame": {"x":3,"y":107,"w":180,"h":65},
-			"spriteSourceSize": {"x":0,"y":0,"w":180,"h":65},
+			"frame": {"x":3,"y":120,"w":180,"h":75},
+			"spriteSourceSize": {"x":0,"y":0,"w":180,"h":75},
 			"sourceSize": {"w":0,"h":0}
 		},
 		"bokeh.png":

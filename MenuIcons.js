@@ -16,6 +16,15 @@ var LockedSprite = (function(){
 		},
 		hide:function(){
 			this.layer.visible = false;
+		},
+		unlock:function(){
+			this.lockedSprite.setTexture(PIXI.Texture.fromFrame('unlocked'));
+			TweenLite.to(this.lockedSprite,1,{
+				delay:0.1,
+				y: 50,
+				alpha: 0,
+				rotation: Math.PI/4
+			});
 		}
 	}
 	return LockedSprite;
@@ -89,7 +98,10 @@ var baseIcon = (function(){
 		},
 		setLocked:function(){
 			this.locked = true;
-			
+		},
+		setUnlocked:function(){
+			this.locked = false;
+			this.lockedSprite.unlock();
 		},
 		hide:function(dir){
 			this.lockedSprite.hide();
@@ -129,6 +141,7 @@ var baseIcon = (function(){
 			this.logo.visible = false;
 		},
 		select:function(){
+			
 		}
 	}
 	return baseIcon;
@@ -159,21 +172,28 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Koan = function(menu){
 			baseIcon.call(this,'koan.png',menu);
-			this.setLocked();
+			this.needScore = 12000;
+			if(!Storage.get('koan_unlocked')){
+				this.setLocked();
+			}
 		};
 		Koan.prototype = Object.create(_super);
 		var p = Koan.prototype;
 		p.select = function(){
 			if(this.locked){
-				states.open(states.states.levelBlocked);
+				states.open(states.states.levelBlocked,{needScore:this.needScore});
 				return;
 			}
-			states.open(states.states.maratron);
+			states.open(states.states.koan);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
 			this.update();
 			background.changeColor('cold blue');
+			if(this.locked && Score.getTotal()>this.needScore){
+				this.setUnlocked();
+				Storage.set('koan_unlocked',true);
+			}
 		}
 		p.update = function(){
 			this.score.set(Score.getHighScore('koan'));
@@ -184,13 +204,16 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Mondo = function(menu){
 			baseIcon.call(this,'mondo.png',menu);
-			// this.setLocked();
+			this.needScore = 15000;
+			if(!Storage.get('mondo_unlocked')){
+				this.setLocked();
+			}
 		};
 		Mondo.prototype = Object.create(_super);
 		var p = Mondo.prototype;
 		p.select = function(){
 			if(this.locked){
-				states.open(states.states.levelBlocked,{needScore:10});
+				states.open(states.states.levelBlocked,{needScore:this.needScore});
 				return;
 			}
 			states.open(states.states.mondo);
@@ -199,6 +222,10 @@ var Icons = {
 			_super.show.call(this,dir);
 			this.update();
 			background.changeColor('cold coffee');
+			if(this.locked && Score.getTotal()>this.needScore){
+				Storage.set('mondo_unlocked',true);
+				this.setUnlocked();
+			}
 		}
 		p.update = function(){
 			this.score.set(Score.getHighScore('mondo'));
@@ -209,21 +236,28 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Dharma = function(menu){
 			baseIcon.call(this,'dharma.png',menu);
-			this.setLocked();
+			this.needScore = 20000;
+			if(!Storage.get('dharma_unlocked')){
+				this.setLocked();
+			}
 		};
 		Dharma.prototype = Object.create(_super);
 		var p = Dharma.prototype;
 		p.select = function(){
 			if(this.locked){
-				states.open(states.states.levelBlocked,{needScore:10});
+				states.open(states.states.levelBlocked,{needScore:this.needScore});
 				return;
 			}
-			states.open(states.states.maratron);
+			states.open(states.states.dharma);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
 			this.update();
 			background.changeColor('cold magent');
+			if(this.locked && Score.getTotal()>this.needScore){
+				Storage.set('dharma_unlocked',true);
+				this.setUnlocked();
+			}
 		}
 		p.update = function(){
 			this.score.set(Score.getHighScore('dharma'));
@@ -238,12 +272,10 @@ var Icons = {
 		Resume.prototype = Object.create(_super);
 		var p = Resume.prototype;
 		p.select = function(){
-
 			if(this.saved_data){
 				console.log(this.saved_data);
 				states.open(states.states[this.saved_data.type],{data:this.saved_data});
 			}
-			// states.open(states.states.zen.resume);
 		}
 		p.show = function(dir){
 			_super.show.call(this,dir);
@@ -251,7 +283,7 @@ var Icons = {
 			background.changeColor('cold magent');
 		}
 		p.update = function(){
-			this.saved_data = Storage.get('last_game')||0;
+			this.saved_data = Storage.get('last_game')||false;
 			this.score.set(this.saved_data.score);
 		}
 		return Resume;

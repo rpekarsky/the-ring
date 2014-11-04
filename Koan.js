@@ -1,12 +1,12 @@
-var Zen = (function () {
+var Koan = (function () {
 	var _super = GameClass.prototype;
-	function Zen(){
+	function Koan(){
 		GameClass.call(this);
-		this.type = 'zen';
+		this.type = 'koan';
 		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 	}
-	Zen.prototype = Object.create(_super);
-	var p = Zen.prototype;
+	Koan.prototype = Object.create(_super);
+	var p = Koan.prototype;
 	p.init = function(options){
 		if(_super.init.call(this)) return;
 		this.newBlocks();
@@ -15,7 +15,15 @@ var Zen = (function () {
 
 	    this.layer.addChild(this.currentScore.layer);
 		this.a = 0;
-
+		var tt = [
+			{x:10,y:2},
+			{x:9,y:2},
+			{x:8,y:2},
+			{x:7,y:2},
+			{x:6,y:2},
+			{x:5,y:2},
+		];
+		this.blocks.load(tt);
 		if(options){
 			if(options.data){
 				console.log('loading..',options.data)
@@ -25,7 +33,13 @@ var Zen = (function () {
 	}
 	p.newBlocks = function(){
 		var hole = this.getHoleIfExists();
-        this.adder.create(1,3,2,7);
+		// console.log(hole);
+		if(hole && hole.length < 6){
+			console.log('create HOLE!');
+			this.adder.createByArr(hole);
+		} else {
+        	this.adder.create(1,2,2,7);
+		}
 	},
 	p.render = function(){
 		_super.render.call(this);
@@ -37,33 +51,26 @@ var Zen = (function () {
 	}
 	p.ringSolved =function(){
 		_super.ringSolved.call(this);
-		this.a += 1;//Math.round(Math.random()*30+500);
-		this.setCenterNum(this.a);
+		// this.a += 1;//Math.round(Math.random()*30+500);
 		this.bulkText();
+		this.setCenterNum(this.blocks.gameobjects.length);
 	}
 	p.added = function(){
 		_super.added.call(this);
         this.newBlocks();
         this.save();
+		this.setCenterNum(this.blocks.gameobjects.length);
         // this.addLevelBulk();
 	}
 	var instance = false;
-	Zen.create = function(options){
+	Koan.create = function(options){
 		var options = options || {};
 		if(instance){
 			console.log('return created');
-			// if(options.data){
-			// 	console.log('loading..',options.data)
-			// 	instance.load(options.data)
-			// }
 			return instance;
 		}
-		instance = new Zen();
-		// if(options.data){
-		// 	console.log('loading..',options.data)
-		// 	instance.load(options.data)
-		// }
+		instance = new Koan();
 		return instance;
 	}
-	return Zen;
+	return Koan;
 })();

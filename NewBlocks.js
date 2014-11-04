@@ -75,6 +75,7 @@ var NewBlocks = (function(){
                 this.blocks[i].move(this.blocks[i].x+delta,this.y);
             };
             Sound.play('move');
+            Vibrate(10);
         },
         show:function(){
             

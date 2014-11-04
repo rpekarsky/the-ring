@@ -1,12 +1,12 @@
-var Zen = (function () {
+var Dharma = (function () {
 	var _super = GameClass.prototype;
-	function Zen(){
+	function Dharma(){
 		GameClass.call(this);
-		this.type = 'zen';
+		this.type = 'dharma';
 		this.deadlineLayer = new PIXI.DisplayObjectContainer();
 	}
-	Zen.prototype = Object.create(_super);
-	var p = Zen.prototype;
+	Dharma.prototype = Object.create(_super);
+	var p = Dharma.prototype;
 	p.init = function(options){
 		if(_super.init.call(this)) return;
 		this.newBlocks();
@@ -25,7 +25,12 @@ var Zen = (function () {
 	}
 	p.newBlocks = function(){
 		var hole = this.getHoleIfExists();
-        this.adder.create(1,3,2,7);
+		if(hole && hole.length < 10){
+			console.log('create HOLE!');
+			this.adder.createByArr(hole);
+		} else {
+        	this.adder.create(1,3,2,7);
+		}
 	},
 	p.render = function(){
 		_super.render.call(this);
@@ -48,22 +53,14 @@ var Zen = (function () {
         // this.addLevelBulk();
 	}
 	var instance = false;
-	Zen.create = function(options){
+	Dharma.create = function(options){
 		var options = options || {};
 		if(instance){
 			console.log('return created');
-			// if(options.data){
-			// 	console.log('loading..',options.data)
-			// 	instance.load(options.data)
-			// }
 			return instance;
 		}
-		instance = new Zen();
-		// if(options.data){
-		// 	console.log('loading..',options.data)
-		// 	instance.load(options.data)
-		// }
+		instance = new Dharma();
 		return instance;
 	}
-	return Zen;
+	return Dharma;
 })();

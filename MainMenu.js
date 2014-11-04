@@ -7,9 +7,9 @@ var MainMenu = (function () {
 			new Icons.Mondo(this),
 			new Icons.Dharma(this),
 		]
-		// if(){
+		if(Storage.get('last_game')){
 			this.MenuStates.splice(0,0,new Icons.Resume(this))
-		// }
+		}
 		window.a = this.MenuStates;
 		this.state = 0;
 		this.rtx = new PIXI.RenderTexture(24*20, 140);
@@ -82,7 +82,7 @@ var MainMenu = (function () {
 			// Mousetrap.bind('down', function(){
 			// 	states.open(states.states.menu);
 			// }.bind(this));
-			TouchInput.back.add(function(){states.back()});
+			// TouchInput.back.add(function(){states.back(); return false;});
 
 			basestage.addChild(this.layer);
 			this.set(this.MenuStates[this.state]);
@@ -107,6 +107,7 @@ var MainMenu = (function () {
 			return false;
 		},
 		set:function(state,dir){
+            Vibrate(20);
 			// console.log(dir);
 			if(this.cur == state){
 				this.cur.update();
