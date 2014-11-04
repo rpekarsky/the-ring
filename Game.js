@@ -247,9 +247,8 @@ var GameClass = (function(){
 		load:function(data){
 			this.adder.load(data.adder);
 			this.blocks.load(data.blocks);
-			Score.setScore(this.type,data.score);
-			this.updateScore();
-			console.log('loaded');
+			this.setScore(data.score);
+			console.log('loaded',data);
 		},
 		addLevelBulk:function(){
 			var blobSplat = new PIXI.Sprite.fromFrame('bokeh.png');
@@ -354,6 +353,7 @@ var GameClass = (function(){
 
 		},
 		setScore:function(score){
+			console.log('set score to',score);
 			Score.setScore(this.type,score);
 			this.updateScore();
 		},

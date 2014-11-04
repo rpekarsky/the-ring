@@ -7,9 +7,6 @@ var MainMenu = (function () {
 			new Icons.Mondo(this),
 			new Icons.Dharma(this),
 		]
-		if(Storage.get('last_game')){
-			this.MenuStates.splice(0,0,new Icons.Resume(this))
-		}
 		window.a = this.MenuStates;
 		this.state = 0;
 		this.rtx = new PIXI.RenderTexture(24*20, 140);
@@ -153,6 +150,18 @@ var MainMenu = (function () {
 			this.ring.visible = true;
 			this.layer.visible = true;
 			background.changeColor('cold blue');
+
+
+
+			if(Storage.get('last_game')){
+				console.log('last_game exists');
+				if(! (this.MenuStates[0] instanceof Icons.Resume) ){
+					this.MenuStates.splice(0,0,new Icons.Resume(this));
+					console.log('create Resume');
+				}
+			} else {
+				console.log('last_game NOT exists');
+			}
 
 			// this.layer.y = gameHeight/2 + 50;
 			this.layer.y = gameHeight/2;

@@ -5,8 +5,8 @@ var gameHeight = window.innerHeight;
 var gameWidth = 360;
 var gameHeight = 480;
 
-// var gameWidth = 320;
-// var gameHeight = 320;
+var gameWidth = 320;
+var gameHeight = 320;
 // gameWidth /= 1.8;;
 // gameWidth = (360/2)/320*360;
 // gameHeight = (360/2)/320*480;
@@ -41,11 +41,22 @@ document.body.appendChild(renderer.view);
 
 var background = new Background;
 bgStage.addChild(background.layer);
-bgStage.addChild(background.layerDebug);
+// bgStage.addChild(background.layerDebug);
 
 // var topMenu = new TopMenu();
 
 var states = new States();
+
+
+if(Storage.get('music-opt') == null){
+	Storage.set('music-opt',true);
+}
+if(Storage.get('sound-opt') == null){
+	Storage.set('sound-opt',true);
+}
+if(Storage.get('vibro-opt') == null){
+	Storage.set('vibro-opt',true);
+}
 
 
 var settingsIcon = new SettingIcon();
@@ -56,6 +67,7 @@ aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
 	Score.init();
+	Sound.init();
 	// topMenu.init();
 	settingsIcon.init();
 	backIcon.init();

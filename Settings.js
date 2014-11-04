@@ -149,17 +149,6 @@ var BackIcon = (function(){
 var Settings = (function () {
 	function Settings(){
 		this.layer = new PIXI.DisplayObjectContainer();
-
-		if(Storage.get('music-opt') == null){
-			Storage.set('music-opt',true);
-		}
-		if(Storage.get('sound-opt') == null){
-			Storage.set('sound-opt',true);
-		}
-		if(Storage.get('vibro-opt') == null){
-			Storage.set('vibro-opt',true);
-		}
-
 		this.music = new SettingsOption('music-opt',Storage.get('music-opt'));
 		this.sound = new SettingsOption('sound-opt',Storage.get('sound-opt'));
 		this.vibro = new SettingsOption('vibro-opt',Storage.get('vibro-opt'));

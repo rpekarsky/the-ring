@@ -170,7 +170,6 @@ var Background = (function(){
 		this.particles = [];
 		this.layer = new PIXI.DisplayObjectContainer();
 		this.layer.scale.set(1/2);
-		this.layerDebug = new PIXI.DisplayObjectContainer();
 	}
 	Background.prototype = {
 		init:function(){
@@ -182,7 +181,7 @@ var Background = (function(){
 			flare.y = gameHeight/2;
 			flare.alpha = 1;
 			flare.tint = mainColor.getHex();
-			flare.scale.x = 8;
+			flare.scale.x = 4;
 			flare.scale.y = 8;
 			// flare.scale.x = 2;
 			// flare.scale.y = 4;

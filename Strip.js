@@ -27,6 +27,9 @@ PIXI.Strip = function(texture)
 
     // this.segs = 8;
     // this.ringsNum = 64;
+
+    // this.segs = 6;
+    // this.ringsNum = 4;
     
     var RN = this.ringsNum;
     var rad = 20*8;

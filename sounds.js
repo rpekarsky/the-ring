@@ -83,6 +83,5 @@ var Sound = (function () {
 			// }
 		}
 	}
-	Sound.init();
 	return Sound;
 })();

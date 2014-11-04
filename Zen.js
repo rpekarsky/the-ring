@@ -24,8 +24,9 @@ var Zen = (function () {
 		}
 	}
 	p.newBlocks = function(){
-		var hole = this.getHoleIfExists();
         this.adder.create(1,3,2,7);
+		this.a += 1;
+		new NewLevelEffect(this.a).show(this.layer);
 	},
 	p.render = function(){
 		_super.render.call(this);
@@ -38,6 +39,7 @@ var Zen = (function () {
 	p.ringSolved =function(){
 		_super.ringSolved.call(this);
 		this.a += 1;//Math.round(Math.random()*30+500);
+		new NewLevelEffect(this.a).show(this.layer);
 		this.setCenterNum(this.a);
 		this.bulkText();
 	}

@@ -102,11 +102,11 @@ var TitleScreen = (function () {
 			TweenLite.to(this.flare,0.3,{
 				alpha:1
 			});
-			TweenLite.to(this.flare,1,{
+			TweenLite.to(this.flare,0.5,{
 				x:gameWidth/2-5
 			});
 			TweenLite.to(this.flare,0.3,{
-				delay:0.7,
+				delay:0.4,
 				alpha:0
 			});
 
