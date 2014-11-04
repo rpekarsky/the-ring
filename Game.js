@@ -21,7 +21,7 @@ var GameClass = (function(){
 		this.scoreLayer = new PIXI.DisplayObjectContainer();
 		this.scoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('yourscore'));
 		this.scoreSprite.pivot.x = this.scoreSprite.width/2;
-		this.scoreSprite.tint = 0x454545;
+		this.scoreSprite.tint = 0x606060;
         this.scoreLayer.addChild(this.scoreSprite);
 
 		this.scoreText = new PIXI.BitmapText('', {font: "40px Comfortaa", align: "right"});
@@ -35,7 +35,7 @@ var GameClass = (function(){
 		this.highScoreLayer = new PIXI.DisplayObjectContainer();
 		this.highScoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('highscore'));
 		this.highScoreSprite.pivot.x = this.highScoreSprite.width/2;
-		this.highScoreSprite.tint = 0x454545;
+		this.highScoreSprite.tint = 0x606060;
         this.highScoreLayer.addChild(this.highScoreSprite);
 
 		this.highScoreText = new PIXI.BitmapText('', {font: "40px Comfortaa", align: "right"});
@@ -49,7 +49,7 @@ var GameClass = (function(){
 		this.newHighScoreLayer = new PIXI.DisplayObjectContainer();
 		this.newHighScoreSprite = new PIXI.Sprite(PIXI.Texture.fromFrame('new_highscore'));
 		this.newHighScoreSprite.pivot.x = this.newHighScoreSprite.width/2;
-		this.newHighScoreSprite.tint = 0x454545;
+		this.newHighScoreSprite.tint = 0x606060;
         this.newHighScoreLayer.addChild(this.newHighScoreSprite);
 
 
@@ -84,15 +84,36 @@ var GameClass = (function(){
         	var score = Score.getScore(this.game.type);
         	var highscore = Score.getHighScore(this.game.type);
 
-        	if(score > highscore){
+        	// if(score > highscore){
         		this.newHighScoreLayer.visible = true;
-        	}
+
+	            var flare = new FlareEffect()
+				flare.layer.x = -this.newHighScoreSprite.width/2;
+				flare.layer.y = this.newHighScoreSprite.height-15;
+				flare.layer.scale.set(2.5);
+				flare.slideRight(this.newHighScoreLayer,this.newHighScoreSprite.width,2);
+
+
+
+	            var flare = new FlareEffect()
+				flare.layer.x = -this.newHighScoreSprite.width/2+this.newHighScoreSprite.width;
+				flare.layer.y = this.newHighScoreSprite.height-35;
+				// flare.layer.scale.set(1);
+				flare.slideLeft(this.newHighScoreLayer,this.newHighScoreSprite.width,2);
+
+
+	   //          var flare = new FlareEffect()
+				// flare.layer.x = -this.newHighScoreSprite.width/2;
+				// flare.layer.y = this.newHighScoreSprite.height-15;
+				// flare.layer.scale.set(0.6);
+				// flare.slideRight(this.newHighScoreLayer,this.newHighScoreSprite.width,0.6);
+        	// }
 
 			this.scoreText.setText(score.toString());
-	        this.scoreText.alpha = 0.9;
+	        // this.scoreText.alpha = 0.9;
 
 			this.highScoreText.setText(highscore.toString());
-	        this.highScoreText.alpha = 0.9;
+	        // this.highScoreText.alpha = 0.9;
 
 			// this.scoreLayer.visible = true;
 			// this.scoreLayer.scale.x = this.scoreLayer.scale.y = 0;
@@ -311,6 +332,7 @@ var GameClass = (function(){
 			// this.centerNumText = new PIXI.BitmapText("0", {font: "60px Comfortaa", align: "right"});
 			this.centerNumText = new PIXI.BitmapText("0", {font: "50px Comfortaa", align: "right"});
 			this.centerNumText.alpha = 0.9;
+			this.centerNumText.alpha = 0;
 	        this.layer.addChild(this.centerNumText);
 		},
 		setCenterNum:function(num){
@@ -349,8 +371,6 @@ var GameClass = (function(){
 
             Vibrate(40);
             this.addScore(50);
-
-
 		},
 		setScore:function(score){
 			console.log('set score to',score);
@@ -360,6 +380,14 @@ var GameClass = (function(){
 		addScore:function(score){
 			Score.addScore(this.type,score);
 			this.updateScore();
+
+            
+            var flare = new FlareEffect()
+			flare.layer.y = this.scoreText.y+20;
+			flare.layer.x = this.scoreText.x;
+			flare.layer.scale.set( 0.6 + score/550);
+			flare.slideRight(this.layer,35,Math.min(0.5+score/3000,1));
+
 		},
 		ringSolved:function(){
 			this.solvedRings++

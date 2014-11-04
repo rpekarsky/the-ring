@@ -32,7 +32,7 @@ var TitleScreen = (function () {
 			this.ringLayer.addChild(this.bg);
 			this.layer.addChild(this.ring);
 			this.layer.addChild(this.logo);
-			this.layer.addChild(this.flare);
+			// this.layer.addChild(this.flare);
 			this.layer.pivot.x = gameWidth/2;
 			this.layer.pivot.y = gameHeight/2;
 
@@ -120,6 +120,16 @@ var TitleScreen = (function () {
 			// 	delay:1,
 			// 	alpha:0
 			// });
+
+
+            var flare = new FlareEffect()
+			// flare.layer.x = gameWidth/2-25;
+			flare.layer.x = gameWidth/2-50;
+			// flare.layer.y = gameHeight/2-20;
+			flare.layer.y = gameHeight/2+20;
+			flare.layer.scale.set(2);
+			flare.slideRight(this.layer,120,2);
+
 
 			this.renderedBinding.active = true;
 			this.tappedBinding.active = true;

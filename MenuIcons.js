@@ -2,9 +2,8 @@ var LockedSprite = (function(){
 	function LockedSprite(){
 		this.layer = new PIXI.DisplayObjectContainer();
 
-		this.lockedSprite = new PIXI.Sprite.fromFrame('locked');
-		this.lockedSprite.pivot.x = this.lockedSprite.width/2;
-		this.lockedSprite.pivot.y = this.lockedSprite.height/2;
+		this.lockedSprite =  new PIXI.Sprite.fromFrame('locked');
+		this.lockedSprite.anchor.x = this.lockedSprite.anchor.y = 0.5;
 		this.lockedSprite.tint = 0x404040;
 
 		this.layer.addChild(this.lockedSprite);
@@ -19,6 +18,15 @@ var LockedSprite = (function(){
 		},
 		unlock:function(){
 			this.lockedSprite.setTexture(PIXI.Texture.fromFrame('unlocked'));
+			var flare = new FlareEffect().show(this.layer);
+			flare.layer.y = -15;
+			flare.layer.x = -15;
+			flare.layer.scale.set(1.3);
+			TweenLite.to(flare.layer,1,{
+				delay:0.1,
+				y: 50,
+			});
+
 			TweenLite.to(this.lockedSprite,1,{
 				delay:0.1,
 				y: 50,
@@ -172,7 +180,7 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Koan = function(menu){
 			baseIcon.call(this,'koan.png',menu);
-			this.needScore = 12000;
+			this.needScore = 0;
 			if(!Storage.get('koan_unlocked')){
 				this.setLocked();
 			}
@@ -190,7 +198,7 @@ var Icons = {
 			_super.show.call(this,dir);
 			this.update();
 			background.changeColor('cold blue');
-			if(this.locked && Score.getTotal()>this.needScore){
+			if(this.locked && Score.getTotal() >= this.needScore){
 				this.setUnlocked();
 				Storage.set('koan_unlocked',true);
 			}
@@ -222,7 +230,7 @@ var Icons = {
 			_super.show.call(this,dir);
 			this.update();
 			background.changeColor('cold coffee');
-			if(this.locked && Score.getTotal()>this.needScore){
+			if(this.locked && Score.getTotal() >= this.needScore){
 				Storage.set('mondo_unlocked',true);
 				this.setUnlocked();
 			}
@@ -254,7 +262,7 @@ var Icons = {
 			_super.show.call(this,dir);
 			this.update();
 			background.changeColor('cold magent');
-			if(this.locked && Score.getTotal()>this.needScore){
+			if(this.locked && Score.getTotal() >= this.needScore){
 				Storage.set('dharma_unlocked',true);
 				this.setUnlocked();
 			}

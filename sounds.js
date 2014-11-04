@@ -38,7 +38,7 @@ var Sound = (function () {
 
 			if(Storage.get('music-opt')){
 				// musicSnd.fadeTo(100,0.8);
-				musicSnd.play();
+				// musicSnd.play();
 			}
 			Storage.changed.add(function(key,oldValue,enabled){
 				if(key == 'music-opt'){

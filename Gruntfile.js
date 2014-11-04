@@ -6,10 +6,12 @@ module.exports = function(grunt) {
     'victor.js',
     'pixi.js',
     'mousetrap.js',
-    'howler.min.js',
+    'buzz.min.js',
 
 
     'utils.js',
+    'Storage.js',
+    'Score.js',
     'CustomPixiShader.js',
     'BlendShader.js',
     'Strip.js',
@@ -20,16 +22,22 @@ module.exports = function(grunt) {
     'Deadline.js',
     'Background.js',
 
-
     'MenuIcons.js',
+    'LevelBlocked.js',
+    'ScoreLine.js',
     'Settings.js',
     'MainMenu.js',
+    'TitleScreen.js',
     'States.js',
 
+    'NewLevelEffect.js',
+    'FlareEffect.js',
 
     'Game.js',
-    'Maratron.js',
     'Zen.js',
+    'Koan.js',
+    'Mondo.js',
+    'Dharma.js',
 
 
     'BlockBorders.js',
@@ -39,6 +47,7 @@ module.exports = function(grunt) {
     'NewBlocks.js',
     'init.js',
     'sounds.js',
+    'Vibrate.js',
     'TouchInput.js'
   ];
   grunt.initConfig({
@@ -55,7 +64,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
-	       mangle: {toplevel: false},
+	       mangle: {toplevel: true},
 	       squeeze: {dead_code: false},
     	 codegen: {quote_keys: false}
       },

@@ -14,10 +14,19 @@ var Block = (function(){
         this.sprite.width = BlockSize;
         // this.sprite.tint = 0x424242;
         this.sprite.height = BlockSize;
+
+        this.fakeGraphics = new PIXI.Sprite.fromFrame('block');
+        this.fakeGraphics.width = BlockSize;
+        this.fakeGraphics.height = BlockSize;
+        this.fakeGraphics.pivot.x = this.fakeGraphics.width/2;
+        this.fakeGraphics.pivot.y = this.fakeGraphics.height/2;
+        // this.fakeGraphics.tint = 0x000000;
         // this.flashgraphics = new PIXI.Graphics();
         // this.DOC.addChild(this.graphics);
         // this.DOC.addChild(this.flashgraphics);
+        this.fakeGraphics.visible = false;
         this.DOC.addChild(this.sprite);
+        // this.DOC.addChild(this.fakeGraphics);
         this.DOC.pivot.x = BlockSize/2;
         this.DOC.pivot.y = BlockSize/2;
         // this.fakeGraphics = new PIXI.Graphics();
@@ -59,11 +68,12 @@ var Block = (function(){
         },
         hide:function(){
             this.layer.removeChild(this.DOC);
-            // this.layer.removeChild(this.fakeGraphics);
+            this.layer.removeChild(this.fakeGraphics);
         },
         show:function(){
             this.layer.addChild(this.DOC);
-            // this.layer.addChild(this.fakeGraphics);
+            // this.layer.addChild(this.DOC);
+            this.layer.addChild(this.fakeGraphics);
         },
         flashing:function(){
             if(this.flashingAnim){
@@ -140,9 +150,9 @@ var Block = (function(){
                 fakeblockseen = true;
             }
             if(fakeblockseen){
-                // this.fakeGraphics.visible = true;
+                this.fakeGraphics.visible = true;
             } else {
-                // this.fakeGraphics.visible = false;
+                this.fakeGraphics.visible = false;
             }
              
             if(fall){
@@ -218,8 +228,8 @@ var Block = (function(){
             this.DOC.x = this.animx*BlockSize + BlockSize/2;
             this.DOC.y = this.animy*BlockSize + BlockSize/2-4;
 
-            // this.fakeGraphics.x = this.animfx*BlockSize + BlockSize/2;
-            // this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2-4;
+            this.fakeGraphics.x = this.animfx*BlockSize + BlockSize/2;
+            this.fakeGraphics.y = this.animy*BlockSize + BlockSize/2-4;
         }
     }
     return Block;

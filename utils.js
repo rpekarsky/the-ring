@@ -46,18 +46,21 @@ function rgbToHexFloat(r, g, b) {
     return Math.ceil(ab(r*255,256))*0x010000+Math.ceil(ab(g*255,256))*0x000100+Math.ceil(ab(b*255,256))*0x000001;
 }
 
-function rColor(r,g,b){
-    this.r = r;
-    this.g = g;
-    this.b = b;
-}
-rColor.prototype.getHex = function() {
-    return rgbToHexFloat(this.r,this.g,this.b);
-};
-rColor.prototype.clone = function() {
-    return new rColor(this.r, this.g, this.b);
-};
+var rColor = (function(){
+    function rColor(r,g,b){
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+    rColor.prototype.getHex = function() {
+        return rgbToHexFloat(this.r,this.g,this.b);
+    };
+    rColor.prototype.clone = function() {
+        return new rColor(this.r, this.g, this.b);
+    };
 
-rColor.fromInt = function(r,g,b) {
-    return new rColor(r/256,g/256,b/256)
-};
+    rColor.fromInt = function(r,g,b) {
+        return new rColor(r/256,g/256,b/256)
+    };
+    return rColor;
+})();

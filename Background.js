@@ -1,7 +1,7 @@
 var Background = (function(){
 	var blackColor = {
-		main: 	rColor.fromInt(50,50,50),
-		sec: 	rColor.fromInt(100,100,100)
+		main: 	rColor.fromInt(90,90,90),
+		sec: 	rColor.fromInt(120,120,120)
 	}
 	var colors = [
 		{

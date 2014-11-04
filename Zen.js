@@ -25,8 +25,6 @@ var Zen = (function () {
 	}
 	p.newBlocks = function(){
         this.adder.create(1,3,2,7);
-		this.a += 1;
-		new NewLevelEffect(this.a).show(this.layer);
 	},
 	p.render = function(){
 		_super.render.call(this);
@@ -36,35 +34,27 @@ var Zen = (function () {
 		this.a = 0;
 		this.setCenterNum(this.a);
 	}
-	p.ringSolved =function(){
+	p.ringSolved = function(){
 		_super.ringSolved.call(this);
-		this.a += 1;//Math.round(Math.random()*30+500);
+		this.a += 1;
 		new NewLevelEffect(this.a).show(this.layer);
 		this.setCenterNum(this.a);
+		background.changeColor();
 		this.bulkText();
 	}
 	p.added = function(){
 		_super.added.call(this);
         this.newBlocks();
         this.save();
-        // this.addLevelBulk();
 	}
 	var instance = false;
 	Zen.create = function(options){
 		var options = options || {};
 		if(instance){
 			console.log('return created');
-			// if(options.data){
-			// 	console.log('loading..',options.data)
-			// 	instance.load(options.data)
-			// }
 			return instance;
 		}
 		instance = new Zen();
-		// if(options.data){
-		// 	console.log('loading..',options.data)
-		// 	instance.load(options.data)
-		// }
 		return instance;
 	}
 	return Zen;
