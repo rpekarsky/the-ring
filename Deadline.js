@@ -36,6 +36,7 @@ var Deadline = (function(){
             this.animy = 0;
             // this.graphics.cacheAsBitmap = true;
             // this.graphicsbg.cacheAsBitmap = true;
+            rendered.add(this.update.bind(this));
             this.reset(true);
     	},
 

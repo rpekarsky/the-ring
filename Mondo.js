@@ -8,12 +8,8 @@ var Mondo = (function () {
 	var p = Mondo.prototype;
 	p.init = function(options){
 		console.log('INIt');
-		// if(this.deadline){
-		// 	this.stage.addChild(this.deadlineLayer);	
-		// }
 		if(_super.init.call(this)) return;
 		this.deadline = this.createDeadline();
-		// this.stage.addChild(this.deadlineLayer);
 		this.newBlocks();
 		this.createCenterNum();
 		this.a = 0;
@@ -33,7 +29,6 @@ var Mondo = (function () {
 		return dl;
 	},
 	p.newBlocks = function(){
-        // this.adder.create(1,1,1,1);
         this.adder.create(2,4,2,6);
 	}
 	p.added = function(){
@@ -79,18 +74,9 @@ var Mondo = (function () {
 		var options = options || {};
 		if(instance){
 			console.log('return created');
-			// if(options.data){
-			// 	console.log('loading..',options.data)
-			// 	instance.load(options.data)
-			// }
-			// instance.deadline.resume();
 			return instance;
 		}
 		instance = new Mondo();
-		// if(options.data){
-		// 	console.log('loading..',options.data)
-		// 	instance.load(options.data)
-		// }
 		return instance;
 	}
 	return Mondo;

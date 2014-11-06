@@ -4,7 +4,7 @@ var Zen = (function () {
 	function Zen(){
 		GameClass.call(this);
 		this.type = 'zen';
-		this.deadlineLayer = new PIXI.DisplayObjectContainer();
+		// this.deadlineLayer = new PIXI.DisplayObjectContainer();
 	}
 	Zen.prototype = Object.create(_super);
 	var p = Zen.prototype;
@@ -72,7 +72,8 @@ var Zen = (function () {
 			blocksMin:2,
 			multipler:7,
 		}
-	]
+	];
+
 	p.initialization = function(options){
 		_super.initialization.call(this,options);
 		this.newBlocks();
@@ -81,11 +82,13 @@ var Zen = (function () {
 	}
 	p.loadLevelSettings = function(settings){
 		_super.loadLevelSettings.call(this,settings);
+		console.log('loadLevelSettings');
 		if(!settings){
 			this.levelSettings.multipler++;
+			background.changeColor();
+		} else {
+			background.changeColor(this.levelSettings.color);
 		}
-		console.log('loadLevelSettings');
-		background.changeColor(this.levelSettings.color);
 		this.rings = this.levelSettings.rings;
 		this.setCenterNum(this.levelSettings.rings);
 	}
@@ -101,22 +104,15 @@ var Zen = (function () {
 	p.customSave = function(data){
 		data.rings = this.rings;
 	}
-	// p.loadLevel = function(level){
-	// 	_super.loadLevel.call(this,level);
-	// }
 	p.newBlocks = function(){
 		console.log('newBlocks settings',this.levelSettings);
 		if(this.levelSettings){
 			var s = this.levelSettings;
-			// console.log(s.groupsMin,s.groupsMax,s.blocksMin,s.blocksMax);
      		this.adder.create(s.groupsMin,s.groupsMax,s.blocksMin,s.blocksMax);
 		} else {
 			this.adder.create(1,3,2,7);
 		}
 	},
-	p.gameover = function(){
-		_super.gameover.call(this);
-	}
 	p.ringSolved = function(){
 		_super.ringSolved.call(this);
 		this.rings--;
@@ -124,8 +120,6 @@ var Zen = (function () {
 			this.levelNum++;
 			this.loadLevel(this.levelNum);
 		}
-		// new NewLevelEffect(5).show(this.layer);
-		// background.changeColor();
 		this.setCenterNum(this.rings);
 		this.bulkText();
 	}
