@@ -145,10 +145,9 @@ var GameClass = (function(){
 		}
 	}
 
-
-
 	function GameClass(){
-		this.levelNum = 1;
+		this.levelNum = 0;
+		this.levelSettings = {};
 		this.num = 24;
 		this.height = 6;
 		this.type = 'none';
@@ -166,15 +165,24 @@ var GameClass = (function(){
 	}
 	GameClass.stage = new PIXI.Stage(0x000000);
 	GameClass.prototype = {
+		levels:[],
 		isGameType:true,
 		initialization:function(){
 		},
 		newGame:function(){
 			console.log('NEW GAME');
 			this.setScore(0);
+			this.loadLevel(0);
+		},
+		loadLevelSettings:function(settings){
+			if(!settings) return;
+			this.levelSettings = settings;
+			console.log('loadLevelSettings',settings);
 		},
 		loadLevel:function(level){
-			console.log('load level',level);
+			new NewLevelEffect(level+1).show(this.layer);
+			console.log('load level',level,this.levels[level]);
+			this.loadLevelSettings(this.levels[level]);
 		},
 		init:function(options){
 			// Score.setScore(this.type,0);
@@ -246,23 +254,35 @@ var GameClass = (function(){
 			this.stage.addChild(this.deadlineLayer);
 			this.inited = true;
 		},
+		customSave:function(data){
+
+		},
+		customLoad:function(data){
+
+		},
 		load:function(options){
 			var data = options.data;
-			this.loadLevel(data.level);
+			console.log('LOAD GAME',data);
+			this.levelSettings = data.levelSettings;
+			this.levelNum = data.level;
+			this.loadLevel(this.levelNum);
 			this.adder.load(data.adder);
 			this.blocks.load(data.blocks);
 			this.setScore(data.score);
 			this.check();
-			console.log('LOAD GAME',data);
 			console.log('loaded');
+			this.customLoad(data);
 		},
 		save:function(){
 			var data = {
 				adder:this.adder.save(),
 				blocks:this.blocks.save(),
 				type:this.type,
+				level:this.levelNum,
+				levelSettings:this.levelSettings,
 				score:Score.getScore(this.type),
 			};
+			this.customSave(data);
 			Storage.set('last_game',data);
 		},
 		pause:function(){
@@ -320,7 +340,6 @@ var GameClass = (function(){
 			this.turnedCVBinding.active = false;
 			this.turnedCCVBinding.active = false;
 			this.layer.visible = false;
-			// topMenu.hideBack();
 			if(this.onClose){
 				this.onClose();
 			}
@@ -393,6 +412,8 @@ var GameClass = (function(){
 
             Vibrate(40);
             this.addScore(50);
+	        this.save();
+        	this.newBlocks();
 		},
 		setScore:function(score){
 			console.log('set score to',score);
@@ -447,6 +468,7 @@ var GameClass = (function(){
 			Score.updateHighScore(this.type);
             this.setScore(0);
             Vibrate(260);
+            this.loadLevel(0);
 		},
 		render:function(){
 			if(this.centerNumText){

@@ -45,6 +45,25 @@ var States = (function () {
 				this.current.open();
 			}
 		},
+		backOpen:function(type,options){
+			if(type == this.current) return;
+			
+			this.current.close();
+			if(typeof type == 'function'){
+				if(type.create){
+					this.current = type.create();
+					this.current.init(options);
+				} else {
+					this.current = new type();
+					this.current.init(options);
+				}
+			} else {
+				this.current = type;
+			}
+			// type.init(options);
+
+			type.open();
+		},
 		back:function(){
 			Vibrate(20);
 			var historyState = this.history.pop();
@@ -52,9 +71,10 @@ var States = (function () {
 				var state = historyState.state;
 				var options = historyState.options;
 				// this.current.close();
-				this.open(state,options);
+				// this.open(state,options);
 				// state.init(options);
-				// state.open();
+				this.backOpen(state,options);
+				
 				// this.current = state;
 			}
 		}
