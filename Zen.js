@@ -7,21 +7,22 @@ var Zen = (function () {
 	}
 	Zen.prototype = Object.create(_super);
 	var p = Zen.prototype;
-	p.init = function(options){
-		if(_super.init.call(this)) return;
+	p.initialization = function(options){
+		_super.initialization.call(this,options);
 		this.newBlocks();
 		this.createCenterNum();
-		background.changeColor('cold green');
-
 	    this.layer.addChild(this.currentScore.layer);
-		this.a = 0;
-
-		if(options){
-			if(options.data){
-				console.log('loading..',options.data)
-				this.load(options.data)
-			}
-		}
+	}
+	p.newGame = function(){
+		_super.newGame.call(this);
+		this.blocks.clearAll();
+		this.newBlocks();
+		this.loadLevel(1);
+	}
+	p.loadLevel = function(){
+		_super.loadLevel.call(this);
+		background.changeColor('cold green');
+		new NewLevelEffect(1).show(this.layer);
 	}
 	p.newBlocks = function(){
         this.adder.create(1,3,2,7);
@@ -31,14 +32,12 @@ var Zen = (function () {
 	}
 	p.gameover = function(){
 		_super.gameover.call(this);
-		this.a = 0;
-		this.setCenterNum(this.a);
+		this.setCenterNum(0);
 	}
 	p.ringSolved = function(){
 		_super.ringSolved.call(this);
-		this.a += 1;
-		new NewLevelEffect(this.a).show(this.layer);
-		this.setCenterNum(this.a);
+		this.setCenterNum(5);
+		new NewLevelEffect(5).show(this.layer);
 		background.changeColor();
 		this.bulkText();
 	}

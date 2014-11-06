@@ -25,11 +25,11 @@ var NewBlocks = (function(){
             this.game = game;
             this.y = game.height;
             this.num = game.num;
+            this.blocks = [];
         },
         create:function(groupsMin,groupsMax,blocksMin,blocksMax){
-            // this.clear();
+            this.clear();
             count = 1;
-            this.blocks = [];
             var s = 0;
             for (var j = 0; j < range(groupsMin,groupsMax); j++) {
                 var secN = range(blocksMin,blocksMax);
@@ -95,6 +95,7 @@ var NewBlocks = (function(){
                     bl.moveUp();
                 };
                 this.x += Math.floor(Math.random()*24);
+                this.blocks = [];
                 this.game.added();
                 this.lastTime = time;
             }
@@ -103,8 +104,6 @@ var NewBlocks = (function(){
             // } catch(e){
             //     console.log(e.stack);
             // }
-
-            
         },
         update:function(){
         }

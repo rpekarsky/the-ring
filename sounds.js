@@ -8,27 +8,27 @@ var Sound = (function () {
 	
 	var Sound = {
 		init:function(){
-			moveSnd = new buzz.sound( "/sounds/move", {
-			    formats: [ "ogg" ],
-			    preload: true
-			});
+			// moveSnd = new buzz.sound( "sounds/move", {
+			//     formats: [ "ogg" ],
+			//     preload: true
+			// });
 
-			placeSnd = new buzz.sound( "/sounds/place", {
-			    formats: [ "ogg" ],
-			    preload: true
-			});
+			// placeSnd = new buzz.sound( "sounds/place", {
+			//     formats: [ "ogg" ],
+			//     preload: true
+			// });
 
-			deathSnd = new buzz.sound( "/sounds/death", {
-			    formats: [ "ogg" ],
-			    preload: true
-			});
+			// deathSnd = new buzz.sound( "sounds/death", {
+			//     formats: [ "ogg" ],
+			//     preload: true
+			// });
 
-			completeSnd = new buzz.sound( "/sounds/complete", {
-			    formats: [ "ogg" ],
-			    preload: true
-			});
+			// completeSnd = new buzz.sound( "sounds/complete", {
+			//     formats: [ "ogg" ],
+			//     preload: true
+			// });
 
-			musicSnd = new buzz.sound( "/sounds/music", {
+			musicSnd = new buzz.sound( "sounds/music", {
 			    formats: [ "ogg" ],
 			    preload: true,
 			    // autoplay: true,

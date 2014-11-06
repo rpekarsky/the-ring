@@ -20,12 +20,17 @@ var Block = (function(){
         this.fakeGraphics.height = BlockSize;
         this.fakeGraphics.pivot.x = this.fakeGraphics.width/2;
         this.fakeGraphics.pivot.y = this.fakeGraphics.height/2;
-        // this.fakeGraphics.tint = 0x000000;
-        // this.flashgraphics = new PIXI.Graphics();
+        this.flashgraphics = new PIXI.Sprite.fromFrame('block');
+        this.flashgraphics.width = BlockSize;
+        this.flashgraphics.height = BlockSize;
+        // this.flashgraphics.pivot.x = this.flashgraphics.width/2;
+        // this.flashgraphics.pivot.y = this.flashgraphics.height/2;
+        this.flashgraphics.visible = false;
+        this.flashgraphics.tint = 0x000000;
         // this.DOC.addChild(this.graphics);
-        // this.DOC.addChild(this.flashgraphics);
         this.fakeGraphics.visible = false;
         this.DOC.addChild(this.sprite);
+        this.DOC.addChild(this.flashgraphics);
         // this.DOC.addChild(this.fakeGraphics);
         this.DOC.pivot.x = BlockSize/2;
         this.DOC.pivot.y = BlockSize/2;
@@ -79,25 +84,25 @@ var Block = (function(){
             if(this.flashingAnim){
                 this.flashingAnim.kill();
             }
-            // this.flashgraphics.alpha = 1;
-            // this.flashingAnim = TweenLite.to(this.flashgraphics,0.2,{
-            //     alpha:0.1,
-            //     onComplete:this.flashing.bind(this)
-            // });
+            this.flashgraphics.alpha = 1;
+            this.flashingAnim = TweenLite.to(this.flashgraphics,0.2,{
+                alpha:0.1,
+                onComplete:this.flashing.bind(this)
+            });
         },
         flash:function(){
-            // this.flashgraphics.visible = true;
-            // if(!this.isFlashing){
-            //     this.flashing();
-            //     this.isFlashing = true;
-            // }
+            this.flashgraphics.visible = true;
+            if(!this.isFlashing){
+                this.flashing();
+                this.isFlashing = true;
+            }
         },
         removeFlash:function(){
             this.isFlashing = false;
-            // this.flashgraphics.visible = false;
-            // if(this.flashingAnim){
-            //     this.flashingAnim.kill();
-            // }
+            this.flashgraphics.visible = false;
+            if(this.flashingAnim){
+                this.flashingAnim.kill();
+            }
         },
         setText:function(str){
         },
