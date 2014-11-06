@@ -173,6 +173,7 @@ var GameClass = (function(){
 			console.log('NEW GAME');
 			this.setScore(0);
 			this.loadLevel(0);
+			new NewLevelEffect(1).show(this.layer);
 		},
 		loadLevelSettings:function(settings){
 			if(!settings) return;
@@ -180,7 +181,9 @@ var GameClass = (function(){
 			console.log('loadLevelSettings',settings);
 		},
 		loadLevel:function(level){
-			new NewLevelEffect(level+1).show(this.layer);
+			if(level){
+				new NewLevelEffect(level+1).show(this.layer);
+			}
 			console.log('load level',level,this.levels[level]);
 			this.loadLevelSettings(this.levels[level]);
 		},
@@ -421,7 +424,11 @@ var GameClass = (function(){
 			this.updateScore();
 		},
 		addScore:function(score){
-			Score.addScore(this.type,score);
+			var addedScore = score;
+			if(this.levelSettings.multipler){
+				addedScore *= this.levelSettings.multipler;
+			}
+			Score.addScore(this.type,addedScore);
 			this.updateScore();
 
             
@@ -468,7 +475,8 @@ var GameClass = (function(){
 			Score.updateHighScore(this.type);
             this.setScore(0);
             Vibrate(260);
-            this.loadLevel(0);
+            this.levelNum = 0;
+            this.loadLevel(this.levelNum);
 		},
 		render:function(){
 			if(this.centerNumText){

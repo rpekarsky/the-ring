@@ -180,7 +180,7 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Koan = function(menu){
 			baseIcon.call(this,'koan.png',menu);
-			this.needScore = 0;
+			this.needScore = 100000;
 			if(!Storage.get('koan_unlocked')){
 				this.setLocked();
 			}
@@ -212,7 +212,7 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Mondo = function(menu){
 			baseIcon.call(this,'mondo.png',menu);
-			this.needScore = 15000;
+			this.needScore = 200000;
 			if(!Storage.get('mondo_unlocked')){
 				this.setLocked();
 			}
@@ -244,7 +244,7 @@ var Icons = {
 		var _super = baseIcon.prototype;
 		var Dharma = function(menu){
 			baseIcon.call(this,'dharma.png',menu);
-			this.needScore = 20000;
+			this.needScore = 500000;
 			if(!Storage.get('dharma_unlocked')){
 				this.setLocked();
 			}

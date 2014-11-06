@@ -11,11 +11,12 @@ var Zen = (function () {
 	p.levels = [
 		{
 			color:'cold green',
-			rings:2,
+			rings:1,
 			groupsMax:1,
 			groupsMin:1,
 			blocksMax:7,
-			blocksMin:4
+			blocksMin:4,
+			multipler:1,
 		},
 		{
 			color:'cold blue',
@@ -23,7 +24,8 @@ var Zen = (function () {
 			groupsMax:2,
 			groupsMin:1,
 			blocksMax:7,
-			blocksMin:4
+			blocksMin:4,
+			multipler:2,
 		},
 		{
 			color:'cold red',
@@ -31,7 +33,8 @@ var Zen = (function () {
 			groupsMax:2,
 			groupsMin:2,
 			blocksMax:4,
-			blocksMin:2
+			blocksMin:2,
+			multipler:3,
 		},
 		{
 			color:'cold red',
@@ -39,7 +42,8 @@ var Zen = (function () {
 			groupsMax:3,
 			groupsMin:2,
 			blocksMax:4,
-			blocksMin:2
+			blocksMin:2,
+			multipler:4,
 		},
 		{
 			color:'cold red',
@@ -47,7 +51,8 @@ var Zen = (function () {
 			groupsMax:5,
 			groupsMin:2,
 			blocksMax:4,
-			blocksMin:2
+			blocksMin:2,
+			multipler:5,
 		},
 		{
 			color:'cold red',
@@ -55,7 +60,8 @@ var Zen = (function () {
 			groupsMax:4,
 			groupsMin:2,
 			blocksMax:5,
-			blocksMin:2
+			blocksMin:2,
+			multipler:6,
 		},
 		{
 			color:'cold red',
@@ -63,7 +69,8 @@ var Zen = (function () {
 			groupsMax:6,
 			groupsMin:2,
 			blocksMax:3,
-			blocksMin:2
+			blocksMin:2,
+			multipler:7,
 		}
 	]
 	p.initialization = function(options){
@@ -74,6 +81,9 @@ var Zen = (function () {
 	}
 	p.loadLevelSettings = function(settings){
 		_super.loadLevelSettings.call(this,settings);
+		if(!settings){
+			this.levelSettings.multipler++;
+		}
 		console.log('loadLevelSettings');
 		background.changeColor(this.levelSettings.color);
 		this.rings = this.levelSettings.rings;
