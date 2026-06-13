@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>The Ring Demo</title>
+    <title>The Ring</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/png" href="icon_gear3.png">
     <style>
         html,body {
             margin: 0;
@@ -19,6 +20,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+        .utility {
+            position: fixed;
+            bottom: 8px;
+            right: 12px;
+            z-index: 100;
+            font-family: monospace;
+            font-size: 11px;
+        }
+        .utility a {
+            color: #555;
+            margin-left: 14px;
+            text-decoration: none;
+            border-bottom: 1px dotted #444;
+        }
+        .utility a:hover { color: #aaa; border-bottom-color: #888; }
         .over {
             pointer-events: none;
             z-index: 10;
@@ -61,6 +77,26 @@
     </style>
 </head>
 <body>
+    <div class="utility">
+        <a href="#" onclick="resetProgress(); return false;">reset progress</a>
+        <a href="#" onclick="unlockAll(); return false;">unlock all modes</a>
+    </div>
+    <script>
+    function resetProgress(){
+        if(!confirm('Reset all progress and high scores?')) return;
+        ['scores','last_game','koan_unlocked','mondo_unlocked','dharma_unlocked'].forEach(function(k){
+            localStorage.removeItem(k);
+        });
+        location.reload();
+    }
+    function unlockAll(){
+        ['koan_unlocked','mondo_unlocked','dharma_unlocked'].forEach(function(k){
+            localStorage.setItem(k,'true');
+        });
+        location.reload();
+    }
+    </script>
+
     <!-- LIBS -->
     <script src="lib/stats.min.js"></script>
     <script src="lib/signals.js"></script>
