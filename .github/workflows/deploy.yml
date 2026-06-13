@@ -44,6 +44,24 @@ jobs:
           cp -r js _site/
           cp sprite.png sprite_en.png spriteSheet.json spriteSheet_en.json _site/
           cp icon_gear2.png icon_gear3.png _site/
+          cp preview.png _site/ 2>/dev/null || true
+
+      - name: Inject analytics
+        env:
+          ANALYTICS_SCRIPT: ${{ vars.ANALYTICS_SCRIPT }}
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const script = process.env.ANALYTICS_SCRIPT || '';
+          if (!script) {
+            console.log('ANALYTICS_SCRIPT not set, skipping injection');
+            process.exit(0);
+          }
+          const path = '_site/index.html';
+          const content = fs.readFileSync(path, 'utf8');
+          fs.writeFileSync(path, content.replace('<!-- analytics -->', script));
+          console.log('Analytics injected into', path);
+          EOF
 
       - uses: actions/upload-pages-artifact@v3
         with:
