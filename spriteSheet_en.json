@@ -182,7 +182,7 @@
 		}
 	},
 	"meta": {
-		"image": "sprite.png",
+		"image": "sprite_en.png",
 		"format": "RGBA8888",
 		"size": {"w":1024,"h":512},
 		"scale": "1"

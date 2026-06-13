@@ -7,12 +7,17 @@
         html,body {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
             background-color: #000000;
-            position: relative;
+            overflow: hidden;
         }
         canvas {
             display: block;
-            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .over {
             pointer-events: none;
@@ -57,55 +62,54 @@
 </head>
 <body>
     <!-- LIBS -->
-    <script src="stats.min.js"></script>
-    <script src="signals.js"></script>
-    <script src="signals-init.js"></script>
-    <script src="victor.js"></script>
-    <script src="pixi.js"></script>
-    <script src="mousetrap.js"></script>
-    <script src="howler.min.js"></script>
-    <script src="buzz.min.js"></script>
+    <script src="lib/stats.min.js"></script>
+    <script src="lib/signals.js"></script>
+    <script src="lib/victor.min.js"></script>
+    <script src="lib/pixi.js"></script>
+    <script src="lib/buzz.min.js"></script>
+    <script src="lib/TweenLite.js"></script>
+    <script src="lib/EasePack.min.js"></script>
+    <script src="lib/mousetrap.js"></script>
     
     <!-- CODE -->
-    <script src="utils.js"></script>
-    <script src="Storage.js"></script>
-    <script src="Score.js"></script>
-    <script src="CustomPixiShader.js"></script>
-    <script src="BlendShader.js"></script>
-    <script src="Strip.js"></script>
-    <script src="Quad.js"></script>
-    <script src="TweenLite.js"></script>
-    <script src="EasePack.min.js"></script>
-    <script src="Deadline.js"></script>
-    <script src="Background.js"></script>
+    <script src="js/signals-init.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/Storage.js"></script>
+    <script src="js/Score.js"></script>
+    <script src="js/CustomPixiShader.js"></script>
+    <script src="js/BlendShader.js"></script>
+    <script src="js/Strip.js"></script>
+    <script src="js/Quad.js"></script>
+    <script src="js/Deadline.js"></script>
+    <script src="js/Background.js"></script>
 
-    <script src="MenuIcons.js"></script>
-    <script src="LevelBlocked.js"></script>
-    <script src="ScoreLine.js"></script>
-    <script src="Settings.js"></script>
-    <script src="MainMenu.js"></script>
-    <script src="TitleScreen.js"></script>
-    <script src="States.js"></script>
+    <script src="js/MenuIcons.js"></script>
+    <script src="js/LevelBlocked.js"></script>
+    <script src="js/ScoreLine.js"></script>
+    <script src="js/Settings.js"></script>
+    <script src="js/MainMenu.js"></script>
+    <script src="js/TitleScreen.js"></script>
+    <script src="js/States.js"></script>
 
     <!-- EFFECTS -->
-    <script src="NewLevelEffect.js"></script>
-    <script src="FlareEffect.js"></script>
+    <script src="js/NewLevelEffect.js"></script>
+    <script src="js/FlareEffect.js"></script>
 
     <!-- GAME TYPES -->
-    <script src="Game.js"></script>
-    <script src="Zen.js"></script>
-    <script src="Koan.js"></script>
-    <script src="Mondo.js"></script>
-    <script src="Dharma.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/Zen.js"></script>
+    <script src="js/Koan.js"></script>
+    <script src="js/Mondo.js"></script>
+    <script src="js/Dharma.js"></script>
 
-    <script src="BlockBorders.js"></script>
-    <script src="Blocks.js"></script>
-    <script src="Block.js"></script>
-    <script src="Score.js"></script>
-    <script src="NewBlocks.js"></script>
-    <script src="init.js"></script>
-    <script src="sounds.js"></script>
-    <script src="Vibrate.js"></script>
-    <script src="TouchInput.js"></script>
+    <script src="js/BlockBorders.js"></script>
+    <script src="js/Blocks.js"></script>
+    <script src="js/Block.js"></script>
+    <script src="js/Score.js"></script>
+    <script src="js/NewBlocks.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/sounds.js"></script>
+    <script src="js/Vibrate.js"></script>
+    <script src="js/TouchInput.js"></script>
 </body>
 </html>

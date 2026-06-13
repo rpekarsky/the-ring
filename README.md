@@ -1,0 +1,95 @@
+# The Ring
+
+Minimalist meditative arcade puzzle game.
+
+Play it (after deploy): _GitHub Pages link goes here once published_.
+
+---
+
+## History
+
+Originally built in **2014** as an entry for theRussian Tizen App Challenge
+
+The codebase then sat ina Dropbox backup for ~12 years. In **2026** it was archaeologically recovered, with the Tizen-specific scaffolding (widget manifest, hardware-key handlers, build deltas, Mercurial vestiges) stripped out, and the project reshaped into a plain web app deployable as static GitHub Pages.
+
+The original gameplay code is intact — no rewrites, no logic changes. Only the surrounding plumbing was modernized.
+
+The revival pass was driven with [Claude Code](https://www.claude.com/product/claude-code) as a collaborator: it audited the legacy codebase, identified the Tizen-coupled pieces, planned the cleanup, applied the changes, and helped patch the autoplay-policy issue that modern browsers introduced after 2017. The original game code from 2014 was written by hand without AI assistance.
+
+## Tech stack
+
+Aggressively 2014:
+
+- **[Pixi.js v1.6.0](https://github.com/pixijs/pixijs)** — WebGL/Canvas2D renderer (ancient API, predates Pixi 2.x)
+- **[buzz.js](https://github.com/jaysalvat/buzz)** — HTML5 audio wrapper
+- **[GreenSock TweenLite + EasePack](https://greensock.com/)** — tweening
+- **[JS-Signals](https://millermedeiros.github.io/js-signals/)** — event dispatch
+- **[Victor.js](http://victorjs.org/)** — 2D vector math
+- **[Mousetrap](https://craig.is/killing/mice)** — keyboard shortcuts
+- **[Grunt](https://gruntjs.com/)** — concat + uglify build
+
+No modules, no transpilation, no framework. 38 JS files concatenated in script-tag order into a single `out/out.min.js` bundle.
+
+## Run locally
+
+```bash
+npm install
+npm run build         # build out/out.min.js
+npm start             # static server on :8765
+# open http://localhost:8765/index.html   (dev — unbundled scripts)
+# open http://localhost:8765/min.html     (prod — bundled out.min.js)
+```
+
+
+## Build
+
+```bash
+npm run build:dev   # concat → out/out.js (readable bundle)
+npm run build       # concat + uglify → out/out.min.js (production)
+```
+
+## Controls
+
+**Touch / Mouse:**
+
+- Drag in a circle around the center — rotate the ring
+- Tap anywhere — interact (select menu item / lock current block)
+- Tap-and-hold then release outside the play area — back
+
+**Keyboard:**
+
+| Key | Action |
+|-----|--------|
+| ← / A | Rotate counter-clockwise |
+| → / D | Rotate clockwise |
+| ↑ / W / Space / Enter | Tap / select / interact |
+| ↓ / S | Back |
+| Esc / Backspace | Back |
+
+### Localization
+
+Sprite atlas is chosen by browser locale (`navigator.language`):
+
+- `ru-*` → `spriteSheet.json` + `sprite.png` (Russian UI text)
+- everything else → `spriteSheet_en.json` + `sprite_en.png` (English)
+
+The original 1.1.4 build used `tizen.systeminfo.getPropertyValue('LOCALE', ...)` for the same logic — the revival swapped it for the standard web API.
+
+
+Highscores per mode are stored in `localStorage`.
+
+## Credits
+
+- **Code & design**: Roman Pekarsky
+
+- **2026 revival**: with [Claude Code](https://www.claude.com/product/claude-code)
+
+## License
+
+Code: **MIT** (see [`LICENSE`](./LICENSE)). Asset and third-party-library notices are bundled in the same file.
+
+---
+
+## Status
+
+🏛️ **Archive / playable demo.** Not actively maintained.

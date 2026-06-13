@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (grunt concat + uglify)
+        run: npm run build
+
+      - name: Assemble _site/
+        run: |
+          mkdir -p _site/out _site/font _site/lib _site/js
+          # production landing — min.html becomes index.html
+          cp min.html _site/index.html
+          # dev page kept alongside, for debugging
+          cp index.html _site/dev.html
+          cp -r out _site/
+          cp -r font _site/
+          cp -r lib _site/
+          cp -r js _site/
+          cp sprite.png sprite_en.png spriteSheet.json spriteSheet_en.json _site/
+          cp icon_gear2.png icon_gear3.png _site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

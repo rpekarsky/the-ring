@@ -1,54 +1,53 @@
 module.exports = function(grunt) {
   var files = [
-    'stats.min.js',
-    'signals.js',
-    'signals-init.js',
-    'victor.js',
-    'pixi.js',
-    'mousetrap.js',
-    'buzz.min.js',
 
+    "lib/stats.min.js",
+    "lib/signals.js",
+    "lib/victor.min.js",
+    "lib/pixi.js",
+    "lib/buzz.min.js",
+    "lib/TweenLite.js",
+    "lib/EasePack.min.js",
+    "lib/mousetrap.js",
+    
+    "js/signals-init.js",
+    "js/utils.js",
+    "js/Storage.js",
+    "js/Score.js",
+    "js/CustomPixiShader.js",
+    "js/BlendShader.js",
+    "js/Strip.js",
+    "js/Quad.js",
+    "js/Deadline.js",
+    "js/Background.js",
 
-    'utils.js',
-    'Storage.js',
-    'Score.js',
-    'CustomPixiShader.js',
-    'BlendShader.js',
-    'Strip.js',
-    'Quad.js',
-    'TweenLite.js',
-    'EasePack.min.js',
-    'mousetrap.js',
-    'Deadline.js',
-    'Background.js',
+    "js/MenuIcons.js",
+    "js/LevelBlocked.js",
+    "js/ScoreLine.js",
+    "js/Settings.js",
+    "js/MainMenu.js",
+    "js/TitleScreen.js",
+    "js/States.js",
 
-    'MenuIcons.js',
-    'LevelBlocked.js',
-    'ScoreLine.js',
-    'Settings.js',
-    'MainMenu.js',
-    'TitleScreen.js',
-    'States.js',
+    "js/NewLevelEffect.js",
+    "js/FlareEffect.js",
 
-    'NewLevelEffect.js',
-    'FlareEffect.js',
+    "js/Game.js",
+    "js/Zen.js",
+    "js/Koan.js",
+    "js/Mondo.js",
+    "js/Dharma.js",
 
-    'Game.js',
-    'Zen.js',
-    'Koan.js',
-    'Mondo.js',
-    'Dharma.js',
+    "js/BlockBorders.js",
+    "js/Blocks.js",
+    "js/Block.js",
+    "js/Score.js",
+    "js/NewBlocks.js",
+    "js/init.js",
+    "js/sounds.js",
+    "js/Vibrate.js",
+    "js/TouchInput.js"
 
-
-    'BlockBorders.js',
-    'Blocks.js',
-    'Block.js',
-    'Score.js',
-    'NewBlocks.js',
-    'init.js',
-    'sounds.js',
-    'Vibrate.js',
-    'TouchInput.js'
   ];
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -64,13 +63,13 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
-	       mangle: {toplevel: true},
-	       squeeze: {dead_code: false},
-    	 codegen: {quote_keys: false}
+	mangle: {toplevel: true},
+	squeeze: {dead_code: false},
+    	codegen: {quote_keys: true}
       },
       dist: {
         files: {
-          'out/out.js': ['<%= concat.dist.dest %>']
+          'out/out.min.js': ['<%= concat.dist.dest %>']
         }
       }
     }
