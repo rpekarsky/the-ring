@@ -87,7 +87,7 @@ Highscores per mode are stored in `localStorage`.
 
 ## License
 
-Code: **MIT** (see [`LICENSE`](./LICENSE)). Asset and third-party-library notices are bundled in the same file.
+Code: **[GNU AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.html)** (see [`LICENSE`](./LICENSE)). Self-hosting, forking, and modification are welcome — but any modified version distributed or run as a network service must release its source under the same license. Bundled third-party libraries remain under their original licenses (MIT / Apache-2.0 / SIL OFL / GreenSock) and are listed in the same file.
 
 ---
 
