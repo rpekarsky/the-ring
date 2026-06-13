@@ -111,7 +111,9 @@ function animate() {
 
 // Letterbox the canvas to fit the viewport, preserving the load-time aspect ratio.
 // Game internals render at the original gameWidth/gameHeight; CSS scales the canvas.
-// TouchInput uses renderer.view.getBoundingClientRect() to map page→canvas coords.
+// Game-object positions are baked at construction time (136 gameWidth/Height refs
+// across 12 files) — re-laying out in place would be a refactor; letterbox is the
+// pragmatic visual fit for an archive build.
 function fitCanvas(){
     var aspect = gameWidth / gameHeight;
     var w = window.innerWidth;

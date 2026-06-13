@@ -28,7 +28,7 @@ Aggressively 2014:
 - **[Mousetrap](https://craig.is/killing/mice)** — keyboard shortcuts
 - **[Grunt](https://gruntjs.com/)** — concat + uglify build
 
-No modules, no transpilation, no framework. 38 JS files concatenated in script-tag order into a single `out/out.min.js` bundle.
+No modules, no transpilation, no framework. 38 JS files concatenated in script-tag order into a single `out/out.js` bundle. Uglify-mangling toplevel globals broke Pixi 1.6's dispatch chain, so production ships unminified.
 
 ## Run locally
 
@@ -44,8 +44,7 @@ npm start             # static server on :8765
 ## Build
 
 ```bash
-npm run build:dev   # concat → out/out.js (readable bundle)
-npm run build       # concat + uglify → out/out.min.js (production)
+npm run build   # concat → out/out.js
 ```
 
 ## Controls

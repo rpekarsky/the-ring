@@ -3,8 +3,7 @@
   "version": "1.1.4",
   "description": "Minimalist meditative arcade. Pixi.js 1.6 game from 2014, revived for the web in 2026.",
   "scripts": {
-    "build": "grunt ugly",
-    "build:dev": "grunt",
+    "build": "grunt",
     "start": "http-server -p 8765 -c-1 ."
   },
   "author": "Roman Pekarsky <contact@rpekarsky.com>",
