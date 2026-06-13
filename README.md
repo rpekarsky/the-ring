@@ -2,7 +2,9 @@
 
 Minimalist meditative arcade puzzle game.
 
-Play it (after deploy): _GitHub Pages link goes here once published_.
+[![The Ring — click to play](preview.png)](https://rpekarsky.github.io/the-ring/)
+
+▶ **[Play in browser](https://rpekarsky.github.io/the-ring/)**
 
 ---
 
