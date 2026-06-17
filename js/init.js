@@ -107,20 +107,27 @@ function animate() {
 // files. Re-laying out every state on resize would be a refactor — instead we
 // reload the page. Score/unlocks live in localStorage; user lands on title screen,
 // which is acceptable for a resize event.
+//
+// Width-only comparison: on mobile, the address bar auto-hide/show changes
+// innerHeight by 50-100px, firing resize events constantly. innerHeight is
+// unreliable as a "viewport really changed" signal. innerWidth only changes on
+// orientation flip or a genuine window resize — those are the cases we want to
+// reload for.
+var initialW = window.innerWidth;
+function maybeReload(){
+    if (Math.abs(window.innerWidth - initialW) > 50) {
+        window.location.reload();
+    }
+}
 var resizeReloadTimer;
 function scheduleResizeReload(){
     clearTimeout(resizeReloadTimer);
-    resizeReloadTimer = setTimeout(function(){ window.location.reload(); }, 200);
+    resizeReloadTimer = setTimeout(maybeReload, 200);
 }
 window.addEventListener('resize', scheduleResizeReload);
 window.addEventListener('orientationchange', scheduleResizeReload);
 
 // PWA initial-load safety: window.innerWidth at parse-time can be stale
-// (window chrome still settling). If dimensions diverged after first paint, reload.
-setTimeout(function(){
-    if (Math.abs(window.innerWidth - gameWidth) > 5 ||
-        Math.abs(window.innerHeight - gameHeight) > 5) {
-        window.location.reload();
-    }
-}, 500);
+// (window chrome still settling). Same width-only check at 500ms.
+setTimeout(maybeReload, 500);
 
