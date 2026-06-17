@@ -99,7 +99,7 @@ var MainMenu = (function () {
 			var l = this.MenuStates.length;
 			this.set( this.MenuStates[((++this.state%l)+l)%l],1 );
 
-            Sound.play('move');
+            Sound.play('move-fwd');
 
 
             var flare = new FlareEffect()
@@ -113,7 +113,7 @@ var MainMenu = (function () {
 		prev:function(){
 			var l = this.MenuStates.length;
 			this.set( this.MenuStates[((--this.state%l)+l)%l],-1 );
-            Sound.play('move');
+            Sound.play('move-back');
 
             var flare = new FlareEffect()
 			flare.layer.x = this.nextSprite.x;
@@ -125,7 +125,6 @@ var MainMenu = (function () {
 			if(this.cur){
 				this.cur.select();
 			}
-			Sound.play('place');
 			return false;
 		},
 		set:function(state,dir){

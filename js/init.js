@@ -62,13 +62,7 @@ if(Storage.get('vibro-opt') == null){
 var settingsIcon = new SettingIcon();
 var backIcon = new BackIcon();
 // var settings = new Settings();
-// Locale-aware asset loading. Original 1.1.4 used tizen.systeminfo.getPropertyValue('LOCALE');
-// on web we use navigator.language ('ru-RU', 'en-US', etc.) — same logic, different source.
-var spriteSheet = (navigator.language || 'en').toLowerCase().indexOf('ru') === 0
-	? 'spriteSheet.json'
-	: 'spriteSheet_en.json';
-
-var aloader = new PIXI.AssetLoader([spriteSheet, 'font/Comfortaa.fnt']);
+var aloader = new PIXI.AssetLoader(['spriteSheet_en.json', 'font/Comfortaa.fnt']);
 aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
@@ -109,21 +103,24 @@ function animate() {
     renderer.render(stage);
 }
 
-// Letterbox the canvas to fit the viewport, preserving the load-time aspect ratio.
-// Game internals render at the original gameWidth/gameHeight; CSS scales the canvas.
-// Game-object positions are baked at construction time (136 gameWidth/Height refs
-// across 12 files) — re-laying out in place would be a refactor; letterbox is the
-// pragmatic visual fit for an archive build.
-function fitCanvas(){
-    var aspect = gameWidth / gameHeight;
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    var fitByWidth = w / aspect <= h;
-    var cssW = Math.floor(fitByWidth ? w : h * aspect);
-    var cssH = Math.floor(fitByWidth ? w / aspect : h);
-    renderer.view.style.width  = cssW + 'px';
-    renderer.view.style.height = cssH + 'px';
+// gameWidth/gameHeight are baked at construction time into 136 places across 12
+// files. Re-laying out every state on resize would be a refactor — instead we
+// reload the page. Score/unlocks live in localStorage; user lands on title screen,
+// which is acceptable for a resize event.
+var resizeReloadTimer;
+function scheduleResizeReload(){
+    clearTimeout(resizeReloadTimer);
+    resizeReloadTimer = setTimeout(function(){ window.location.reload(); }, 200);
 }
-window.addEventListener('resize', fitCanvas);
-fitCanvas();
+window.addEventListener('resize', scheduleResizeReload);
+window.addEventListener('orientationchange', scheduleResizeReload);
+
+// PWA initial-load safety: window.innerWidth at parse-time can be stale
+// (window chrome still settling). If dimensions diverged after first paint, reload.
+setTimeout(function(){
+    if (Math.abs(window.innerWidth - gameWidth) > 5 ||
+        Math.abs(window.innerHeight - gameHeight) > 5) {
+        window.location.reload();
+    }
+}, 500);
 

@@ -63,9 +63,13 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
-	mangle: {toplevel: true},
-	squeeze: {dead_code: false},
-    	codegen: {quote_keys: true}
+        mangle: false,
+        compress: {
+          dead_code: false
+        },
+        output: {
+          quote_keys: true
+        }
       },
       dist: {
         files: {
@@ -79,6 +83,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
 
   grunt.registerTask('default', ['concat']);
-  grunt.registerTask('ugly', ['concat', 'uglify']);
+  grunt.registerTask('prod', ['concat', 'uglify']);
 
 };

@@ -74,7 +74,7 @@ var NewBlocks = (function(){
             for (var i = 0; i < this.blocks.length; i++) {
                 this.blocks[i].move(this.blocks[i].x+delta,this.y);
             };
-            Sound.play('move');
+            Sound.play(delta > 0 ? 'move-fwd' : 'move-back');
             Vibrate(10);
         },
         show:function(){

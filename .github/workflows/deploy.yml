@@ -28,12 +28,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (grunt concat)
-        run: npm run build
+      - name: Build (grunt concat + uglify)
+        run: npm run build:prod
 
       - name: Assemble _site/
         run: |
-          mkdir -p _site/out _site/font _site/lib _site/js
+          mkdir -p _site
           # production landing — min.html becomes index.html
           cp min.html _site/index.html
           # dev page kept alongside, for debugging
@@ -42,8 +42,12 @@ jobs:
           cp -r font _site/
           cp -r lib _site/
           cp -r js _site/
-          cp sprite.png sprite_en.png spriteSheet.json spriteSheet_en.json _site/
-          cp icon_gear2.png icon_gear3.png _site/
+          cp -r sounds _site/
+          cp sprite_en.png spriteSheet_en.json _site/
+          cp 192.png 512.png favicon.png manifest.webmanifest _site/
+          cp sw.js _site/
+          # Inject git SHA as SW cache version → invalidates old cache on each deploy.
+          sed -i "s/__BUILD_HASH__/${GITHUB_SHA}/g" _site/sw.js
           cp preview.png _site/ 2>/dev/null || true
 
       - name: Inject analytics

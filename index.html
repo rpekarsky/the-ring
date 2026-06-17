@@ -3,7 +3,10 @@
 <head>
     <title>The Ring</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" type="image/png" href="icon_gear3.png">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="192.png">
+    <link rel="manifest" href="manifest.webmanifest">
     <style>
         html,body {
             margin: 0;
@@ -151,5 +154,14 @@
     <script src="js/sounds.js"></script>
     <script src="js/Vibrate.js"></script>
     <script src="js/TouchInput.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function(){
+            navigator.serviceWorker.register('sw.js').catch(function(err){
+                console.warn('SW registration failed:', err);
+            });
+        });
+    }
+    </script>
 </body>
 </html>

@@ -23,6 +23,7 @@ var States = (function () {
 		open:function(type,options){
 			if(type != this.current){
 				Vibrate(20);
+				Sound.play('place');
 				if(this.current){
 					this.current.close();
 					this.history.push({state:this.current,options:this.current.options});
@@ -68,6 +69,7 @@ var States = (function () {
 			Vibrate(20);
 			var historyState = this.history.pop();
 			if(historyState){
+				Sound.play('place');
 				var state = historyState.state;
 				var options = historyState.options;
 				// this.current.close();

@@ -48,7 +48,7 @@ var SettingsOption = (function(){
 			console.log('set',this.name,this.checkbox.enabled)
 			Storage.set(this.name,this.checkbox.enabled);
 			this.animate();
-            Sound.play('move');
+            Sound.play('move-fwd');
             Vibrate(20);
 
 
@@ -116,7 +116,6 @@ var SettingIcon = (function(){
 				} else {
 					states.open(states.states.settings);
 				}
-				Sound.play('move');
 				return false;
 			}
 		}
@@ -157,7 +156,7 @@ var Settings = (function () {
 	function Settings(){
 		this.layer = new PIXI.DisplayObjectContainer();
 		this.music = new SettingsOption('music-opt',Storage.get('music-opt'));
-		// this.sound = new SettingsOption('sound-opt',Storage.get('sound-opt'));
+		this.sound = new SettingsOption('sound-opt',Storage.get('sound-opt'));
 		this.vibro = new SettingsOption('vibro-opt',Storage.get('vibro-opt'));
 		this.binding = TouchInput.tapped.add(this.processTouch.bind(this), null, 1);
 		this.binding.active = false;
@@ -173,8 +172,8 @@ var Settings = (function () {
 			this.music.layer.y = -55;
 			this.layer.addChild(this.music.layer);
 
-			// this.sound.layer.y = 0;
-			// this.layer.addChild(this.sound.layer);
+			this.sound.layer.y = 0;
+			this.layer.addChild(this.sound.layer);
 
 			this.vibro.layer.y = 55;
 			this.layer.addChild(this.vibro.layer);
@@ -186,9 +185,9 @@ var Settings = (function () {
 			if(this.music.getBounds().contains(touch.x,touch.y)){
 				this.music.toggle();
 			}
-			// if(this.sound.getBounds().contains(touch.x,touch.y)){
-			// 	this.sound.toggle();
-			// }
+			if(this.sound.getBounds().contains(touch.x,touch.y)){
+				this.sound.toggle();
+			}
 			if(this.vibro.getBounds().contains(touch.x,touch.y)){
 				this.vibro.toggle();
 			}
@@ -234,7 +233,7 @@ var Settings = (function () {
 				ease:Elastic.easeOut
 			});
 			this.music.show(0);
-			// this.sound.show(0.05);
+			this.sound.show(0.05);
 			this.vibro.show(0.10);
 		},
 		animateOut:function(){

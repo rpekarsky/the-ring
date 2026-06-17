@@ -67,16 +67,6 @@ npm run build   # concat → out/out.js
 | ↓ / S | Back |
 | Esc / Backspace | Back |
 
-### Localization
-
-Sprite atlas is chosen by browser locale (`navigator.language`):
-
-- `ru-*` → `spriteSheet.json` + `sprite.png` (Russian UI text)
-- everything else → `spriteSheet_en.json` + `sprite_en.png` (English)
-
-The original 1.1.4 build used `tizen.systeminfo.getPropertyValue('LOCALE', ...)` for the same logic — the revival swapped it for the standard web API.
-
-
 Highscores per mode are stored in `localStorage`.
 
 ## Credits
@@ -84,6 +74,8 @@ Highscores per mode are stored in `localStorage`.
 - **Code & design**: Roman Pekarsky
 
 - **2026 revival**: with [Claude Code](https://www.claude.com/product/claude-code)
+
+- **Sound effects**: mechanical keyboard click recordings ("Akko Lavenders" pack) by [@mshareef-git](https://github.com/mshareef-git), originally contributed to [monkeytypegame/monkeytype](https://github.com/monkeytypegame/monkeytype/pull/7764) under GPL-3.0
 
 ## License
 

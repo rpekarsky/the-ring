@@ -14,6 +14,20 @@ var TouchInput = (function(){
 	var gameRect = new PIXI.Rectangle(0,0,gameWidth,gameHeight);
 	var lastTouchTime = 0;
 	var TOUCH_DELAY = 30;
+
+	var KEY_REPEAT_MS = 100;
+	var keyRepeats = {};
+	function startKeyRepeat(name, action){
+		if (keyRepeats[name]) return;
+		action();
+		keyRepeats[name] = setInterval(action, KEY_REPEAT_MS);
+	}
+	function stopKeyRepeat(name){
+		if (keyRepeats[name]) {
+			clearInterval(keyRepeats[name]);
+			delete keyRepeats[name];
+		}
+	}
 	TouchInput = {
 		enabled:true,
 		fingerControlPhases:0,
@@ -173,13 +187,27 @@ var TouchInput = (function(){
 			document.addEventListener('touchmove',ontouchmove,false);
 			document.addEventListener('touchstart',ontouchstart,false);
 			document.addEventListener('touchend',ontouchend,false);	
-			Mousetrap.bind(['left', 'a'], function(){ TouchInput.turnedCCV.dispatch(); return false; });
-			Mousetrap.bind(['right', 'd'], function(){ TouchInput.turnedCV.dispatch(); return false; });
+			Mousetrap.bind(['left', 'a'], function(){
+				startKeyRepeat('left', function(){ TouchInput.turnedCCV.dispatch(); });
+				return false;
+			});
+			Mousetrap.bind(['left', 'a'], function(){ stopKeyRepeat('left'); return false; }, 'keyup');
+
+			Mousetrap.bind(['right', 'd'], function(){
+				startKeyRepeat('right', function(){ TouchInput.turnedCV.dispatch(); });
+				return false;
+			});
+			Mousetrap.bind(['right', 'd'], function(){ stopKeyRepeat('right'); return false; }, 'keyup');
+
 			Mousetrap.bind(['up', 'w', 'space', 'enter'], function(){
 				TouchInput.tapped.dispatch(new Victor(gameWidth/2, gameHeight/2));
 				return false;
 			});
 			Mousetrap.bind(['down', 's', 'esc', 'backspace'], function(){ TouchInput.back.dispatch(); return false; });
+
+			window.addEventListener('blur', function(){
+				for (var name in keyRepeats) stopKeyRepeat(name);
+			});
 		}
 	};
 

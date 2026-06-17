@@ -4370,7 +4370,7 @@ var SettingsOption = (function(){
 			console.log('set',this.name,this.checkbox.enabled)
 			Storage.set(this.name,this.checkbox.enabled);
 			this.animate();
-            Sound.play('move');
+            Sound.play('move-fwd');
             Vibrate(20);
 
 
@@ -4438,7 +4438,6 @@ var SettingIcon = (function(){
 				} else {
 					states.open(states.states.settings);
 				}
-				Sound.play('move');
 				return false;
 			}
 		}
@@ -4479,7 +4478,7 @@ var Settings = (function () {
 	function Settings(){
 		this.layer = new PIXI.DisplayObjectContainer();
 		this.music = new SettingsOption('music-opt',Storage.get('music-opt'));
-		// this.sound = new SettingsOption('sound-opt',Storage.get('sound-opt'));
+		this.sound = new SettingsOption('sound-opt',Storage.get('sound-opt'));
 		this.vibro = new SettingsOption('vibro-opt',Storage.get('vibro-opt'));
 		this.binding = TouchInput.tapped.add(this.processTouch.bind(this), null, 1);
 		this.binding.active = false;
@@ -4495,8 +4494,8 @@ var Settings = (function () {
 			this.music.layer.y = -55;
 			this.layer.addChild(this.music.layer);
 
-			// this.sound.layer.y = 0;
-			// this.layer.addChild(this.sound.layer);
+			this.sound.layer.y = 0;
+			this.layer.addChild(this.sound.layer);
 
 			this.vibro.layer.y = 55;
 			this.layer.addChild(this.vibro.layer);
@@ -4508,9 +4507,9 @@ var Settings = (function () {
 			if(this.music.getBounds().contains(touch.x,touch.y)){
 				this.music.toggle();
 			}
-			// if(this.sound.getBounds().contains(touch.x,touch.y)){
-			// 	this.sound.toggle();
-			// }
+			if(this.sound.getBounds().contains(touch.x,touch.y)){
+				this.sound.toggle();
+			}
 			if(this.vibro.getBounds().contains(touch.x,touch.y)){
 				this.vibro.toggle();
 			}
@@ -4556,7 +4555,7 @@ var Settings = (function () {
 				ease:Elastic.easeOut
 			});
 			this.music.show(0);
-			// this.sound.show(0.05);
+			this.sound.show(0.05);
 			this.vibro.show(0.10);
 		},
 		animateOut:function(){
@@ -4696,7 +4695,7 @@ var Settings = (function () {
 			var l = this.MenuStates.length;
 			this.set( this.MenuStates[((++this.state%l)+l)%l],1 );
 
-            Sound.play('move');
+            Sound.play('move-fwd');
 
 
             var flare = new FlareEffect()
@@ -4710,7 +4709,7 @@ var Settings = (function () {
 		prev:function(){
 			var l = this.MenuStates.length;
 			this.set( this.MenuStates[((--this.state%l)+l)%l],-1 );
-            Sound.play('move');
+            Sound.play('move-back');
 
             var flare = new FlareEffect()
 			flare.layer.x = this.nextSprite.x;
@@ -4722,7 +4721,6 @@ var Settings = (function () {
 			if(this.cur){
 				this.cur.select();
 			}
-			Sound.play('place');
 			return false;
 		},
 		set:function(state,dir){
@@ -5054,6 +5052,7 @@ var Settings = (function () {
 		open:function(type,options){
 			if(type != this.current){
 				Vibrate(20);
+				Sound.play('place');
 				if(this.current){
 					this.current.close();
 					this.history.push({state:this.current,options:this.current.options});
@@ -5099,6 +5098,7 @@ var Settings = (function () {
 			Vibrate(20);
 			var historyState = this.history.pop();
 			if(historyState){
+				Sound.play('place');
 				var state = historyState.state;
 				var options = historyState.options;
 				// this.current.close();
@@ -6978,7 +6978,7 @@ var Settings = (function () {
             for (var i = 0; i < this.blocks.length; i++) {
                 this.blocks[i].move(this.blocks[i].x+delta,this.y);
             };
-            Sound.play('move');
+            Sound.play(delta > 0 ? 'move-fwd' : 'move-back');
             Vibrate(10);
         },
         show:function(){
@@ -7080,13 +7080,7 @@ if(Storage.get('vibro-opt') == null){
 var settingsIcon = new SettingIcon();
 var backIcon = new BackIcon();
 // var settings = new Settings();
-// Locale-aware asset loading. Original 1.1.4 used tizen.systeminfo.getPropertyValue('LOCALE');
-// on web we use navigator.language ('ru-RU', 'en-US', etc.) — same logic, different source.
-var spriteSheet = (navigator.language || 'en').toLowerCase().indexOf('ru') === 0
-	? 'spriteSheet.json'
-	: 'spriteSheet_en.json';
-
-var aloader = new PIXI.AssetLoader([spriteSheet, 'font/Comfortaa.fnt']);
+var aloader = new PIXI.AssetLoader(['spriteSheet_en.json', 'font/Comfortaa.fnt']);
 aloader.addEventListener('onComplete',function(){
 	background.init();
 	TouchInput.init();
@@ -7127,134 +7121,74 @@ function animate() {
     renderer.render(stage);
 }
 
-// Letterbox the canvas to fit the viewport, preserving the load-time aspect ratio.
-// Game internals render at the original gameWidth/gameHeight; CSS scales the canvas.
-// Game-object positions are baked at construction time (136 gameWidth/Height refs
-// across 12 files) — re-laying out in place would be a refactor; letterbox is the
-// pragmatic visual fit for an archive build.
-function fitCanvas(){
-    var aspect = gameWidth / gameHeight;
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    var fitByWidth = w / aspect <= h;
-    var cssW = Math.floor(fitByWidth ? w : h * aspect);
-    var cssH = Math.floor(fitByWidth ? w / aspect : h);
-    renderer.view.style.width  = cssW + 'px';
-    renderer.view.style.height = cssH + 'px';
+// gameWidth/gameHeight are baked at construction time into 136 places across 12
+// files. Re-laying out every state on resize would be a refactor — instead we
+// reload the page. Score/unlocks live in localStorage; user lands on title screen,
+// which is acceptable for a resize event.
+var resizeReloadTimer;
+function scheduleResizeReload(){
+    clearTimeout(resizeReloadTimer);
+    resizeReloadTimer = setTimeout(function(){ window.location.reload(); }, 200);
 }
-window.addEventListener('resize', fitCanvas);
-fitCanvas();
+window.addEventListener('resize', scheduleResizeReload);
+window.addEventListener('orientationchange', scheduleResizeReload);
+
+// PWA initial-load safety: window.innerWidth at parse-time can be stale
+// (window chrome still settling). If dimensions diverged after first paint, reload.
+setTimeout(function(){
+    if (Math.abs(window.innerWidth - gameWidth) > 5 ||
+        Math.abs(window.innerHeight - gameHeight) > 5) {
+        window.location.reload();
+    }
+}, 500);
 
 ;var Sound = (function () {
-	var moveSnd,
-		placeSnd,
-		deathSnd,
-		completeSnd,
-		musicSnd,
-		sounds;
-	
-	var Sound = {
-		init:function(){
-			// moveSnd = new buzz.sound( "sounds/move", {
-			//     formats: [ "ogg" ],
-			//     preload: true
-			// });
 
-			// placeSnd = new buzz.sound( "sounds/place", {
-			//     formats: [ "ogg" ],
-			//     preload: true
-			// });
+	var COUNTS = {
+		'move-fwd':  4,
+		'move-back': 4,
+		'place':     2,
+		'complete':  0,
+		'death':     0
+	};
 
-			// deathSnd = new buzz.sound( "sounds/death", {
-			//     formats: [ "ogg" ],
-			//     preload: true
-			// });
+	var pools  = {};
+	var cursor = {};
+	var ready  = false;
 
-			// completeSnd = new buzz.sound( "sounds/complete", {
-			//     formats: [ "ogg" ],
-			//     preload: true
-			// });
-
-			// Music & SFX disabled: the original 2014 build shipped licensed audio
-			// (PremiumBeat) that isn't redistributable in this public source repo.
-			// All audio-related init, wheel-volume, M-mute, and focus/blur handlers
-			// are commented out to avoid 404s on sounds/music.ogg and runtime errors
-			// on undefined musicSnd. To re-enable when you have a CC0 track:
-			//   1. drop the file at sounds/music.ogg
-			//   2. uncomment the block below
-			//
-			// var savedVolume = Storage.get('music-volume');
-			// var volume = (savedVolume == null) ? 50 : savedVolume;
-			// musicSnd = new buzz.sound( "sounds/music", {
-			//     formats: [ "ogg" ],
-			//     preload: true,
-			//     loop: true,
-			//     volume: volume
-			// });
-			// var startMusic = function(){
-			//     if(Storage.get('music-opt')){ musicSnd.play(); }
-			//     document.removeEventListener('touchstart', startMusic);
-			//     document.removeEventListener('mousedown', startMusic);
-			//     document.removeEventListener('keydown', startMusic);
-			// };
-			// document.addEventListener('touchstart', startMusic);
-			// document.addEventListener('mousedown', startMusic);
-			// document.addEventListener('keydown', startMusic);
-			// document.addEventListener('wheel', function(e){
-			//     var v = musicSnd.getVolume();
-			//     v = Math.max(0, Math.min(100, v + (e.deltaY < 0 ? 5 : -5)));
-			//     musicSnd.setVolume(v);
-			//     Storage.set('music-volume', v);
-			//     e.preventDefault();
-			// }, {passive: false});
-			// Mousetrap.bind('m', function(){
-			//     Storage.set('music-opt', !Storage.get('music-opt'));
-			//     return false;
-			// });
-			// Storage.changed.add(function(key,oldValue,enabled){
-			//     if(key == 'music-opt'){
-			//         if(enabled){ musicSnd.unmute(); musicSnd.play(); }
-			//         else { musicSnd.pause(); musicSnd.mute(); }
-			//     }
-			// });
-			// sounds = {
-			// 	'move':moveSnd,
-			// 	'place':placeSnd,
-			// 	'complete':completeSnd,
-			// 	'death':deathSnd,
-			// 	// 'music':musicSnd,
-			// }
-		},
-		play:function(name){
-			// if(name == 'move'){
-			// 	new buzz.sound( "/sounds/move", {
-			// 	    formats: [ "mp3" ]
-			// 	}).play();
-			// 	return;
-			// }
-
-			// new buzz.sound( "/sounds/move", {
-			//     formats: [ "ogg" ],
-			//     preload: true,
-			//     autoplay: true,
-			// });
-			// if(Storage.get('sound-opt')){
-			// 	if(sounds[name]){
-			// 		sounds[name].stop();
-			// 		sounds[name].play();
-			// 	}
-			// }
+	function loadPool(name, count){
+		var arr = [];
+		for (var i = 1; i <= count; i++) {
+			arr.push(new buzz.sound("sounds/" + name + "/" + i, {
+				formats: ["wav"],
+				preload: true
+			}));
 		}
+		return arr;
 	}
 
-	// window.addEventListener('focus', function(){
-	//     if(Storage.get('music-opt')){ musicSnd.play(); }
-	// });
-	// window.addEventListener('blur', function(){
-	//     musicSnd.stop();
-	// });
+	var Sound = {
+		init: function(){
+			for (var name in COUNTS) {
+				pools[name]  = loadPool(name, COUNTS[name]);
+				cursor[name] = 0;
+			}
+			ready = true;
+		},
+		play: function(name){
+			if (!ready) return;
+			if (!Storage.get('sound-opt')) return;
+			var pool = pools[name];
+			if (!pool || !pool.length) return;
+			var snd = pool[cursor[name]++ % pool.length];
+			snd.stop();
+			snd.play();
+		}
+	};
+
 	return Sound;
-})();;var Vibrate = (function () {
+})();
+;var Vibrate = (function () {
 	// enable vibration support
 	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	var enabled = false;
@@ -7286,6 +7220,20 @@ fitCanvas();
 	var gameRect = new PIXI.Rectangle(0,0,gameWidth,gameHeight);
 	var lastTouchTime = 0;
 	var TOUCH_DELAY = 30;
+
+	var KEY_REPEAT_MS = 100;
+	var keyRepeats = {};
+	function startKeyRepeat(name, action){
+		if (keyRepeats[name]) return;
+		action();
+		keyRepeats[name] = setInterval(action, KEY_REPEAT_MS);
+	}
+	function stopKeyRepeat(name){
+		if (keyRepeats[name]) {
+			clearInterval(keyRepeats[name]);
+			delete keyRepeats[name];
+		}
+	}
 	TouchInput = {
 		enabled:true,
 		fingerControlPhases:0,
@@ -7445,13 +7393,27 @@ fitCanvas();
 			document.addEventListener('touchmove',ontouchmove,false);
 			document.addEventListener('touchstart',ontouchstart,false);
 			document.addEventListener('touchend',ontouchend,false);	
-			Mousetrap.bind(['left', 'a'], function(){ TouchInput.turnedCCV.dispatch(); return false; });
-			Mousetrap.bind(['right', 'd'], function(){ TouchInput.turnedCV.dispatch(); return false; });
+			Mousetrap.bind(['left', 'a'], function(){
+				startKeyRepeat('left', function(){ TouchInput.turnedCCV.dispatch(); });
+				return false;
+			});
+			Mousetrap.bind(['left', 'a'], function(){ stopKeyRepeat('left'); return false; }, 'keyup');
+
+			Mousetrap.bind(['right', 'd'], function(){
+				startKeyRepeat('right', function(){ TouchInput.turnedCV.dispatch(); });
+				return false;
+			});
+			Mousetrap.bind(['right', 'd'], function(){ stopKeyRepeat('right'); return false; }, 'keyup');
+
 			Mousetrap.bind(['up', 'w', 'space', 'enter'], function(){
 				TouchInput.tapped.dispatch(new Victor(gameWidth/2, gameHeight/2));
 				return false;
 			});
 			Mousetrap.bind(['down', 's', 'esc', 'backspace'], function(){ TouchInput.back.dispatch(); return false; });
+
+			window.addEventListener('blur', function(){
+				for (var name in keyRepeats) stopKeyRepeat(name);
+			});
 		}
 	};
 
